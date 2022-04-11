@@ -12,36 +12,7 @@ import Home from '../views/Home.vue'
 import Announcements from '../views/Announcements.vue'
 import Component_404 from '../views/404.vue'
 
-const protect = (to, from, next) => {
-  if((localStorage.getItem('email') != undefined || localStorage.getItem('phone') != undefined) &&
-      localStorage.getItem('password') != undefined && localStorage.getItem('token') != undefined &&
-      localStorage.getItem('type') != undefined){
-    next()
-  }
-  else next({ name : "Login"})
-}
 
-const skip = (to, from, next) => {
-  if((localStorage.getItem('email') != undefined || localStorage.getItem('phone') != undefined) &&
-      localStorage.getItem('password') != undefined && localStorage.getItem('token') != undefined &&
-      localStorage.getItem('type') != undefined){
-    next( {name: "Login"})
-  }
-  else next()
-}
-
-
-
-
-
-const protectSup = (to, from, next) => {
-  if((localStorage.getItem('email') != undefined || localStorage.getItem('phone') != undefined) &&
-      localStorage.getItem('password') != undefined && localStorage.getItem('token') != undefined &&
-      localStorage.getItem('type') != undefined&&localStorage.getItem('type')!='cittadino'){
-    next()
-  }
-  else next({ name : "Login"})
-}
 
 Vue.use(VueRouter)
 
@@ -54,7 +25,6 @@ Vue.use(VueRouter)
     {
         path:'/',
         name:'Home',
-        beforeEnter:skip,
         component:Home
     },
   {
@@ -65,7 +35,6 @@ Vue.use(VueRouter)
   {
     path: '/about',
     name: 'About',
-    beforeEnter : protect,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -84,39 +53,33 @@ Vue.use(VueRouter)
   {
     path: '/logout',
     name: 'Logout',
-    beforeEnter : protect,
     component: Logout
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    beforeEnter : protect,
     component: Dashboard
   },
 
   {
     path:'/avanzato',
     name:'Avanzato',
-    beforeEnter:protectSup,
     component: Avanzato
   },
   {
     path:'/cambio_pw',
     name:'CambioPw',
-    beforeEnter:protect,
     component:CambioPw
   },
   {
     path:'/newoperatore',
     name:'NewOperatore',
-    beforeEnter:protectSup,
     component:NewOperatore
   },
  
   {
     path:'/announcements',
     name:'Announcements',
-    beforeEnter:protect,
     component:Announcements
   },
 

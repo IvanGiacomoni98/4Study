@@ -13,6 +13,8 @@ export default new Vuex.Store({
     stazione:"",
     agente:"",
     nomeStazione:"",
+    users:["danielebufalieritkd@gmail.com","progetto4study@gmail.com"],
+    pws:["daniele98","4study98."]
   },
   getters: {
     getStazione: state=>{
@@ -39,6 +41,12 @@ export default new Vuex.Store({
 
     getType : state => {
       return state.type
+    },
+    getUsers : state => {
+      return state.users
+    },
+    getPws : state => {
+      return state.pws
     }
   },
   mutations: {

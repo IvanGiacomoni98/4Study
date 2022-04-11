@@ -13,11 +13,11 @@
     aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation" id="hamburger" @click="setClicked" :style="stateMenu" ><span class="navbar-toggler-icon"></span></button>
 
   <!-- Collapsible content -->
-  <div v-if="isLogged == true" class="collapse navbar-collapse " id="navbarSupportedContent15">
+  <div v-if="isLogged == true" class="collapse navbar-collapse mt-2" id="navbarSupportedContent15">
 
     <!-- Links -->
     
-    <ul class="navbar-nav mr-auto bg-success border border-dark pl-3 pr-3" style="position:relative; z-index: 3;float:right;">
+    <ul class="navbar-nav mr-auto bg-warning border border-dark pl-3 pr-3" style="position:relative; z-index: 3;float:right;">
       
       <li class="nav-item " >
         <router-link  to="/" class="nav-link " href="#">Dashboard </router-link>
@@ -118,7 +118,7 @@ mounted(){
     setClicked(){
       if(this.isClicked==false){
         this.$store.commit('setMenu',true)
-        this.$store.commit('setStatoMenu',"background-color: #238521;")
+        this.$store.commit('setStatoMenu',"background-color: #a88932;")
       }
       else  {
         this.$store.commit('setMenu',false)

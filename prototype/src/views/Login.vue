@@ -4,31 +4,32 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 
         <!--  CARD  -->
-        <div class="card card-signin my-5 border-success mb-3">
+        <div class="card card-signin my-5 border-warning mb-3">
           <div class="card-body">
-            <h5 class="card-title text-center"><b>Accedi</b></h5>
+            <h5 class="card-title text-center"><b>Log in</b></h5>
             <hr class="my-4">
 
             <!--  FORM  -->
             <form class="form-signin" @keyup.enter="accedi()">
               <div class="form-label-group">
-                <input type="text" id="inputEmailOrPhone" class="form-control" v-model="emailOrPhone" placeholder="Inserici l'indirizzo email o il telefono" required >
+                  <h4>  Email ID  </h4>
+                <input type="text" id="inputEmailOrPhone" class="form-control" v-model="emailOrPhone" placeholder="Insert your email address" required >
               </div>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="Inserisci la password" required>
+              <h4>Password </h4>
+                <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="Insert your password" required>
               </div>
 
-              <router-link to="/pw_forgotten">Hai dimenticato la password?</router-link>
 
-              <button v-if="readyEmail || readyPhone" @click="accedi()" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Accedi</button>
+              <button v-if="readyEmail || readyPhone" @click="accedi()" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Log in</button>
               <hr class="my-4">
 
               <div v-if="errorAuth != null" :class="colore" role="alert">
                   {{text}}
               </div>
               
-              <router-link to="/registration">Registrati</router-link>
+              <router-link to="/registration">Sign up</router-link>
               
             </form>
             <!--  FINE FORM  -->
@@ -45,9 +46,9 @@
 
 <script>
 
-import axios from 'axios'
-import {mapMutations} from 'vuex'
 
+import {mapMutations} from 'vuex'
+import { mapGetters} from 'vuex'
 export default {
     name: 'Login',
     data (){
@@ -61,7 +62,9 @@ export default {
         phoneOk : false,
         errorAuth : null,
         text : "",
-        colore : ""
+        colore : "",
+        users:[],
+        pws:[]
       }
     },
 
@@ -154,6 +157,10 @@ export default {
         'setToken',
         'setType'
       ]),
+      ...mapGetters([
+        'getUsers',
+        'getPws'
+      ]),
 
       memorizzaCredenziali(response){
         localStorage.email = this.emailOrPhone,
@@ -163,67 +170,48 @@ export default {
       },
     
       async accedi() {
+
+  
         
         // Accesso con email e password
         if(this.readyEmail){
-
-          axios({
-            method: 'post',
-            url: 'http://localhost:8081/auth/email',
-            data: {
-              email: this.emailOrPhone,
-              password: this.password
-            }
-          }).then((response) => {
-            
-            this.memorizzaCredenziali(response)
-
+          this.users=this.$store.state.users
+          this.pws= this.$store.state.pws
+          console.log(this.users)
+          console.log(this.pws)
+          console.log(this.password)
+           console.log(this.emailOrPhone)
+        var i=0
+        var okusers=false
+        var okpw=false
+        for (i=0;(this.users.length);i++)
+        {
+          if(this.users[i]==this.emailOrPhone)
+                okusers=true
+                break
+        }
+        for (i=0;i<(this.pws.length);i++)
+        {
+          if(this.pws[i]==this.password)
+                okpw=true
+                break
+        }
+        if(okusers & okpw)
+          { 
             this.errorAuth = 'NO ERROR'
             this.text = "Accesso a Eco effettato con successo!"
             this.colore = "alert alert-success"
-            this.$store.commit('setToken', response.data.token)
-            this.$store.commit('setType', response.data.type)
             this.$store.commit('setLogged', true)
-            
-            this.$router.push('/dashboard')
-          })
-            .catch((error) => {
-              console.log(error)
+            this.$router.push('/avanzato')
+          }
+          else{
               this.errorAuth = true
               this.colore = "alert alert-danger"
               this.text = "Email o password errati!"
-            })
-        }
-
-        // Accesso con telefono e password
-        else if(this.readyPhone){
-          axios({
-            method: 'post',
-            url: 'http://localhost:8081/auth/phone',
-            data: {
-              phone: this.emailOrPhone,
-              password: this.password
             }
-          }).then((response) => {
-              
-            this.memorizzaCredenziali(response)
-            
-            this.errorAuth = 'NO ERROR'
-            this.text = "Accesso a Eco effettato con successo!"
-            this.colore = "alert alert-success"
-            this.$store.commit('setToken', response.data.token)
-            this.$store.commit('setType', response.data.type)
-            this.$store.commit('setLogged', true)
-
-            this.$router.push('/dashboard')
-          })
-            .catch((error) => {
-              console.log(error)
-              this.colore = "alert alert-danger"
-              this.errorAuth = true
-              this.text = "Telefono o password errati!"
-            })
         }
+
+       
 
       }
     },
