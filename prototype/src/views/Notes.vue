@@ -94,7 +94,7 @@
       <!--  Img Back  -->
       <div class="row mt-1 ml-1">
         <img
-          @click="tornaAllaSchermataPrecedenteDaFiltri"
+          @click="tornaAllaSchermataPrecedenteDaFiltri()"
           src="../assets/back.png"
           class="back mt-1"
           style="width: 20px; margin-left: 16px"
@@ -498,181 +498,6 @@
           </div>
         </div>
 
-        <!--  DA TELEFONO  -->
-
-        <div
-          class="card card-signin border-success mt-2 d-block d-sm-none"
-          style="width: 100%"
-        >
-          <div class="card-body">
-            <h5 class="card-title text-center"><b>AGGIORNA L'ANNUNCIO</b></h5>
-
-            <form @keyup.enter="aggiornaAnnuncio">
-              <!--  CF  -->
-              <div class="row">
-                <div class="col">
-                  <h6><b>CF</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-success"
-                    v-model="CF"
-                    type="text"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
-
-              <!--  Data inizio  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Data inizio</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-success mt-1"
-                    v-model="data_inizio"
-                    type="date"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
-
-              <!--  Data fine  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Data fine</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-success mt-1"
-                    v-model="data_fine"
-                    type="date"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
-
-              <!--  Zone  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Zone</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-success mt-1"
-                    v-model="newZona"
-                    placeholder="Aggiungi(+) / Rimuovi(-)"
-                    type="text"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
-
-              <!--  Bottoni inserimento(+) e rimozione(-) zone  -->
-              <div class="row mt-1">
-                <div class="col">
-                  <!--  Padding  -->
-                </div>
-
-                <div class="col">
-                  <button
-                    @click="aggiungiZona()"
-                    class="btn border-success"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>+</b>
-                  </button>
-                  <button
-                    @click="mostraZoneInserite = !mostraZoneInserite"
-                    class="btn border-danger ml-1"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>-</b>
-                  </button>
-                </div>
-              </div>
-
-              <!--  Zone inserite  -->
-              <div v-if="mostraZoneInserite">
-                <div v-for="(zona, index) in zone" :key="index">
-                  <div class="row mt-2">
-                    <div class="col">
-                      {{ zona }}
-                    </div>
-
-                    <div class="col">
-                      <button
-                        @click="rimuoviZona"
-                        :id="index"
-                        class="btn border-warning ml-1"
-                        type="button"
-                        style="width: 35px; height: 35px"
-                      >
-                        <b>-</b>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--  Descrizione  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Descrizione</b></h6>
-                </div>
-
-                <div class="col">
-                  <textarea
-                    class="form-control border-success mt-1"
-                    v-model="descrizione"
-                    type="textarea"
-                    maxlength="200"
-                    style="width: 200px; height: 200px"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div
-                v-if="
-                  cliccatoSuAggiorna &&
-                  (error == 'CF' ||
-                    error == 'Data inizio' ||
-                    error == 'Data fine' ||
-                    error == 'Logica delle date' ||
-                    error == 'Descrizione')
-                "
-                class="alert alert-danger mt-1"
-                role="alert"
-              >
-                {{ messaggioErrore }}
-              </div>
-
-              <div
-                v-else-if="cliccatoSuAggiorna && error == ''"
-                class="alert alert-success mt-1"
-                role="alert"
-              >
-                {{ messaggioConferma }}
-              </div>
-
-              <!--  Bottone di aggiornamento annuncio  -->
-              <button
-                @click="aggiornaAnnuncio()"
-                type="button"
-                class="btn btn-success mt-1"
-              >
-                Aggiorna annuncio
-              </button>
-            </form>
-          </div>
-        </div>
       </center>
     </div>
 
@@ -989,7 +814,7 @@ export default {
     pubblicaNote() {
 
       this.notes.push({id:this.id+1,title:this.title,email:this.email,course:this.course,tag:this.tags})
-      console.log(this.notes)
+
       this.adding=false
       this.visualizzandoDettagli=false
       this.updating=false
@@ -1014,7 +839,7 @@ export default {
         }
       }
     },
-  },
+
 
   // Filtri per gli annunci
   filtraAnnunci() {
@@ -1339,6 +1164,13 @@ export default {
       }
     }
   },
+  tornaIndietro(){
+      this.adding=false
+      this.visualizzandoDettagli=false
+      this.updating=false
+      this.cliccatoSuFiltra=false
+      this.filtering=false
+  },
 
   // Rimozione filtri
   rimuoviFiltri() {
@@ -1365,7 +1197,8 @@ export default {
     this.zone = [];
     this.CF = "";
   },
-};
+}
+}
 </script>
 
 <style scoped>
