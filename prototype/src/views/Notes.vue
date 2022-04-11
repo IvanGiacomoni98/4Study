@@ -55,15 +55,14 @@
                     <img
                       src="../assets/eye.png"
                       height="30"
-                      :id="note._id"
-                      @click="settaCampiPerAggiornamentoAnnuncio"
+                      :id="note.id"
+                      @click="visualizzaDettagli"
                     />
                   </td>
                   <td>
                     <a href="../assets/download.txt" download="download.txt"><img
                       src="../assets/download.png"
-                      :id="note._id"
-                      @click="visualizzaDettagli"
+                      :id="note.id"
                       height="35"
                     /></a>
                   </td>
@@ -205,10 +204,7 @@
       <!--  Img Back  -->
       <div class="row mt-1 ml-1">
         <img
-          @click="
-            aggiornaSchermataAnnunci();
-            visualizzandoDettagli = false;
-          "
+          @click="tornaAllaSchermataPrecedenteDaFiltri()"
           src="../assets/back.png"
           class="back mt-1"
           style="width: 20px; margin-left: 16px"
@@ -218,78 +214,50 @@
       <center>
         <div class="card border-success mt-2" style="width: 460px">
           <div class="card-body">
-            <h5 class="card-title text-center"><b>DETTAGLI ANNUNCIO</b></h5>
+            <h5 class="card-title text-center"><b>Note details</b></h5>
 
             <!--  CF  -->
             <div class="row">
               <div class="col">
-                <p><b>CF</b></p>
+                <p><b>title</b></p>
               </div>
 
               <div class="col">
-                {{ annuncioDaVisualizzare.CF }}
+                {{ noteDaVisualizzare.title }}
               </div>
             </div>
 
             <!--  Data inizio  -->
             <div class="row">
               <div class="col">
-                <p><b>Data di inizio</b></p>
+                <p><b>Course</b></p>
               </div>
 
               <div class="col">
-                {{ annuncioDaVisualizzare.start }}
+                {{ noteDaVisualizzare.course }}
               </div>
             </div>
 
             <!--  Data fine  -->
             <div class="row">
               <div class="col">
-                <p><b>Data di fine</b></p>
+                <p><b>e-mail owner</b></p>
               </div>
 
               <div class="col">
-                {{ annuncioDaVisualizzare.end }}
+                {{ noteDaVisualizzare.email }}
               </div>
             </div>
 
-            <!--  Unica zona  -->
-            <div v-if="annuncioDaVisualizzare.zone.length == 1" class="row">
-              <div class="col">
-                <p><b>Zona</b></p>
-              </div>
-
-              <div class="col">
-                {{ annuncioDaVisualizzare.zone[0] }}
-              </div>
-            </div>
-
-            <!--  Più zone  -->
-            <div
-              v-else
-              class="row"
-              v-for="(zona, index) in annuncioDaVisualizzare.zone"
-              :key="index"
-            >
-              <div class="col">
-                <p>
-                  <b>Zona {{ index + 1 }}</b>
-                </p>
-              </div>
-
-              <div class="col">
-                {{ zona }}
-              </div>
-            </div>
 
             <!--  Descrizione  -->
             <div class="row">
               <div class="col">
-                <p><b>Descrizione</b></p>
+                <p><b>Tags</b></p>
               </div>
 
               <div class="col">
-                {{ annuncioDaVisualizzare.description }}
+                {{ noteDaVisualizzare.tag }}
               </div>
             </div>
           </div>
@@ -752,7 +720,7 @@ export default {
       cliccatoSuPubblica: false,
       cliccatoSuAggiorna: false,
       messaggioConferma: "",
-      annuncioDaVisualizzare: {},
+      noteDaVisualizzare: {},
       annuncioDaModificare: {},
       mostraZoneInserite: false,
       idBack: "",
@@ -826,18 +794,21 @@ export default {
       this.visualizzandoDettagli = true;
 
       // Prendo l'id dell'annuncio tramite event
-      const id_annuncio = event.target.id;
-      const annunci = this.annunci;
+      const id_note = event.target.id;
+      console.log(id_note)
+      const notes = this.notes;
       let i;
-      const dim = annunci.length;
+      const dim = notes.length;
 
       // Cerco l'annuncio con tale id
       for (i = 0; i < dim; i++) {
-        if (annunci[i]._id == id_annuncio) {
-          this.annuncioDaVisualizzare = annunci[i];
+        if (notes[i].id == id_note) {
+          this.noteDaVisualizzare = notes[i];
           break;
         }
       }
+
+      console.log(this.noteDaVisualizzare)
     },
 
 
@@ -1190,6 +1161,7 @@ export default {
     this.updating = false;
     this.cliccatoSuFiltra = false;
     this.mostraZoneInserite = false;
+    this.visualizzandoDettagli= false
 
     this.data_inizio = "";
     this.data_fine = "";
