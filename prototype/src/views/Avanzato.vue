@@ -2,22 +2,33 @@
 <div>
   <!-- pc -->
   <div class="container mt-3 ">
-    <div class="row mt-3">
-       
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/studygroup">
+          <button  class="rounded"  id="im3"><h5>Find a study group</h5></button>
+          </router-link>
+          </div>
         <div class="col">
-            <router-link to="/announcements">
-         <button   id="im3"></button> 
+            <router-link to="/findStudyRoom">
+         <button  class="rounded"  id="im3"><h5>Find study rooms</h5></button> 
           </router-link>
         </div>
 
-    <div v-if="tipoUtente=='admin'" class="row mt-3">
- 
-        <div v-if="tipoUtente!='operatore'" class="col ">
-          <router-link to="/newoperatore">
-         <button   id="im4"></button> 
+  
+    </div>
+       <div class="row mt-5">
+       <div class="col">
+         <router-link to="/announcements">
+          <button class="rounded"  id="im3"><h5>Announcements</h5></button> 
+          </router-link>
+          </div>
+        <div class="col">
+            <router-link to="/notes">
+         <button   class="rounded" id="im3"><h5>Notes</h5></button> 
           </router-link>
         </div>
-    </div>
+
+  
     </div>
     </div>
 
@@ -60,16 +71,18 @@ export default {
 
     height:250px;  
     width:300px;
-    background-image:url('../assets/menu_annunci.png');
+   
      background-size: cover;
-     border:0;
-     background-color: transparent;
+     background-color: #ffc107;
+     border-color: #c7b330;
+     
+    
 
 }
 
 #im3:hover{
-  background-image:url('../assets/menu_annunci2.png');
-   
+  border-color: #ffe53e;
+   background-color:#e0ca3b
     
 }
 
@@ -77,8 +90,8 @@ export default {
 
     height:250px;  
     width:300px;
-    background-image:url('../assets/menu_ins.png');
-     background-size: cover;
+    
+    background-size: cover;
      border:0;
      background-color: transparent;
 
