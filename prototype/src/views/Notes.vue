@@ -60,12 +60,12 @@
                     />
                   </td>
                   <td>
-                    <img
+                    <a href="../assets/download.txt" download="download.txt"><img
                       src="../assets/download.png"
                       :id="note._id"
                       @click="visualizzaDettagli"
                       height="35"
-                    />
+                    /></a>
                   </td>
 
                   <td><!--  Padding per img filter  --></td>
