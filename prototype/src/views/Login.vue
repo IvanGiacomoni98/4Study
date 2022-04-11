@@ -12,12 +12,12 @@
             <!--  FORM  -->
             <form class="form-signin" @keyup.enter="accedi()">
               <div class="form-label-group">
-                  <h4>  Email ID  </h4>
+                  <h4>Email ID</h4>
                 <input type="text" id="inputEmailOrPhone" class="form-control" v-model="emailOrPhone" placeholder="Insert your email address" required >
               </div>
 
               <div class="form-label-group">
-              <h4>Password </h4>
+              <h4>Password</h4>
                 <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="Insert your password" required>
               </div>
 
@@ -29,7 +29,7 @@
                   {{text}}
               </div>
               
-              <router-link to="/registration">Sign up</router-link>
+              <router-link to="/registration">Not registered? Sign up</router-link>
               
             </form>
             <!--  FINE FORM  -->

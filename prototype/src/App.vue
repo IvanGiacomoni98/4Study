@@ -6,7 +6,7 @@
   <nav class="navbar navbar-light navbar-1 black bg-warning">
 
   <!-- Navbar brand -->
-  <a class="navbar-brand ml-5" href="#"  > 4Study</a>
+  <a class="navbar-brand ml-5" href="/home"  > 4Study</a>
 
   <!-- Collapse button -->
   <button v-if="isLogged == true" class="navbar-toggler border border-dark mr-5 " type="button" data-toggle="collapse" data-target="#navbarSupportedContent15"
