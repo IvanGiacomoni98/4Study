@@ -39,6 +39,7 @@ export default {
   },
   created()
   {
+    console.log( this.$store.state.indexUserLogged)
     this.tipoUtente=localStorage.type
 
       this.$store.commit('setStazione','')

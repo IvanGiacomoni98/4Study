@@ -13,8 +13,16 @@ export default new Vuex.Store({
     stazione:"",
     agente:"",
     nomeStazione:"",
-    users:["danielebufalieritkd@gmail.com","progetto4study@gmail.com"],
-    pws:["daniele98","4study98."]
+    names:["daniele","ivan"],
+    surnames:["bufalieri","giacomoni"],
+    phones:["3312233230","3553332230"],
+    dates:["2/12/1998","31/05/1998"],
+    users:["danielebufalieritkd@gmail.com","ivangiacomoni@gmail.com"],
+    highschools:["A.Volta","G.Galilei"],
+    towns:["Rome","Terracina"],
+    univerisities:["Sapienza","Sapienza"],
+    pws:["daniele98","4study98."],
+    indexLoggedUser:0,
   },
   getters: {
     getStazione: state=>{
@@ -50,6 +58,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setIndexLoggedUser: (state,val)=>
+    {
+      state.indexLoggedUser=val
+    },
     setLogged: (state,val)=> {
       state.logged=val
     },

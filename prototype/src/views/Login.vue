@@ -174,28 +174,40 @@ export default {
   
         
         // Accesso con email e password
-        if(this.readyEmail){
+     
           this.users=this.$store.state.users
           this.pws= this.$store.state.pws
-          console.log(this.users)
-          console.log(this.pws)
-          console.log(this.password)
-           console.log(this.emailOrPhone)
+
         var i=0
         var okusers=false
         var okpw=false
-        for (i=0;(this.users.length);i++)
+        var index=0
+        console.log(this.emailOrPhone)
+        console.log(this.password)
+        console.log(this.users.length)
+        for (i=0;i<(this.users.length);i++)
         {
-          if(this.users[i]==this.emailOrPhone)
+               console.log(i)
+          if(this.users[i]==this.emailOrPhone){
+                console.log('QUi')
                 okusers=true
+                index=i
                 break
+          }
         }
-        for (i=0;i<(this.pws.length);i++)
+
+        for (i=0;i<=(this.pws.length);i++)
         {
           if(this.pws[i]==this.password)
+          {
                 okpw=true
+                index=i
                 break
+          }
         }
+
+        this.$store.state.indexUserLogged=index
+
         if(okusers & okpw)
           { 
             this.errorAuth = 'NO ERROR'
@@ -209,7 +221,7 @@ export default {
               this.colore = "alert alert-danger"
               this.text = "Email o password errati!"
             }
-        }
+        
 
        
 
