@@ -3,10 +3,10 @@
     <!--menu-->
 
   <!--Navbar-->
-  <nav class="navbar navbar-light navbar-1 black bg-success">
+  <nav class="navbar navbar-light navbar-1 black bg-warning">
 
   <!-- Navbar brand -->
-  <a class="navbar-brand ml-5" href="#"  > </a>
+  <a class="navbar-brand ml-5" href="#"  > 4Study</a>
 
   <!-- Collapse button -->
   <button v-if="isLogged == true" class="navbar-toggler border border-dark mr-5 " type="button" data-toggle="collapse" data-target="#navbarSupportedContent15"
@@ -44,7 +44,7 @@
 
   <div class="mt-3 " v-else >
 
-      <router-link to="/login" class="link"> Accedi </router-link> | <router-link to="/registration" class="link"> Registrati </router-link>
+      <router-link to="/login" class="link"> Log in </router-link> | <router-link to="/registration" class="link"> Sign up </router-link>
     </div>
 
   <!-- Collapsible content -->
@@ -149,13 +149,14 @@ mounted(){
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #f5dd42;
     }
   }
 }
 
 .navbar{
   height: 70px;
+  
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -170,7 +171,7 @@ mounted(){
 }
 
 #hamburger:hover{
-background-color: #238521;
+background-color: #ffc107;
 
 }
 
