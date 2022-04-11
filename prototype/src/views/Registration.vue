@@ -3,99 +3,71 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5  border-success">
+        <div class="card card-signin my-5  border-warning">
           <div class="card-body">
-           <h5 class="card-title text-center"><b>Registrazione </b></h5>
+           <h4 class="card-title text-center "><b>Registration </b></h4>
            
             <hr class="my-4">
             <form class="form-signin" onsubmit="return checkForm();">
 
-            <h6 class="card-subtitle mb-2 text-muted text-left">Credenziali:</h6>
+
 
               <div class="form-label-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" v-model=name  id="inputName" :class="nameClass" placeholder="Nome" autofocus required>
-                        <label v-if="nameVer==false" for="inputName" class="badge badge-danger">No numero</label>
-                    </div>
+                
+                    <div class="row">
                     <div class="col ">
-                        <input type="text" v-model=surname id="inputSurname" :class="surnameClass" placeholder="Cognome" required>
+                      <h5>Surname</h5>
+                        <input type="text" v-model=surname id="inputSurname" :class="surnameClass" placeholder="Surname" required>
                         <label v-if="surnameVer==false" for="inputSurname" class="badge badge-danger">No numero</label>
                     </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <h5>Name</h5>
+                        <input type="text" v-model=name  id="inputName" :class="nameClass" placeholder="Name" autofocus required>
+                        <label v-if="nameVer==false" for="inputName" class="badge badge-danger">No numero</label>
+                    </div>
+                    </div>
               </div>
 
               <div class="form-label-group">
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col">
+                       <h5>Email</h5>
                         <input type="email" v-model=email id="inputEmail" :class="emailClass" placeholder="E-mail" required>
-                        <label v-if="emailVer==false" for="inputEmail" class="badge badge-danger">Email non valida</label>
+                        <label v-if="emailVer==false" for="inputEmail" class="badge badge-danger">Email not valid</label>
                     </div>
+                </div>
+                <div class="row mt-2">
                     <div class="col">
-                        <input type="text" v-model=phone id="inputPhone" :class="phoneClass" placeholder="Telefono*">
-                        <label v-if="phoneVer==false" for="inputSurname" class="badge badge-danger">Numero non valido</label>
+                      <h5>Date of birth</h5>
+                        <input type="date" v-model=phone id="inputDate" :class="nameClass" placeholder="Date of birth">
                     </div>
                 </div>
-              </div>
 
-              <div class="form-label-group">
-                  <input type="password" v-model=password :class="passwordClass" placeholder="Password" required>
-                  <label v-if="passwordVer==false" class="badge badge-danger">Deve contenere almeno 8 caratteri,una <br>lettera maiuscola, una minuscola ed un numero</label>
+                <div class="row mt-2">
+                  <div class="col">
+                    <h5>Password</h5>
+                    <input type="password" v-model=password :class="passwordClass" placeholder="Password" required>
+                  <label v-if="passwordVer==false" class="badge badge-danger">It must contain at least 8 characters, <br> a capital letter, a small letter and a number</label>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col">
+                      <h5>Repeat the password</h5>
+                         <input type="password" v-model=password2 :class="password2Class" placeholder="Repeat Password" required>
+                  <label v-if="password2Ver==false" class="badge badge-danger">The two password are not equals</label>
+                      </div>
+                    </div>
               </div>
-
-              <div class="form-label-group">
-                  <input type="password" v-model=password2 :class="password2Class" placeholder="Ripeti Password" required>
-                  <label v-if="password2Ver==false" class="badge badge-danger">Le due password non coincidono</label>
-              </div>
-
-              <div class="form-label-group"><br>
-                <h6 class="card-subtitle mb-2 text-muted text-left">Data e luogo di nascita:</h6>
-                <div class="form-inline">
-                <select :class="dayClass" name="giorno" id="inputGiorno" v-model=day required > 
-                    <option disabled value="" >GG</option>
-                    <option v-for="i in 31" :key="i">{{i}}</option>
-                </select>
-                <pre> </pre>
-                <select :class="monthClass" name="mese" id="inputMese" v-model=month required>
-                    <option disabled value="">MM</option>  
-                    <option v-for="i in 12" :key="i">{{i}}</option>                  
-                </select>
-                <pre> </pre>
-                <select :class="yearClass" name="anno" id="inputAnno" v-model="year" required>
-                    <option disabled value="">AAAA</option>
-                    <option v-for="i in 115" :key="i">{{i+1905}}</option>
-                </select>
-                </div>
-            </div>
-                <div class="form-label-group">
-                <input  size="12" type="text" v-model="birthplace" id="inputLuogo" :class="birthplaceClass" placeholder="Comune di nascita" required>
-                 <label v-if="birthplaceVer==false" for="inputBirthplace" class="badge badge-danger">Non trovato</label>
-            </div>
 
               
-
-              <div class="form-label-group">
-                  <div class="form-inline">
-                    <h6 class="card-subtitle mb-2 text-muted text-left">Genere:</h6> <pre>  </pre>
-                    <select :class="sexClass" name="giorno" id="inputGiorno" v-model=sex required > 
-                    <option disabled value="" >---</option>
-                    <option value="M">Uomo</option>
-                    <option value="F">Donna</option>
-                </select>
-              </div>
-                
-              </div>
-
-              <div v-if="allerta" class="alert alert-danger" role="alert">
-                Non hai inserito tutto!
-              </div>
-              <h6 class="card-subtitle mb-2 text-muted text-left">*campo facoltativo </h6>
               <hr class="my-4">
 
-              <button  @click="regPost" class="btn btn-lg btn-success btn-block text-uppercase"  type="button">Entra in Eco!</button>
+              <button  @click="regPost" class="btn btn-lg btn-success btn-block text-uppercase"  type="button">Register</button>
               
               <hr class="my-4">
-              <router-link to="/login" >Torna alla pagina di login</router-link>
+              <router-link to="/login" >Back to the login page</router-link>
               
 
             </form>
@@ -107,8 +79,6 @@
 </template>
 
 <script>
-
-import axios from 'axios'
 
 export default {
     name:'Registration',
@@ -376,55 +346,19 @@ export default {
               this.allerta = true
               this.sexClass = 'select-control-check-errore'
           }
-          //CON TELEFONO
-          if(tuttoInserito == true && this.phone!=''){
-            this.allerta = false
-            axios({
-            method: 'post',
-            url: 'http://localhost:8081/registration/citizen',
-            data: {
-                name: this.name,
-                surname: this.surname,
-                sex: this.sex,
-                birthdate: this.year+'-'+this.month+'-'+this.day,
-                birthplace: this.birthplace,
-                email: this.email,
-                password: this.password,
-                phone: this.phone
-            }
-            }).then(() => {
-                alert('Registrazione avvenuta con successo!')
-                this.$router.push('/login')
-                
-            }, (error) => {
-                alert("Errore richiesta:\n"+error)
-            });  
-          }
-          
-          //SENZA TELEFONO
-          else if(tuttoInserito == true){
-            this.allerta = false
-            axios({
-            method: 'post',
-            url: 'http://localhost:8081/registration/citizen',
-            data: {
-                name: this.name,
-                surname: this.surname,
-                sex: this.sex,
-                birthdate: this.year+'-'+this.month+'-'+this.day,
-                birthplace: this.birthplace,
-                email: this.email,
-                password: this.password
-            }
-            }).then(() => {
-                alert('Registrazione avvenuta con successo!')
-                this.$router.push('/login')
-                
-            }, (error) => {
-                alert("Errore richiesta:\n"+error)
-            }); 
 
-          }
+          this.$store.state.names.push(this.name)
+          this.$store.state.surnames.push(this.name)
+          //don't worry be happy
+           this.$store.state.dates.push(this.phone)
+        this.$store.state.users.push(this.email)
+        this.$store.state.pws.push(this.password)
+        console.log( tuttoInserito)
+        alert("Registration success")
+        this.$router.push('/login')
+
+          
+
         }
     }
 }
@@ -440,7 +374,9 @@ export default {
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }
 
-
+h5 {
+float:left;
+}
 
 
 
