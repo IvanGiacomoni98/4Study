@@ -60,10 +60,11 @@
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="download.txt"><img
-                      src="../assets/download.png"
-                      :id="note.id"
-                      height="35"
+                    <a href="../assets/download.txt" download="download.txt"
+                      ><img
+                        src="../assets/download.png"
+                        :id="note.id"
+                        height="35"
                     /></a>
                   </td>
 
@@ -149,7 +150,6 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="email"
-                
                     style="width: 200px"
                   />
                 </div>
@@ -164,7 +164,6 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tags"
-      
                     style="width: 200px"
                   />
                 </div>
@@ -177,7 +176,6 @@
                 <div class="col">
                   <input
                     class="form-control border-warning mt-1"
-  
                     style="width: 200px"
                     type="file"
                   />
@@ -248,7 +246,6 @@
                 {{ noteDaVisualizzare.email }}
               </div>
             </div>
-
 
             <!--  Descrizione  -->
             <div class="row">
@@ -465,7 +462,6 @@
             </form>
           </div>
         </div>
-
       </center>
     </div>
 
@@ -491,8 +487,8 @@
           <div class="card-body">
             <h5 class="card-title text-center"><b>FILTRA ANNUNCI</b></h5>
 
-            <form @keyup.enter="filtraAnnunci()">
-              <div  class="row">
+            <form @keyup.enter="filtraNote()">
+              <div class="row">
                 <div class="col mt-1">
                   <h6><b>Insert tag</b></h6>
                 </div>
@@ -519,7 +515,6 @@
                     style="width: 200px"
                   />
                 </div>
-
               </div>
 
               <div class="row mt-1">
@@ -536,19 +531,17 @@
                 </div>
               </div>
 
-
               <!--  Bottone di filtraggio annunci  -->
               <button
                 @click="filtraNote()"
                 type="button"
                 class="btn btn-success mt-2"
               >
-               Filter notes
+                Filter notes
               </button>
             </form>
           </div>
         </div>
-
       </center>
     </div>
 
@@ -557,7 +550,7 @@
     <div v-if="filtering && !visualizzandoDettagli">
       <div class="card border-warning mt-3">
         <div class="card-body">
-          <h5 class="card-title"><b>FIltered notes</b></h5>
+          <h5 class="card-title"><b>Filtered notes</b></h5>
 
           <!--  TABELLA  -->
 
@@ -583,21 +576,22 @@
 
               <!--  Corpo tabella  -->
               <tbody>
-                <tr v-for="note in noteFiltrate" :key="note.id">
-                  <td>{{ note.title }}</td>
-                           <td>
+                <tr v-for="n in noteFiltrate" :key="n.id">
+                  <td>{{ n.title }}</td>
+                  <td>
                     <img
                       src="../assets/eye.png"
                       height="30"
-                      :id="note.id"
-                      @click="visualizzaDettagli"
+                      :id="n.id"
+                       @click="visualizzaDettagli"
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="download.txt"><img
-                      src="../assets/download.png"
-                      :id="note.id"
-                      height="35"
+                    <a href="../assets/download.txt" download="download.txt"
+                      ><img
+                        src="../assets/download.png"
+                        :id="n.id"
+                        height="35"
                     /></a>
                   </td>
                   <td><!--  Padding per img no filter  --></td>
@@ -645,11 +639,11 @@ export default {
       title: "",
       course: "",
       tags: "",
-      id:2,
+      id: 2,
       email: "",
-      tag1:"",
-      tag2:"",
-      tag3:""
+      tag1: "",
+      tag2: "",
+      tag3: "",
     };
   },
 
@@ -673,25 +667,30 @@ export default {
   },
 
   methods: {
-
     // Pubblicazione annuncio
     pubblicaNote() {
+      this.notes.push({
+        id: this.id + 1,
+        title: this.title,
+        email: this.email,
+        course: this.course,
+        tag: this.tags,
+      });
 
-      this.notes.push({id:this.id+1,title:this.title,email:this.email,course:this.course,tag:this.tags})
-
-      this.adding=false
-      this.visualizzandoDettagli=false
-      this.updating=false
-      this.cliccatoSuFiltra=false
-      this.filtering=false
+      this.adding = false;
+      this.visualizzandoDettagli = false;
+      this.updating = false;
+      this.cliccatoSuFiltra = false;
+      this.filtering = false;
     },
-    // Visualizzazione dettagli annuncio
+    
     visualizzaDettagli(event) {
+      
       this.visualizzandoDettagli = true;
 
       // Prendo l'id dell'annuncio tramite event
       const id_note = event.target.id;
-      console.log(id_note)
+      console.log(id_note);
       const notes = this.notes;
       let i;
       const dim = notes.length;
@@ -704,82 +703,76 @@ export default {
         }
       }
 
-      console.log(this.noteDaVisualizzare)
+      console.log(this.noteDaVisualizzare);
     },
 
-
-  // Filtri per gli annunci
-  filtraNote() {
-    this.cliccatoSuFiltra = false;
-   var i=0
+    // Filtri per gli annunci
+    filtraNote() {
+      this.cliccatoSuFiltra = false;
+      var i = 0;
       const dim = this.notes.length;
       const notes = this.notes;
-     
+
       for (i = 0; i < dim; i++) {
-        var pushato=false
-        if (notes[i].tag.includes(this.tag1) && this.tag1!="")
-        {
-                this.noteFiltrate.push(notes[i]);
-                pushato=true
+        var pushato = false;
+        if (notes[i].tag.includes(this.tag1) && this.tag1 != "") {
+          this.noteFiltrate.push(notes[i]);
+          pushato = true;
         }
-        if(notes[i].tag.includes(this.tag2) && this.tag2!="" &&pushato==false)
-         {
-                this.noteFiltrate.push(notes[i]);
-                pushato=true
+        if (
+          notes[i].tag.includes(this.tag2) &&
+          this.tag2 != "" &&
+          pushato == false
+        ) {
+          this.noteFiltrate.push(notes[i]);
+          pushato = true;
         }
-          if(notes[i].tag.includes(this.tag3) && this.tag3!="" &&pushato==false)
-         {
-                this.noteFiltrate.push(notes[i]);
-                pushato=true
+        if (
+          notes[i].tag.includes(this.tag3) &&
+          this.tag3 != "" &&
+          pushato == false
+        ) {
+          this.noteFiltrate.push(notes[i]);
+          pushato = true;
         }
       }
-    
-      console.log(this.noteFiltrate)
       this.filtering = true;
-      this.visualizzaDettagli=false
-    
-
-    
-
+   
     },
 
-  tornaIndietro(){
-      this.adding=false
-      this.visualizzandoDettagli=false
-      this.updating=false
-      this.cliccatoSuFiltra=false
-      this.filtering=false
+    tornaIndietro() {
+      this.adding = false;
+      this.visualizzandoDettagli = false;
+      this.updating = false;
+      this.cliccatoSuFiltra = false;
+      this.filtering = false;
+    },
+
+    // Rimozione filtri
+    rimuoviFiltri() {
+      this.cliccatoSuFiltra = false;
+      this.filtering = false;
+      this.tag1 = "";
+      this.tag2 = "";
+      this.tag3 = "";
+      this.noteFiltrate = [];
+    },
+
+    tornaAllaSchermataPrecedenteDaFiltri() {
+      this.adding = false;
+      this.updating = false;
+      this.cliccatoSuFiltra = false;
+      this.mostraZoneInserite = false;
+      this.visualizzandoDettagli = false;
+
+      this.data_inizio = "";
+      this.data_fine = "";
+      this.descrizione = "";
+      this.zone = [];
+      this.CF = "";
+    },
   },
-
-  // Rimozione filtri
-  rimuoviFiltri() {
-    this.cliccatoSuFiltra = false;
-    this.filtering = false;
-
-    this.data_inizio = "";
-    this.data_fine = "";
-    this.descrizione = "";
-    this.zone = [];
-    this.noteFiltrate = [];
-    this.CF = "";
-  },
-
-  tornaAllaSchermataPrecedenteDaFiltri() {
-    this.adding = false;
-    this.updating = false;
-    this.cliccatoSuFiltra = false;
-    this.mostraZoneInserite = false;
-    this.visualizzandoDettagli= false
-
-    this.data_inizio = "";
-    this.data_fine = "";
-    this.descrizione = "";
-    this.zone = [];
-    this.CF = "";
-  },
-}
-}
-
+};
 </script>
 
 <style scoped>
