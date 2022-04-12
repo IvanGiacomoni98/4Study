@@ -20,7 +20,7 @@ export default {
   mounted()
   {
     setTimeout(this.cambiaPagina,5000)
-    document.body.setAttribute("style","background: linear-gradient( to right, #72e0e0,  #9086af);")
+    document.body.setAttribute("style","background: linear-gradient( to right, #f5dd42,  #ffc107);")
    
   },
   methods:
