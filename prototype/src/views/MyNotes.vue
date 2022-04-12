@@ -387,7 +387,7 @@
 
               <!--  Bottone di aggiornamento annuncio  -->
               <button
-                @click="aggiornaAnnuncio()"
+                @click="aggiornaNote()"
                 type="button"
                 class="btn btn-success mt-1"
               >
@@ -578,7 +578,8 @@ export default {
       tag1: "",
       tag2: "",
       tag3: "",
-      user_id:0
+      user_id:0,
+      id_updating:0
     };
   },
 
@@ -658,6 +659,7 @@ export default {
                     this.tags=this.notes[i].tag
                     this.course=this.notes[i].course
                     this.email=this.notes[i].email
+                    this.id_updating=id_note
                     break
                  }
              }
@@ -726,6 +728,42 @@ export default {
       this.cliccatoSuFiltra = false;
       this.filtering = false;
     },
+    aggiornaNote(){
+      var i=0
+      var index=0
+      var id_note=this.id_updating
+         for (i=0;this.notes.length;i++ )
+             {
+                 if(this.notes[i].id==id_note)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+
+            this.$store.state.notes.splice(index,1)
+            this.notes.splice(index,1)
+
+         this.notes.push({
+        id: this.id_updating,
+        title: this.title,
+        email: this.email,
+        course: this.course,
+        tag: this.tags,
+
+       
+      });
+
+       this.$store.state.notes.push({
+        id: this.id_updating,
+        title: this.title,
+        email: this.email,
+        course: this.course,
+        tag: this.tags,
+      })
+       this.updating=false
+    },
 
     // Rimozione filtri
     rimuoviFiltri() {
@@ -750,6 +788,16 @@ export default {
       this.zone = [];
       this.CF = "";
     },
+
+    tornaAllaSchermataPrecedenteDaModifica()
+    {
+      this.adding = false;
+      this.visualizzandoDettagli = false;
+      this.updating = false;
+      this.cliccatoSuFiltra = false;
+      this.filtering = false;
+      
+    }
   },
 };
 </script>
