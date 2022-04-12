@@ -13,7 +13,7 @@ import Announcements from '../views/Announcements.vue'
 import Component_404 from '../views/404.vue'
 import Note from '../views/Notes.vue'
 import MyNotes from '../views/MyNotes.vue'
-
+import Profile from '../views/Profile.vue'
 
 
 Vue.use(VueRouter)
@@ -23,6 +23,11 @@ Vue.use(VueRouter)
       path: '/notFound',
       name: 'NotFound',
       component: Component_404
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     },
     {
       path:'/mynotes',
