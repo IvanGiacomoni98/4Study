@@ -22,6 +22,9 @@ export default new Vuex.Store({
     towns:["Rome","Terracina"],
     univerisities:["Sapienza","Sapienza"],
     pws:["daniele98","4study98."],
+
+    chosenCity: "",
+
     notes:[
       {
         id: 0,
@@ -72,6 +75,9 @@ export default new Vuex.Store({
     },
     getPws : state => {
       return state.pws
+    },
+    getChosenCity : state => {
+      return state.chosenCity
     }
   },
   mutations: {
@@ -107,6 +113,9 @@ export default new Vuex.Store({
     },
     setStatoMenu: (state, menu)=> {
       state.statomenu= menu
+    },
+    setChosenCity : (state, val)=> {
+      state.chosenCity = val;
     }
   },
   actions: {
