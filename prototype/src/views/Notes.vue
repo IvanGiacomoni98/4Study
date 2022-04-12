@@ -639,7 +639,7 @@ export default {
       title: "",
       course: "",
       tags: "",
-      id: 2,
+      id: 0,
       email: "",
       tag1: "",
       tag2: "",
@@ -648,22 +648,8 @@ export default {
   },
 
   created() {
-    this.notes = [
-      {
-        id: 1,
-        title: "SE Notes",
-        course: "SE",
-        email: "danielebufalieritkd@gmail.com",
-        tag: "#SE #IOT",
-      },
-      {
-        id: 2,
-        title: "HCI Notes",
-        course: "HCI",
-        email: "danielebufalieritkd@gmail.com",
-        tag: "#HCI",
-      },
-    ];
+    this.id=this.$store.state.id_notes
+    this.notes = this.$store.state.notes
   },
 
   methods: {
@@ -676,6 +662,8 @@ export default {
         course: this.course,
         tag: this.tags,
       });
+
+   
 
       this.adding = false;
       this.visualizzandoDettagli = false;

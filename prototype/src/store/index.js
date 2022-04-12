@@ -22,6 +22,23 @@ export default new Vuex.Store({
     towns:["Rome","Terracina"],
     univerisities:["Sapienza","Sapienza"],
     pws:["daniele98","4study98."],
+    notes:[
+      {
+        id: 1,
+        title: "SE Notes",
+        course: "SE",
+        email: "danielebufalieritkd@gmail.com",
+        tag: "#SE #IOT",
+      },
+      {
+        id: 2,
+        title: "HCI Notes",
+        course: "HCI",
+        email: "danielebufalieritkd@gmail.com",
+        tag: "#HCI",
+      },
+    ],
+    id_notes:2,
     indexLoggedUser:0,
   },
   getters: {
