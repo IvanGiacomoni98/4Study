@@ -24,14 +24,14 @@ export default new Vuex.Store({
     pws:["daniele98","4study98."],
     notes:[
       {
-        id: 1,
+        id: 0,
         title: "SE Notes",
         course: "SE",
         email: "danielebufalieritkd@gmail.com",
         tag: "#SE #IOT",
       },
       {
-        id: 2,
+        id: 1,
         title: "HCI Notes",
         course: "HCI",
         email: "danielebufalieritkd@gmail.com",

@@ -12,9 +12,8 @@
       "
     >
       <div class="card border-warning mt-3">
-        
         <div class="card-body">
-          <h5 class="card-title "><button class="btn btn-warning mb-2" @click="myNotes()" style="float:left">View my notes </button><b>Notes</b></h5>
+          <h5 class="card-title"><b>My Notes</b></h5>
 
           <!--  TABELLA  -->
 
@@ -34,6 +33,8 @@
                   </th>
                   <th scope="col">Title</th>
                   <th scope="col">Details</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
                   <th scope="col">Download</th>
                   <th scope="col">
                     <img
@@ -58,6 +59,22 @@
                       height="30"
                       :id="note.id"
                       @click="visualizzaDettagli"
+                    />
+                  </td>
+                  <td>
+                    <img
+                      src="../assets/update.png"
+                      height="25"
+                      :id="note.id"
+                      @click="visualizzaDettagli"
+                    />
+                  </td>
+                   <td>
+                    <img
+                      src="../assets/delete.png"
+                      height="25"
+                      :id="note.id"
+                      @click="eliminaNote"
                     />
                   </td>
                   <td>
@@ -608,7 +625,7 @@
 
 <script>
 export default {
-  name: "Notes",
+  name: "MyNotes",
 
   data() {
     return {
@@ -645,12 +662,22 @@ export default {
       tag1: "",
       tag2: "",
       tag3: "",
+      user_id:0
     };
   },
 
   created() {
     this.id=this.$store.state.id_notes
     this.notes = this.$store.state.notes
+    this.user_id=this.$store.state.indexLoggedUser
+    var app=[]
+    var i=0
+    for(i=0;i<this.notes.length;i++)
+    {
+        if(this.notes[i].email == this.$store.state.users[this.user_id])
+            app.push(this.notes[i])
+    }
+    this.notes=app
   },
 
   methods: {
@@ -672,7 +699,27 @@ export default {
       this.cliccatoSuFiltra = false;
       this.filtering = false;
     },
-    
+    eliminaNote(event){
+        const id_note = event.target.id;
+         if(confirm("Do you really want to delete?"))
+         {
+             var  index=0
+             var i=0
+             for (i=0;this.notes.length;i++ )
+             {
+                 if(this.notes[i].id==id_note)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+
+            this.$store.state.notes.splice(index,1)
+            this.notes.splice(index,1)
+            
+         }
+    },
     visualizzaDettagli(event) {
       
       this.visualizzandoDettagli = true;
@@ -693,10 +740,6 @@ export default {
       }
 
       console.log(this.noteDaVisualizzare);
-    },
-    myNotes()
-    {
-      this.$router.push("/mynotes")
     },
 
     // Filtri per gli annunci
