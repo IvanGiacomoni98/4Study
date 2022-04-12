@@ -35,6 +35,8 @@
 <script>
 
 import { mapGetters, mapMutations} from 'vuex'
+import axios from 'axios';
+require("dotenv").config();
 
 export default {
     name:'FindStudyRoom',
@@ -69,11 +71,13 @@ export default {
     methods : {
 
       ...mapMutations([
-        'setChosenCity'
+        'setChosenCity',
+        'setChosenCityCoordinates'
       ]),
 
       ...mapGetters([
-        'getChosenCity'
+        'getChosenCity',
+        'getChosenCityCoordinates'
       ]),
 
         goToMapStudyRooms() {
@@ -82,7 +86,33 @@ export default {
 
           alert(this.getChosenCity())
 
-          this.$router.push('/findStudyRoomMap/'+this.chosen_city)
+          const key = process.env.VUE_APP_MAP_STUDY_ROOMS
+          const city = this.getChosenCity()
+
+          axios.get('https://open.mapquestapi.com/geocoding/v1/address?key='+key+'&location='+city)
+          .then(response => {
+
+            const latLng = response.data.results[0].locations[0].displayLatLng
+
+            //alert("SUBITO LAT: "+response.data.results[0].locations[0].displayLatLng.lat)
+            //alert("SUBITO LNG: "+response.data.results[0].locations[0].displayLatLng.lng)
+
+            const lat = parseFloat(latLng.lat);
+            const lng = parseFloat(latLng.lng);
+
+            localStorage.setItem('lat', lat);
+            localStorage.setItem('lng', lng);
+
+            alert(localStorage.getItem('lat'))
+            alert(localStorage.getItem('lng'))
+
+            this.$router.push('/findStudyRoomMap/'+this.chosen_city)
+          })
+          .catch(error => {
+            alert("catch")
+            console.log(error);
+          });
+
         }
     }
 }

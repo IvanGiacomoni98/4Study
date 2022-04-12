@@ -8,7 +8,16 @@
 
       <div class="row mt-5">
 
-        MAPPA
+        <GmapMap
+              class = "mappa"
+              :center="{lat:center.lat, lng:center.lng}"
+              :zoom="zoomMap"
+              style="width: 1200px; height: 500px"
+        >
+
+        
+           
+        </GmapMap>
 
       </div>
 
@@ -21,11 +30,22 @@
 <script>
 
 import { mapGetters, mapMutations} from 'vuex'
-import axios from 'axios';
-require("dotenv").config();
+import {gmapApi} from 'vue2-google-maps'
+
+//:icon="{ url: require('../assets/markerSensore.png')}"  => ICON SUI MARKER (?)
 
 export default {
   name: 'FindStudyRoomMap',
+
+  computed: {
+    google: gmapApi,
+
+    ...mapGetters([
+        'getChosenCity',
+        'getChosenCityCoordinates'
+    ]),
+
+  },
 
   components: {
    
@@ -34,56 +54,36 @@ export default {
   data() {
 
       return {
-                
+        center: { lat: parseFloat(localStorage.getItem('lat')), lng: parseFloat(localStorage.getItem('lng')) },
+        zoomMap: 16,
+        coord_array: [],
+        MARKER_DETERMINATION: 3
       }
   },
 
-  created(){
+  beforeCreate(){
 
-      const key = process.env.VUE_APP_MAP_STUDY_ROOMS
-      const city = this.getChosenCity()
-      alert(city)
+    const coord = this.$store.state.choosenCityCoordinates;
+    this.center.lat = coord.lat;
+    this.center.lng = coord.lng;
 
-      axios.get('https://open.mapquestapi.com/geocoding/v1/address?key='+key+'&location='+city)
-      .then(response => {
-
-        const latLng = response.data.results[0].locations[0].displayLatLng
-
-        //alert(response.data.results[0].locations[0].displayLatLng.lat)
-        //alert(response.data.results[0].locations[0].displayLatLng.lng)
-
-        const lat = latLng.lat;
-        const lng = latLng.lng;
-        
-        alert(lat)
-        alert(lng)
-        
-
-      })
-      .catch(error => {
-        alert("catch")
-        console.log(error);
-      });
   },
   
   mounted() {
-    
-  },
 
-  computed: {
-    
   },
 
   methods: {
 
-    ...mapGetters([
-        'getChosenCity'
-      ]),
+    
 
     ...mapMutations([
         'setChosenCity'
       ]),
 
+      showInfoDetails(){
+        alert("cliccato sulla study room!")
+      },
   }
 
 }

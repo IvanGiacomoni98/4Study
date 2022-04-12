@@ -24,6 +24,7 @@ export default new Vuex.Store({
     pws:["daniele98","4study98."],
 
     chosenCity: "",
+    chosenCityCoordinates: { lat: 0.0, lng: 0.0 },
 
     notes:[
       {
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     },
     getChosenCity : state => {
       return state.chosenCity
+    },
+    getChosenCityCoordinates : state => {
+      return state.chosenCityCoordinates
     }
   },
   mutations: {
@@ -116,6 +120,9 @@ export default new Vuex.Store({
     },
     setChosenCity : (state, val)=> {
       state.chosenCity = val;
+    },
+    setChosenCityCoordinates : (state, val) => {
+      state.chosenCityCoordinates = val;
     }
   },
   actions: {
