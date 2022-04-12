@@ -11,7 +11,7 @@
         !filtering
       "
     >
-      <div class="card border-success mt-3">
+      <div class="card border-warning mt-3">
         <div class="card-body">
           <h5 class="card-title"><b>Notes</b></h5>
 
@@ -102,7 +102,7 @@
 
       <center>
         <!--  DA PC E TUTTI GLI ALTRI DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
-        <div class="card card-signin border-success mt-2" style="width: 520px">
+        <div class="card card-signin border-warning mt-2" style="width: 520px">
           <div class="card-body">
             <h5 class="card-title text-center"><b>Share notes</b></h5>
 
@@ -114,7 +114,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success"
+                    class="form-control border-warning"
                     v-model="title"
                     type="text"
                     style="width: 200px"
@@ -129,7 +129,7 @@
 
                 <div class="col">
                   <select
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="course"
                     style="width: 200px"
                   >
@@ -147,7 +147,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="email"
                 
                     style="width: 200px"
@@ -162,7 +162,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="tags"
       
                     style="width: 200px"
@@ -176,7 +176,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
   
                     style="width: 200px"
                     type="file"
@@ -212,7 +212,7 @@
       </div>
 
       <center>
-        <div class="card border-success mt-2" style="width: 460px">
+        <div class="card border-warning mt-2" style="width: 460px">
           <div class="card-body">
             <h5 class="card-title text-center"><b>Note details</b></h5>
 
@@ -283,7 +283,7 @@
         <!--  DA PC E TUTTI GLI ALTRI DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
 
         <div
-          class="card card-signin border-success mt-2 d-none d-sm-block"
+          class="card card-signin border-warning mt-2 d-none d-sm-block"
           style="width: 520px"
         >
           <div class="card-body">
@@ -298,7 +298,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success"
+                    class="form-control border-warning"
                     v-model="CF"
                     type="text"
                     style="width: 200px"
@@ -318,7 +318,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="data_inizio"
                     type="date"
                     style="width: 200px"
@@ -338,7 +338,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="data_fine"
                     type="date"
                     style="width: 200px"
@@ -358,7 +358,7 @@
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="newZona"
                     placeholder="Aggiungi(+) / Rimuovi(-)"
                     type="text"
@@ -370,7 +370,7 @@
                 <div class="col">
                   <button
                     @click="aggiungiZona()"
-                    class="btn border-success"
+                    class="btn border-warning"
                     type="button"
                     style="width: 35px; height: 35px"
                   >
@@ -418,7 +418,7 @@
 
                 <div class="col">
                   <textarea
-                    class="form-control border-success mt-1"
+                    class="form-control border-warning mt-1"
                     v-model="descrizione"
                     type="textarea"
                     maxlength="200"
@@ -485,140 +485,65 @@
       <center>
         <!--  DA PC E TUTTI I DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
         <div
-          class="card card-signin border-success mt-2 d-none d-sm-block"
+          class="card card-signin border-warning mt-2 d-none d-sm-block"
           style="width: 520px"
         >
           <div class="card-body">
             <h5 class="card-title text-center"><b>FILTRA ANNUNCI</b></h5>
 
             <form @keyup.enter="filtraAnnunci()">
-              <!--  CF  -->
-              <div v-if="tipoUtente != 'cittadino'" class="row">
+              <div  class="row">
                 <div class="col mt-1">
-                  <h6><b>CF</b></h6>
+                  <h6><b>Insert tag</b></h6>
                 </div>
 
                 <div class="col">
                   <input
-                    class="form-control border-success"
-                    v-model="CF"
+                    class="form-control border-warning"
+                    v-model="tag1"
                     type="text"
                     style="width: 200px"
                   />
                 </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
               </div>
 
-              <!--  Data inizio  -->
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>Data inizio</b></h6>
+                  <h6><b>Insert tag</b></h6>
                 </div>
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
-                    v-model="data_inizio"
-                    type="date"
+                    class="form-control border-warning mt-1"
+                    v-model="tag2"
                     style="width: 200px"
                   />
                 </div>
 
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
               </div>
 
-              <!--  Data fine  -->
               <div class="row mt-1">
                 <div class="col mt-1">
-                  <h6><b>Data fine</b></h6>
+                  <h6><b>Insert tag</b></h6>
                 </div>
 
                 <div class="col">
                   <input
-                    class="form-control border-success mt-1"
-                    v-model="data_fine"
-                    type="date"
+                    class="form-control border-warning mt-1"
+                    v-model="tag3"
                     style="width: 200px"
                   />
                 </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
               </div>
 
-              <!--  Zone  -->
-              <div class="row mt-1">
-                <div class="col mt-1">
-                  <h6><b>Zone</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-success mt-1"
-                    v-model="newZona"
-                    placeholder="Aggiungi(+) / Rimuovi(-)"
-                    type="text"
-                    style="width: 200px"
-                  />
-                </div>
-
-                <!--  Bottoni aggiunta(+) e rimozione(-) zone  -->
-                <div class="col">
-                  <button
-                    @click="aggiungiZona()"
-                    class="btn border-success"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>+</b>
-                  </button>
-                  <button
-                    @click="mostraZoneInserite = !mostraZoneInserite"
-                    class="btn border-danger ml-1"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>-</b>
-                  </button>
-                </div>
-              </div>
-
-              <!--  Zone inserite  -->
-              <div v-if="mostraZoneInserite">
-                <div v-for="(zona, index) in zone" :key="index">
-                  <div class="row mt-2">
-                    <div class="col">
-                      {{ zona }}
-                    </div>
-
-                    <div class="col">
-                      <button
-                        @click="rimuoviZona"
-                        :id="index"
-                        class="btn border-warning ml-1"
-                        type="button"
-                        style="width: 35px; height: 35px"
-                      >
-                        <b>-</b>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               <!--  Bottone di filtraggio annunci  -->
               <button
-                @click="filtraAnnunci()"
+                @click="filtraNote()"
                 type="button"
-                class="btn btn-success mt-1"
+                class="btn btn-success mt-2"
               >
-                Filtra annunci
+               Filter notes
               </button>
             </form>
           </div>
@@ -630,9 +555,9 @@
     <!--  SCHERMATA DI VISUALIZZAZIONE ANNUNCI FILTRATI  -->
 
     <div v-if="filtering && !visualizzandoDettagli">
-      <div class="card border-success mt-3">
+      <div class="card border-warning mt-3">
         <div class="card-body">
-          <h5 class="card-title"><b>ANNUNCI FILTRATI</b></h5>
+          <h5 class="card-title"><b>FIltered notes</b></h5>
 
           <!--  TABELLA  -->
 
@@ -641,10 +566,9 @@
               <!--  Intestazione tabella  -->
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">CF</th>
-                  <th scope="col">Data inizio</th>
-                  <th scope="col">Data fine</th>
-                  <th scope="col">Dettagli</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Details</th>
+                  <th scope="col">Download</th>
                   <th scope="col">
                     <img
                       @click="rimuoviFiltri()"
@@ -659,28 +583,22 @@
 
               <!--  Corpo tabella  -->
               <tbody>
-                <tr v-for="annuncio in annunciFiltrati" :key="annuncio._id">
-                  <td>{{ annuncio.CF }}</td>
-                  <td>{{ annuncio.start }}</td>
-                  <td>{{ annuncio.end }}</td>
+                <tr v-for="note in noteFiltrate" :key="note.id">
+                  <td>{{ note.title }}</td>
+                           <td>
+                    <img
+                      src="../assets/eye.png"
+                      height="30"
+                      :id="note.id"
+                      @click="visualizzaDettagli"
+                    />
+                  </td>
                   <td>
-                    <p
-                      data-placement="top"
-                      data-toggle="tooltip"
-                      title="Detail"
-                    >
-                      <button
-                        :id="annuncio._id"
-                        @click="visualizzaDettagli"
-                        class="btn btn-success btn-xs"
-                        data-title="Detail"
-                        data-toggle="modal"
-                        data-target="#detail"
-                        style="height: 10px; width: 20px"
-                      >
-                        <span class="glyphicon glyphicon-trash"></span>
-                      </button>
-                    </p>
+                    <a href="../assets/download.txt" download="download.txt"><img
+                      src="../assets/download.png"
+                      :id="note.id"
+                      height="35"
+                    /></a>
                   </td>
                   <td><!--  Padding per img no filter  --></td>
                 </tr>
@@ -702,7 +620,7 @@ export default {
       notes: [],
       tipoUtente: "",
       annunci: [],
-      annunciFiltrati: [],
+      noteFiltrate: [],
       loading: false,
       adding: false,
       visualizzandoDettagli: false,
@@ -729,6 +647,9 @@ export default {
       tags: "",
       id:2,
       email: "",
+      tag1:"",
+      tag2:"",
+      tag3:""
     };
   },
 
@@ -752,31 +673,6 @@ export default {
   },
 
   methods: {
-    // Permette di ottenere tutti gli annunci pubblicati finora
-
-    // Validazione data inizio e fine
-    controllaDate() {
-      if (this.data_inizio.length < 10) {
-        this.error = "Data inizio";
-        this.messaggioErrore = "Data di inizio non valida";
-        return false;
-      }
-
-      if (this.data_fine.length < 10) {
-        this.error = "Data fine";
-        this.messaggioErrore = "Data di fine non valida";
-        return false;
-      }
-
-      if (this.data_fine < this.data_inizio) {
-        this.error = "Logica delle date";
-        this.messaggioErrore =
-          "La data di inizio non può essere maggiore di quella di fine";
-        return false;
-      }
-
-      return true;
-    },
 
     // Pubblicazione annuncio
     pubblicaNote() {
@@ -813,328 +709,40 @@ export default {
 
 
   // Filtri per gli annunci
-  filtraAnnunci() {
+  filtraNote() {
     this.cliccatoSuFiltra = false;
-
-    // SOLO CF
-    if (
-      this.CF != "" &&
-      this.data_inizio == "" &&
-      this.data_fine == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
+   var i=0
+      const dim = this.notes.length;
+      const notes = this.notes;
+     
       for (i = 0; i < dim; i++) {
-        if (annunci[i].CF == this.CF) this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    // SOLO DATA INIZIO
-    else if (
-      this.data_inizio != "" &&
-      this.CF == "" &&
-      this.data_fine == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (annunci[i].start >= this.data_inizio)
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    //SOLO DATA FINE
-    else if (
-      this.data_fine != "" &&
-      this.CF == "" &&
-      this.data_inizio == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (annunci[i].end <= this.data_fine)
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    //SOLO ZONA
-    else if (
-      this.zone.length > 0 &&
-      this.CF == "" &&
-      this.data_inizio == "" &&
-      this.data_fine == ""
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        this.appoggioFiltri(annunci[i]);
-      }
-    }
-
-    // SOLO CF E DATA INIZIO
-    if (
-      this.CF != "" &&
-      this.data_inizio != "" &&
-      this.data_fine == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (annunci[i].CF == this.CF && annunci[i].start >= this.data_inizio)
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    // SOLO CF E DATA FINE
-    if (
-      this.CF != "" &&
-      this.data_fine != "" &&
-      this.data_inizio == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (annunci[i].CF == this.CF && annunci[i].end <= this.data_fine)
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    // SOLO DATA INIZIO E DATA FINE
-    if (
-      this.data_inizio != "" &&
-      this.data_fine != "" &&
-      this.CF == "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (
-          annunci[i].start >= this.data_inizio &&
-          annunci[i].end <= this.data_fine
-        )
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    // SOLO CF E ZONE
-    if (
-      this.CF != "" &&
-      this.zone.length > 0 &&
-      this.data_inizio == "" &&
-      this.data_fine == ""
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (annunci[i].CF == this.CF) {
-          this.appoggioFiltri(annunci[i]);
+        var pushato=false
+        if (notes[i].tag.includes(this.tag1) && this.tag1!="")
+        {
+                this.noteFiltrate.push(notes[i]);
+                pushato=true
+        }
+        if(notes[i].tag.includes(this.tag2) && this.tag2!="" &&pushato==false)
+         {
+                this.noteFiltrate.push(notes[i]);
+                pushato=true
+        }
+          if(notes[i].tag.includes(this.tag3) && this.tag3!="" &&pushato==false)
+         {
+                this.noteFiltrate.push(notes[i]);
+                pushato=true
         }
       }
-    }
-
-    // SOLO DATA INIZIO E ZONE
-    if (
-      this.data_inizio != "" &&
-      this.zone.length > 0 &&
-      this.data_fine == "" &&
-      this.CF == ""
-    ) {
+    
+      console.log(this.noteFiltrate)
       this.filtering = true;
+      this.visualizzaDettagli=false
+    
 
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (annunci[i].start >= this.data_inizio) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
+    
 
-    // SOLO DATA FINE E ZONE
-    if (
-      this.data_fine != "" &&
-      this.zone.length > 0 &&
-      this.data_inizio == "" &&
-      this.CF == ""
-    ) {
-      this.filtering = true;
+    },
 
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (annunci[i].end <= this.data_fine) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
-
-    // SOLO CF, DATA INIZIO E DATA FINE
-    if (
-      this.CF != "" &&
-      this.data_inizio != "" &&
-      this.data_fine != "" &&
-      this.zone.length == 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        if (
-          annunci[i].CF == this.CF &&
-          annunci[i].start >= this.data_inizio &&
-          annunci[i].end <= this.data_fine
-        )
-          this.annunciFiltrati.push(annunci[i]);
-      }
-    }
-
-    // SOLO CF, DATA INIZIO E ZONE
-    if (
-      this.CF != "" &&
-      this.data_inizio != "" &&
-      this.zone.length > 0 &&
-      this.data_fine == ""
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (annunci[i].CF == this.CF && annunci[i].start >= this.data_inizio) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
-
-    // SOLO CF, DATA FINE E ZONE
-    if (
-      this.CF != "" &&
-      this.data_fine != "" &&
-      this.zone.length > 0 &&
-      this.data_inizio == ""
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (annunci[i].CF == this.CF && annunci[i].end <= this.data_fine) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
-
-    // SOLO DATA INIZIO, DATA FINE E ZONE
-    if (
-      this.data_inizio != "" &&
-      this.data_fine != "" &&
-      this.zone.length > 0 &&
-      this.CF == ""
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (
-          annunci[i].start >= this.data_inizio &&
-          annunci[i].end <= this.data_fine
-        ) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
-
-    // CF, DATA INIZIO, DATA FINE E ZONE
-    if (
-      this.CF != "" &&
-      this.data_inizio != "" &&
-      this.data_fine != "" &&
-      this.zone.length > 0
-    ) {
-      this.filtering = true;
-
-      let i;
-      const dim = this.annunci.length;
-      const annunci = this.annunci;
-      for (i = 0; i < dim; i++) {
-        // Scorro gli annunci
-        if (
-          annunci[i].CF == this.CF &&
-          annunci[i].start >= this.data_inizio &&
-          annunci[i].end <= this.data_fine
-        ) {
-          this.appoggioFiltri(annunci[i]);
-        }
-      }
-    }
-  },
-
-  // Funzione di appoggio per i filtri per zona
-  appoggioFiltri(annuncio) {
-    const zone = annuncio.zone;
-    let j;
-    const size = zone.length;
-    for (j = 0; j < size; j++) {
-      // Per ogni annuncio scorro le zone inserite
-      const zonaAnnuncio = zone[j].toLowerCase();
-      let h;
-      const len = this.zone.length;
-      for (h = 0; h < len; h++) {
-        // Per ogni zona inserita di ogni annuncio vedo se corrisponde a qualcuna di quelle per cui sto filtrando
-        const zonaFiltro = this.zone[h].toLowerCase();
-        const res = zonaAnnuncio.match(zonaFiltro);
-
-        if (res != null && !this.annunciFiltrati.includes(annuncio)) {
-          this.annunciFiltrati.push(annuncio);
-        }
-      }
-    }
-  },
   tornaIndietro(){
       this.adding=false
       this.visualizzandoDettagli=false
@@ -1152,7 +760,7 @@ export default {
     this.data_fine = "";
     this.descrizione = "";
     this.zone = [];
-    this.annunciFiltrati = [];
+    this.noteFiltrate = [];
     this.CF = "";
   },
 
@@ -1171,6 +779,7 @@ export default {
   },
 }
 }
+
 </script>
 
 <style scoped>
