@@ -6,13 +6,13 @@
         <div class="card border-warning mb-3">
         <div class="card-body">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item active"><a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false" >Profile</a></li>
-          <li class="nav-item"><a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="true">My bookings</a></li>
+          <li class="nav-item active"><a @click="switchProfile()" class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false" >Profile</a></li>
+          <li class="nav-item" ><a @click="switchBooking()"  class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="true">My bookings</a></li>
          
         </ul>
         <!-- TABBED PANE CONTENT-->
         <div class="tab-content" id="myTabContent" >
-          <div  id="tab1" class="tab-pane active" role="tabpanel" aria-labelledby="tab1-tab">
+          <div   v-if="profile" id="tab1" class="tab-pane active" role="tabpanel" aria-labelledby="tab1-tab">
               <div class="row">
                 <div class="col">
                     
@@ -137,7 +137,7 @@
           </div>
 
           <!-- Secondo Tabbed-->
-          <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+          <div v-if="!profile" class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
               
             <div class ="col" style="padding-top:5px;">
         
@@ -161,6 +161,7 @@ export default {
   name: 'Profile',
   data(){
     return {
+        profile: true,
       tipoUtente:null
     }
   },
@@ -168,6 +169,15 @@ export default {
   {
     
   },
+  methods:{
+      switchBooking(){
+          this.profile=false
+      },
+    switchProfile(){
+          this.profile=true
+      }
+  }
+
   
 }
 </script>
