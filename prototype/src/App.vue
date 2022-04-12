@@ -20,17 +20,13 @@
     <ul class="navbar-nav mr-auto bg-warning border border-dark pl-3 pr-3" style="position:relative; z-index: 3;float:right;">
       
       <li class="nav-item " >
-        <router-link  to="/" class="nav-link " href="#">Dashboard </router-link>
+        <router-link  to="/avanzato" class="nav-link " href="#">Home </router-link>
       </li>
-      <li v-if="getTipo=='cittadino'" class="nav-item">
-        <router-link  to="/announcements" class="nav-link" href="#">Annunci</router-link>
+      <li  class="nav-item">
+        <router-link  to="/profile" class="nav-link" href="#">Profile</router-link>
       </li>
-       <li v-if="getTipo!='cittadino'" class="nav-item">
-        <router-link  to="/avanzato" class="nav-link" href="#">Avanzato</router-link>
-      </li>
-        <li class="nav-item">
-        <router-link  to="/cambio_pw" class="nav-link" href="#">Cambia password </router-link>
-      </li>
+       <li  class="nav-item">
+        <router-link  to="/chat" class="nav-link" href="#">Chat</router-link>
        <li class="nav-item">
         <router-link  to="/logout" class="nav-link" href="#">Logout </router-link>
       </li>
