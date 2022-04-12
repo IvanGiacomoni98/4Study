@@ -691,6 +691,13 @@ export default {
         tag: this.tags,
       });
 
+       this.$store.state.notes.push({
+        id: this.id + 1,
+        title: this.title,
+        email: this.email,
+        course: this.course,
+        tag: this.tags,
+      })
    
 
       this.adding = false;
