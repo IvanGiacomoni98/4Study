@@ -66,7 +66,7 @@
                       src="../assets/update.png"
                       height="25"
                       :id="note.id"
-                      @click="visualizzaDettagli"
+                      @click="visualizzaModifica"
                     />
                   </td>
                    <td>
@@ -302,172 +302,88 @@
           style="width: 520px"
         >
           <div class="card-body">
-            <h5 class="card-title text-center"><b>AGGIORNA L'ANNUNCIO</b></h5>
+            <h5 class="card-title text-center"><b>UPDATE NOTE</b></h5>
 
             <form @keyup.enter="aggiornaAnnuncio">
-              <!--  CF  -->
+             
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>CF</b></h6>
+                  <h6><b>Title</b></h6>
                 </div>
 
                 <div class="col">
                   <input
                     class="form-control border-warning"
-                    v-model="CF"
+                    v-model="title"
                     type="text"
                     style="width: 200px"
                   />
                 </div>
 
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
               </div>
 
-              <!--  Data inizio  -->
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>Data inizio</b></h6>
+                  <h6><b>Course</b></h6>
                 </div>
 
-                <div class="col">
-                  <input
+                   <div class="col">
+                  <select
                     class="form-control border-warning mt-1"
-                    v-model="data_inizio"
-                    type="date"
+                    v-model="course"
                     style="width: 200px"
-                  />
-                </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
-              </div>
-
-              <!--  Data fine  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Data fine</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="data_fine"
-                    type="date"
-                    style="width: 200px"
-                  />
-                </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
-              </div>
-
-              <!--  Zone  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Zone</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="newZona"
-                    placeholder="Aggiungi(+) / Rimuovi(-)"
-                    type="text"
-                    style="width: 200px"
-                  />
-                </div>
-
-                <!--  Bottoni inserimento(+) e rimozione(-) zone  -->
-                <div class="col">
-                  <button
-                    @click="aggiungiZona()"
-                    class="btn border-warning"
-                    type="button"
-                    style="width: 35px; height: 35px"
                   >
-                    <b>+</b>
-                  </button>
-                  <button
-                    @click="mostraZoneInserite = !mostraZoneInserite"
-                    class="btn border-danger ml-1"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>-</b>
-                  </button>
+                    <option value="HCI">HCI</option>
+                    <option value="HCI">SE</option>
+                    <option value="HCI">IOT</option>
+                  </select>
                 </div>
+
               </div>
 
-              <!--  Zone inserite  -->
-              <div v-if="mostraZoneInserite">
-                <div v-for="(zona, index) in zone" :key="index">
-                  <div class="row mt-2">
-                    <div class="col">
-                      {{ zona }}
-                    </div>
-
-                    <div class="col">
-                      <button
-                        @click="rimuoviZona"
-                        :id="index"
-                        class="btn border-warning ml-1"
-                        type="button"
-                        style="width: 35px; height: 35px"
-                      >
-                        <b>-</b>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--  Descrizione  -->
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>Descrizione</b></h6>
+                  <h6><b>Add tags</b></h6>
                 </div>
 
                 <div class="col">
-                  <textarea
+                  <input
                     class="form-control border-warning mt-1"
-                    v-model="descrizione"
-                    type="textarea"
-                    maxlength="200"
-                    style="width: 200px; height: 200px"
-                  ></textarea>
+                    v-model="tags"
+                    style="width: 200px"
+                  />
+                </div>
+
+              </div>
+                <div class="row">
+                <div class="col mt-1">
+                  <h6><b>Email</b></h6>
                 </div>
 
                 <div class="col">
-                  <!--  Padding per bottoni + e -  -->
+                  <input
+                    class="form-control border-warning mt-1"
+                    v-model="email"
+                    style="width: 200px"
+                  />
+                </div>
+
+              </div>
+
+                   <div class="row mt-2">
+                <div class="col mt-1">
+                  <h6><b>Choose file</b></h6>
+                </div>
+
+                <div class="col">
+                  <input
+                    class="form-control border-warning mt-1"
+                    style="width: 200px"
+                    type="file"
+                  />
                 </div>
               </div>
 
-              <div
-                v-if="
-                  cliccatoSuAggiorna &&
-                  (error == 'CF' ||
-                    error == 'Data inizio' ||
-                    error == 'Data fine' ||
-                    error == 'Logica delle date' ||
-                    error == 'Descrizione')
-                "
-                class="alert alert-danger mt-1"
-                role="alert"
-              >
-                {{ messaggioErrore }}
-              </div>
-
-              <div
-                v-else-if="cliccatoSuAggiorna && error == ''"
-                class="alert alert-success mt-1"
-                role="alert"
-              >
-                {{ messaggioConferma }}
-              </div>
 
               <!--  Bottone di aggiornamento annuncio  -->
               <button
@@ -475,7 +391,7 @@
                 type="button"
                 class="btn btn-success mt-1"
               >
-                Aggiorna annuncio
+                Update note
               </button>
             </form>
           </div>
@@ -680,6 +596,7 @@ export default {
     this.notes=app
   },
 
+
   methods: {
     // Pubblicazione annuncio
     pubblicaNote() {
@@ -727,6 +644,25 @@ export default {
             
          }
     },
+    visualizzaModifica(event)
+    {
+        const id_note = event.target.id;
+        var i=0
+        console.log(this.notes)
+         for (i=0;this.notes.length;i++ )
+             {
+                 if(this.notes[i].id==id_note)
+                 {
+                     console.log(this.notes[i])
+                    this.title=this.notes[i].title
+                    this.tags=this.notes[i].tag
+                    this.course=this.notes[i].course
+                    this.email=this.notes[i].email
+                    break
+                 }
+             }
+        this.updating=true
+     },
     visualizzaDettagli(event) {
       
       this.visualizzandoDettagli = true;
