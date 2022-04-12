@@ -51,10 +51,10 @@ export default {
   created()
   {
     console.log( this.$store.state.indexUserLogged)
-    this.tipoUtente=localStorage.type
 
-      this.$store.commit('setStazione','')
-      this.$store.commit('setAgente','')
+  },
+  mounted(){
+    console.log('ID STORE',this.$store.state.indexLoggedUser)
   },
   computed:{
 ...mapGetters({

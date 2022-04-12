@@ -189,7 +189,7 @@ export default {
         {
                console.log(i)
           if(this.users[i]==this.emailOrPhone){
-                console.log('QUi')
+  
                 okusers=true
                 index=i
                 break
@@ -201,13 +201,14 @@ export default {
           if(this.pws[i]==this.password)
           {
                 okpw=true
-                index=i
                 break
           }
         }
 
         this.$store.state.indexUserLogged=index
-
+        localStorage.id_utente=index
+        console.log("INDEX",index)
+        console.log("ID STORE PRE",this.$store.state.indexUserLogged)
         if(okusers & okpw)
           { 
             this.errorAuth = 'NO ERROR'

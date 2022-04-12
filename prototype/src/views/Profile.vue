@@ -161,13 +161,32 @@ export default {
   name: 'Profile',
   data(){
     return {
+        id_utente:0,
+        phone:"",
+        email:"",
+        town:"",
+        high:"",
+        university:"",
+        date:"",
+        name:"",
+        surname:"",
         profile: true,
-      tipoUtente:null
     }
   },
-  created()
+  mounted()
   {
-    
+    console.log('ID',this.id_utente)
+    console.log('ID STORE',this.$store.state.indexLoggedUser)
+    this.id_utente=localStorage.id_utente
+    console.log(this.id_utente)
+    this.phone=this.$store.state.phones[this.id_utente]
+    this.email=this.$store.state.users[this.id_utente]
+    this.phone=this.$store.state.phones[this.id_utente]
+    this.name=this.$store.state.names[this.id_utente]
+    this.surname=this.$store.state.surnames[this.id_utente]
+    this.high=this.$store.state.highschools[this.id_utente]
+    this.town=this.$store.state.towns[this.id_utente]
+    this.university=this.$store.state.univerisities[this.id_utente]
   },
   methods:{
       switchBooking(){
@@ -175,6 +194,18 @@ export default {
       },
     switchProfile(){
           this.profile=true
+      },
+      saveProfile()
+      {
+          this.$store.state.phones[this.id_utente]=this.phone
+          this.$store.state.users[this.id_utente]=this.email
+          this.$store.state.phones[this.id_utente]= this.phone
+          this.$store.state.names[this.id_utente]=this.name
+          this.$store.state.surnames[this.id_utente]=this.surname
+          this.$store.state.highschools[this.id_utente]=this.high
+          this.$store.state.univerisities[this.id_utente]=this.university
+          alert("Profile saved!")
+          
       }
   }
 
