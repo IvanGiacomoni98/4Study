@@ -26,6 +26,20 @@ export default new Vuex.Store({
     chosenCity: "",
     chosenCityCoordinates: { lat: 0.0, lng: 0.0 },
 
+    study_rooms_names : ['Aula 108 Marco Polo', 'Aula 31 SPV', 'Aula B2 DIAG'],
+    study_rooms_addresses : ['Viale Dello Scalo di San Lorenzo 82', 'Via Eudossiana 18', 'Via Ariosto 25'],
+    study_rooms_available_seats: ['32', '0', '27'],
+    study_rooms_opening_hours : [{
+      not_sunday: '8:30am - 6pm',
+      sunday: 'closed'
+    }, {
+      not_sunday: '8:00am - 7pm',
+      sunday: 'closed'
+    }, {
+      not_sunday: '8:30am - 6:30pm',
+      sunday: 'closed'
+    }],
+
     notes:[
       {
         id: 0,

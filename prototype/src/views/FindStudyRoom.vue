@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="row mt-4">
+      <router-link to="/avanzato"><img src="../assets/back.png" width="30"/></router-link>
+    </div>
+    
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5 border-warning">
@@ -84,8 +88,6 @@ export default {
           
           this.setChosenCity(this.chosen_city)
 
-          alert(this.getChosenCity())
-
           const key = process.env.VUE_APP_MAP_STUDY_ROOMS
           const city = this.getChosenCity()
 
@@ -102,9 +104,6 @@ export default {
 
             localStorage.setItem('lat', lat);
             localStorage.setItem('lng', lng);
-
-            alert(localStorage.getItem('lat'))
-            alert(localStorage.getItem('lng'))
 
             this.$router.push('/findStudyRoomMap/'+this.chosen_city)
           })
