@@ -116,8 +116,13 @@ export default {
         'setChosenCity'
       ]),
 
-      showInfoDetails(){
+      showInfoDetails(event){
         alert("cliccato sulla study room!")
+        const X = event.domEvent.clientX
+        const Y = event.domEvent.clientY
+        
+        console.log(X + ' ' + Y)
+
       },
 
   }
