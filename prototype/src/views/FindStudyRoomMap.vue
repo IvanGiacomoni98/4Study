@@ -67,6 +67,7 @@ export default {
   data() {
 
       return {
+        text: '',
         center: { lat: parseFloat(localStorage.getItem('lat')), lng: parseFloat(localStorage.getItem('lng')) },
         zoomMap: 16,
         coord_array: [],
@@ -120,8 +121,14 @@ export default {
         alert("cliccato sulla study room!")
         const X = event.domEvent.clientX
         const Y = event.domEvent.clientY
+
+        this.text = JSON.stringify(event.latLng)
+        const lat = JSON.parse(this.text).lat
+        const lng = JSON.parse(this.text).lng
         
         console.log(X + ' ' + Y)
+        console.log(lat + ' ' + lng)
+
 
       },
 
