@@ -31,6 +31,12 @@
                />
            
         </GmapMap>
+        <div v-if="show" :style="stylecard" class="card">
+            <div class="card-body">
+              {{lat}}
+              {{lng}}
+              </div>
+          </div>
 
       </div>
 
@@ -73,6 +79,10 @@ export default {
         coord_array: [],
         MARKER_DETERMINATION: 0.002,
         markers : [],
+        lat:"",
+        lng:"",
+        show:false,
+        stylecard:"",
 
         
         markerOptions: {
@@ -118,7 +128,6 @@ export default {
       ]),
 
       showInfoDetails(event){
-        alert("cliccato sulla study room!")
         const X = event.domEvent.clientX
         const Y = event.domEvent.clientY
 
@@ -128,7 +137,12 @@ export default {
         
         console.log(X + ' ' + Y)
         console.log(lat + ' ' + lng)
+        this.lat=lat
+        this.lng=lng
 
+        this.stylecard="position:absolute;top:"+Y+"px;left:"+X+"px;"
+        console.log(this.stylecard)
+        this.show=true
 
       },
 
