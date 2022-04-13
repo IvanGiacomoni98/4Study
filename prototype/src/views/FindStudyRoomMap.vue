@@ -27,7 +27,7 @@
                 :clickable="true"
                 :animation= google.maps.Animation.DROP
                 :icon="markerOptions"
-                @click=" showInfoDetails()"
+                @click="showInfoDetails"
                />
            
         </GmapMap>
