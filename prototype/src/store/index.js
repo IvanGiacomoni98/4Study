@@ -26,19 +26,127 @@ export default new Vuex.Store({
     chosenCity: "",
     chosenCityCoordinates: { lat: 0.0, lng: 0.0 },
 
-    study_rooms_names : ['Aula 108 Marco Polo', 'Aula 31 SPV', 'Aula B2 DIAG'],
+    studyRoomPrenotata : false,
+    coordinate_aule : [],
+    study_rooms_names : ['Aula 108 Edificio Marco Polo', 'Aula 31 SPV', 'Aula B2 DIAG'],
     study_rooms_addresses : ['Viale Dello Scalo di San Lorenzo 82', 'Via Eudossiana 18', 'Via Ariosto 25'],
-    study_rooms_available_seats: ['32', '0', '27'],
-    study_rooms_opening_hours : [{
-      not_sunday: '8:30am - 6pm',
-      sunday: 'closed'
-    }, {
-      not_sunday: '8:00am - 7pm',
-      sunday: 'closed'
-    }, {
-      not_sunday: '8:30am - 6:30pm',
-      sunday: 'closed'
-    }],
+    schedules: [
+      [
+        {
+          day: 'Monday',
+          daily_schedule: '8:00am - 18:00pm',
+          curr_available_seates: 12,
+        },
+        {
+          day: 'Tuesday',
+          daily_schedule: '8:00am - 19:00pm',
+          curr_available_seates: 3,
+        },
+        {
+          day: 'Wednesday',
+          daily_schedule: '8:30am - 18:00pm',
+          curr_available_seates: 0,
+        },
+        {
+          day: 'Thursday',
+          daily_schedule: '8:30am - 18:30pm',
+          curr_available_seates: 1,
+        },
+        {
+          day: 'Friday',
+          daily_schedule: '8:30am - 18:30pm',
+          curr_available_seates: 5,
+        },
+        {
+          day: 'Saturday',
+          daily_schedule: '9:00am - 17:00pm',
+          curr_available_seates: 32,
+        },
+        {
+          day: 'Sunday',
+          daily_schedule: 'closed',
+          curr_available_seates: '--',
+        }
+      ],
+      
+      [
+        {
+          day: 'Monday',
+          daily_schedule: '9:00am - 18:00pm',
+          curr_available_seates: 12,
+        },
+        {
+          day: 'Tuesday',
+          daily_schedule: '9:00am - 19:00pm',
+          curr_available_seates: 3,
+        },
+        {
+          day: 'Wednesday',
+          daily_schedule: '9:00am - 18:00pm',
+          curr_available_seates: 0,
+        },
+        {
+          day: 'Thursday',
+          daily_schedule: '8:30am - 18:30pm',
+          curr_available_seates: 1,
+        },
+        {
+          day: 'Friday',
+          daily_schedule: '9:0am - 18:30pm',
+          curr_available_seates: 5,
+        },
+        {
+          day: 'Saturday',
+          daily_schedule: '9:00am - 17:00pm',
+          curr_available_seates: 32,
+        },
+        {
+          day: 'Sunday',
+          daily_schedule: 'closed',
+          curr_available_seates: '--',
+        }
+      ],
+
+      [
+        {
+          day: 'Monday',
+          daily_schedule: '8:00am - 18:00pm',
+          curr_available_seates: 12,
+        },
+        {
+          day: 'Tuesday',
+          daily_schedule: '8:00am - 19:00pm',
+          curr_available_seates: 3,
+        },
+        {
+          day: 'Wednesday',
+          daily_schedule: '8:30am - 18:00pm',
+          curr_available_seates: 0,
+        },
+        {
+          day: 'Thursday',
+          daily_schedule: '8:30am - 18:30pm',
+          curr_available_seates: 1,
+        },
+        {
+          day: 'Friday',
+          daily_schedule: '8:00am - 18:30pm',
+          curr_available_seates: 5,
+        },
+        {
+          day: 'Saturday',
+          daily_schedule: 'closed',
+          curr_available_seates: '--',
+        },
+        {
+          day: 'Sunday',
+          daily_schedule: 'closed',
+          curr_available_seates: '--',
+        }
+      ]
+    
+    
+    ],
 
     notes:[
       {
@@ -96,7 +204,23 @@ export default new Vuex.Store({
     },
     getChosenCityCoordinates : state => {
       return state.chosenCityCoordinates
+    },
+    getStudy_rooms_names : state => {
+      return state.study_rooms_names
+    },
+    getStudy_rooms_addresses : state => {
+      return state.study_rooms_addresses
+    },
+    getSchedules : state => {
+      return state.schedules
+    },
+    getStudyRoomPrenotata : state => {
+      return state.studyRoomPrenotata
+    },
+    getCoordinate_aule : state => {
+      return state.coordinate_aule
     }
+
   },
   mutations: {
     setIndexLoggedUser: (state,val)=>
@@ -137,6 +261,21 @@ export default new Vuex.Store({
     },
     setChosenCityCoordinates : (state, val) => {
       state.chosenCityCoordinates = val;
+    },
+    setStudy_rooms_names : (state, val) => {
+      state.study_rooms_names = val;
+    },
+    setStudy_rooms_addresses : (state, val) => {
+      state.study_rooms_addresses = val;
+    },
+    setSchedules : (state, val) => {
+      state.schedules = val;
+    },
+    setStudyRoomPrenotata : (state, val) => {
+      state.studyRoomPrenotata = val;
+    },
+    setCoordinate_aule : (state, val) => {
+      state.coordinate_aule = val;
     }
   },
   actions: {
