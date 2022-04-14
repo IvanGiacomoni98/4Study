@@ -194,10 +194,8 @@ export default {
     this.inserisciMarkers();
 
     const coordinate_aule = this.$store.state.coordinate_aule;
-    console.log(coordinate_aule)
 
     let numberOfMarkers = coordinate_aule.length;
-    console.log(numberOfMarkers)
     let i
 
     let studyRoomsDetails = []
@@ -214,9 +212,6 @@ export default {
       info.name = this.$store.state.study_rooms_names[i];
       info.schedule = this.$store.state.schedules[i];
       info.coordinates = coordinate_aule[i];
-
-      console.log(info)
-      console.log()
 
       studyRoomsDetails.push(info)
     }
@@ -245,78 +240,69 @@ export default {
 
     i=0;
     for(i=0;i<numberOfMarkers;i++){
-      const studyRoom = this.studyRoomsDetails[i];
-      console.log(studyRoom)
-      console.log(todayMonthName);
+
+      let orderedSchedule = [];
 
       let j;
       for(j=0;j<this.studyRoomsDetails[i].schedule.length;j++){
         if(dayOfWeek == this.studyRoomsDetails[i].schedule[j].day){
           this.studyRoomsDetails[i].schedule[j].day = dayOfWeek + ' ' + todayMonthName + ' ' + todayDayNumber
+          console.log("QUIIIIII")
+          console.log(this.studyRoomsDetails[i].schedule[j])
+          console.log()
+          orderedSchedule.push(this.studyRoomsDetails[i].schedule[j]);
+          this.studyRoomsDetails[i].schedule = [];
+          break;
         }
       }
+
+      console.log("PRIMA")
+      console.log(orderedSchedule)
+      console.log()
+
+      let currentDayNumber = todayDayNumber;
+      let currentMonth;
+        
+      if(todayMonth == 1)
+        currentMonth = 12;
+      else
+        currentMonth = todayMonth - 1;
+
+      let currentDate;
+      currentDate = new Date(2022, parseInt(currentMonth), parseInt(currentDayNumber));
+
+      for(let h=0;h<6;h++){
+          
+        currentDate.setDate(currentDate.getDate() + 1);
+
+        
+        let dayNumber = currentDate.getDate();
+        let month = currentDate.getMonth();
+        let day_of_week = this.getDayOfWeek(currentDate);
+
+        if(month == 12)
+          month = 1;
+        else
+          month += 1;
+
+        let monthName = this.convertiMese(month);
+        
+        let k;
+        for(k=0;k<this.studyRoomsDetails[i].schedule.length;k++){
+          if(day_of_week == this.studyRoomsDetails[i].schedule[k].day){
+            this.studyRoomsDetails[i].schedule[k].day = day_of_week + ' ' + monthName + ' ' + dayNumber
+            orderedSchedule.push(this.studyRoomsDetails[i].schedule[k]);
+            break;
+          }
+        }
+      }
+
+    this.studyRoomsDetails[i].schedule = orderedSchedule;
       
     }
 
-    console.log('----------')
-    console.log()
-    console.log(this.studyRoomsDetails);
-
-        /*let orderedDays = [];
-
-        let todayDetailsFromSchedule = this.findDayOfWeekDetailsFromSchedule(schedule_aula, dayOfWeek);
-      
-        let todayDetails = dayOfWeek + ' ' + todayMonthName + ' ' + todayDayNumber;
-        alert("qui")
-        todayDetailsFromSchedule['day'] = todayDetails;
-        alert('morto')
-
-
-        orderedDays.push(todayDetailsFromSchedule);
-        let currentDayNumber = todayDayNumber;
-        let currentMonth;
-        
-        if(todayMonth == 1)
-          currentMonth = 12;
-        else
-          currentMonth = todayMonth - 1;
-
-        let currentDate;
-        currentDate = new Date(2022, parseInt(currentMonth), parseInt(currentDayNumber));
-        alert("INIZIO")
-        alert(currentDate)
-
-        for(let i=0;i<6;i++){
-          alert(i)
-          
-          currentDate.setDate(currentDate.getDate() + 1);
-
-          alert(currentDate)
-
-         let dayNumber = today.getDate();
-          let month = today.getMonth();
-          let day_of_week = this.getDayOfWeek(currentDate);
-
-          if(month == 12)
-            month = 1;
-          else
-            month += 1;
-
-          let monthName = this.convertiMese(month);
-          alert("qui")
-          console.log("qui")
-          const dayDetailsFromSchedule = this.findDayOfWeekDetailsFromSchedule(schedule_aula, day_of_week);
-        
-          let dayDetails = day_of_week + ' ' + monthName + ' ' + dayNumber;
-          alert(dayDetails)
-          dayDetailsFromSchedule.day = dayDetails;
-        
-          orderedDays.push(dayDetailsFromSchedule);
-
-
-        }
-
-        console.log(orderedDays);*/
+    console.log("DANIELEEEEEEEEEEEEEEEEE")
+    console.log(this.studyRoomsDetails)
 
   },
 
@@ -380,7 +366,7 @@ export default {
     },
 
     getDayOfWeek(today){
-      alert('converti giorno della settimana')
+      //alert('converti giorno della settimana')
       let number = today.getDay();
 
       if(number == 0)
@@ -416,7 +402,7 @@ export default {
     },
 
     convertiMese(numeroMese){
-      alert('converti mese')
+      //alert('converti mese')
       if(numeroMese == '1') return 'January';
       else if(numeroMese == '2') return 'February';
       else if(numeroMese == '3') return 'March';
