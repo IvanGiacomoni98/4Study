@@ -169,11 +169,163 @@ export default {
         X: '',
         Y: '',
 
-        nome_aula: '',
-        indirizzo_aula: '',
-        schedule_aula: [],
-        orderedDays : [],
-        studyRoomsDetails : [],
+        studyRoomsDetails : [
+
+          {
+
+            id_study_room: 0,
+            coordinate_aule : {
+              lat: '',
+              lng: '',
+            },
+            nome_aula: 'Aula 108 Edificio Marco Polo',
+            indirizzo_aula: 'Viale Dello Scalo di San Lorenzo 82',
+            schedule : [
+              {
+                day: 'Monday',
+                daily_schedule: '8:00am - 18:00pm',
+                curr_available_seats: 12,
+              },
+              {
+                day: 'Tuesday',
+                daily_schedule: '8:00am - 19:00pm',
+                curr_available_seats: 3,
+              },
+              {
+                day: 'Wednesday',
+                daily_schedule: '8:30am - 18:00pm',
+                curr_available_seats: 0,
+              },
+              {
+                day: 'Thursday',
+                daily_schedule: '8:30am - 18:30pm',
+                curr_available_seats: 1,
+              },
+              {
+                day: 'Friday',
+                daily_schedule: '8:30am - 18:30pm',
+                curr_available_seats: 5,
+              },
+              {
+                day: 'Saturday',
+                daily_schedule: '9:00am - 17:00pm',
+                curr_available_seats: 32,
+              },
+              {
+                day: 'Sunday',
+                daily_schedule: 'closed',
+                curr_available_seats: '--',
+              }
+            ]
+
+          },
+
+          // Study room 1
+
+          {
+
+            id_study_room: 1,
+            coordinate_aule : {
+              lat: '',
+              lng: '',
+            },
+            nome_aula: 'Aula 31 SPV',
+            indirizzo_aula: 'Via Eudossiana 18',
+            schedule : [
+              {
+                day: 'Monday',
+                daily_schedule: '9:00am - 18:00pm',
+                curr_available_seats: 12,
+              },
+              {
+                day: 'Tuesday',
+                daily_schedule: '9:00am - 19:00pm',
+                curr_available_seats: 3,
+              },
+              {
+                day: 'Wednesday',
+                daily_schedule: '9:00am - 18:00pm',
+                curr_available_seats: 0,
+              },
+              {
+                day: 'Thursday',
+                daily_schedule: '8:30am - 18:30pm',
+                curr_available_seats: 1,
+              },
+              {
+                day: 'Friday',
+                daily_schedule: '9:00am - 18:30pm',
+                curr_available_seats: 5,
+              },
+              {
+                day: 'Saturday',
+                daily_schedule: '9:00am - 17:00pm',
+                curr_available_seats: 32,
+              },
+              {
+                day: 'Sunday',
+                daily_schedule: 'closed',
+                curr_available_seats: '--',
+              }
+            ]
+
+          },
+
+
+          // Study room 2
+
+          {
+
+            id_study_room: 2,
+            coordinate_aule : {
+              lat: '',
+              lng: '',
+            },
+            nome_aula: 'Aula B2 DIAG',
+            indirizzo_aula: 'Via Ariosto 25',
+            schedule : [
+              {
+                day: 'Monday',
+                daily_schedule: '8:00am - 18:00pm',
+                curr_available_seats: 12,
+              },
+              {
+                day: 'Tuesday',
+                daily_schedule: '8:00am - 19:00pm',
+                curr_available_seats: 3,
+              },
+              {
+                day: 'Wednesday',
+                daily_schedule: '8:30am - 18:00pm',
+                curr_available_seats: 0,
+              },
+              {
+                day: 'Thursday',
+                daily_schedule: '8:30am - 18:30pm',
+                curr_available_seats: 1,
+              },
+              {
+                day: 'Friday',
+                daily_schedule: '8:00am - 18:30pm',
+                curr_available_seats: 5,
+              },
+              {
+                day: 'Saturday',
+                daily_schedule: 'closed',
+                curr_available_seats: '--',
+              },
+              {
+                day: 'Sunday',
+                daily_schedule: 'closed',
+                curr_available_seats: '--',
+              }
+            ]
+
+          },
+
+
+
+        ],
 
         
         markerOptions: {
@@ -193,38 +345,10 @@ export default {
     
     this.inserisciMarkers();
 
-    const coordinate_aule = this.$store.state.coordinate_aule;
+    /*console.log(this.studyRoomsDetails[0].coordinate_aule)
+    console.log(this.studyRoomsDetails[1].coordinate_aule)
+    console.log(this.studyRoomsDetails[2].coordinate_aule)*/
 
-    let numberOfMarkers = coordinate_aule.length;
-    let i
-
-    let studyRoomsDetails = []
-
-    for(i=0;i<numberOfMarkers;i++){
-      let info = {
-        address: '',
-        name: '',
-        schedule: [],
-        coordinates: {}
-      }
-
-      info.address = this.$store.state.study_rooms_addresses[i];
-      info.name = this.$store.state.study_rooms_names[i];
-      info.schedule = this.$store.state.schedules[i];
-      info.coordinates = coordinate_aule[i];
-
-      studyRoomsDetails.push(info)
-    }
-
-    /*console.log("-----");
-    console.log()
-    console.log(studyRoomsDetails);
-
-    console.log('AAAAAAAa')
-    console.log()
-    console.log(this.studyRoomsDetails);*/
-
-    this.studyRoomsDetails = studyRoomsDetails;
 
     let today = new Date();
     let todayDayNumber = today.getDate();
@@ -238,28 +362,43 @@ export default {
 
     let todayMonthName = this.convertiMese(todayMonth);
 
-    i=0;
+    /*console.log(todayDayNumber)
+    console.log(todayMonthName)
+    console.log(dayOfWeek)*/
+
+    let numberOfMarkers = this.studyRoomsDetails.length;
+    let i
+
     for(i=0;i<numberOfMarkers;i++){
 
-      let orderedSchedule = [];
+      //console.log("i = "+i)
+      
+      let ordered = []
+      let j=0;
+      let n = this.studyRoomsDetails[i].schedule.length;
 
-      let j;
-      for(j=0;j<this.studyRoomsDetails[i].schedule.length;j++){
-        if(dayOfWeek == this.studyRoomsDetails[i].schedule[j].day){
-          this.studyRoomsDetails[i].schedule[j].day = dayOfWeek + ' ' + todayMonthName + ' ' + todayDayNumber
-          console.log("QUIIIIII")
-          console.log(this.studyRoomsDetails[i].schedule[j])
-          console.log()
-          orderedSchedule.push(this.studyRoomsDetails[i].schedule[j]);
-          this.studyRoomsDetails[i].schedule = [];
+      for(j=0;j<n;j++){
+
+        if(dayOfWeek === this.studyRoomsDetails[i].schedule[j].day){
+          let app = this.studyRoomsDetails[i].schedule[j]
+
+          app.day = dayOfWeek + ' ' + todayMonthName + ' ' + todayDayNumber
+
+          /*console.log("Stampo quello in data: ")
+          console.log(this.studyRoomsDetails[i].schedule[j].day)
+          console.log("Stampo app.day: ")
+          console.log(app.day);*/
+
+          ordered.push(app);
+
           break;
         }
+
       }
 
-      console.log("PRIMA")
-      console.log(orderedSchedule)
-      console.log()
-
+      /*console.log("ordered che contiene solo il giorno di oggi")
+      console.log(ordered)*/
+      
       let currentDayNumber = todayDayNumber;
       let currentMonth;
         
@@ -271,11 +410,15 @@ export default {
       let currentDate;
       currentDate = new Date(2022, parseInt(currentMonth), parseInt(currentDayNumber));
 
-      for(let h=0;h<6;h++){
-          
+      /*console.log(currentDate);
+      console.log()*/
+
+      let h=0;
+
+      for(h=0;h<6;h++){
+
         currentDate.setDate(currentDate.getDate() + 1);
 
-        
         let dayNumber = currentDate.getDate();
         let month = currentDate.getMonth();
         let day_of_week = this.getDayOfWeek(currentDate);
@@ -287,22 +430,36 @@ export default {
 
         let monthName = this.convertiMese(month);
         
-        let k;
-        for(k=0;k<this.studyRoomsDetails[i].schedule.length;k++){
+        let k=0;
+        let size = this.studyRoomsDetails[i].schedule.length;
+
+        for(k=0;k<size;k++){
           if(day_of_week == this.studyRoomsDetails[i].schedule[k].day){
-            this.studyRoomsDetails[i].schedule[k].day = day_of_week + ' ' + monthName + ' ' + dayNumber
-            orderedSchedule.push(this.studyRoomsDetails[i].schedule[k]);
+
+            let app = this.studyRoomsDetails[i].schedule[k]
+            app.day = day_of_week + ' ' + monthName + ' ' + dayNumber;
+
+            ordered.push(app); 
             break;
           }
         }
+
       }
 
-    this.studyRoomsDetails[i].schedule = orderedSchedule;
+      /*console.log()
+      console.log("ordered che contiene 7 elementi in ordine a partire da oggi")
+      console.log(ordered)
       
-    }
+      console.log()*/
 
-    console.log("DANIELEEEEEEEEEEEEEEEEE")
-    console.log(this.studyRoomsDetails)
+      this.studyRoomsDetails[i].schedule = ordered;
+
+
+
+    }
+    console.log("array in data");
+    console.log(this.studyRoomsDetails);
+    console.log();
 
   },
 
@@ -329,40 +486,23 @@ export default {
           lng: this.center.lng - this.MARKER_DETERMINATION
         })
 
-        // preparo array di coordinate nello store per il successivo caricamento dei dati relativi ai dettagli
-        let coordinate_aule = []
-        
-        coordinate_aule.push({
-          id_study_room: 0,
+        // setto le coordinate nel mio array locale studyRoomsDetails
+
+        this.studyRoomsDetails[0].coordinate_aule = {
           lat: this.center.lat,
           lng: this.center.lng
-        })
+        }
 
-        coordinate_aule.push({
-          id_study_room: 1,
+        this.studyRoomsDetails[1].coordinate_aule = {
           lat: this.center.lat + this.MARKER_DETERMINATION,
           lng: this.center.lng + this.MARKER_DETERMINATION
-        })
+        }
 
-        coordinate_aule.push({
-          id_study_room: 2,
+        this.studyRoomsDetails[2].coordinate_aule = {
           lat: this.center.lat + this.MARKER_DETERMINATION,
           lng: this.center.lng - this.MARKER_DETERMINATION
-        })
-
-         this.setCoordinate_aule(coordinate_aule);
-
-         console.log(this.$store.state.coordinate_aule);
-
-    },
-
-    findElementIndex(array_coordinates, lat, lng){
-      for(let i=0;i<array_coordinates.length;i++){
-        if(array_coordinates[i].lat === lat && array_coordinates[i].lng === lng){
-          return i;
         }
-      }
-      return -1;
+
     },
 
     getDayOfWeek(today){
@@ -390,15 +530,6 @@ export default {
       else if(number == 6)
         return 'Saturday'
 
-    },
-
-    findDayOfWeekDetailsFromSchedule(schedule, day){
-      for(let i=0;i<schedule.length;i++){
-        if(schedule[i].day == day){
-          return schedule[i]
-        }
-      }
-      return null;
     },
 
     convertiMese(numeroMese){
