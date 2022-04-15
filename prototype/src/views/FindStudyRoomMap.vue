@@ -1,6 +1,8 @@
 <template>
 
-    <div class="container">
+    <div>
+
+      <div v-if="!bookingSeat && !viewingSummaryPage && !sharingWithFriends" class="container">
 
       <div class="row mt-3">
         <router-link to="/findStudyRoom"><img src="../assets/back.png" width="30"/></router-link>
@@ -72,7 +74,7 @@
                   <thead class="thead bg-warning">
                     <tr>
                       <th scope="col">Day</th>
-                      <th scope="col">Daily Schedule</th>
+                      <th scope="col">Daily schedule</th>
                       <th scope="col">Currently available seats</th>
                       <th scope="col">Book a seat!</th>
                     </tr>
@@ -82,7 +84,7 @@
                       <td>{{giorno.day}}</td>
                       <td>{{giorno.daily_schedule}}</td>
                       <td>{{giorno.curr_available_seats}}</td>
-                      <td v-if="giorno.curr_available_seats > 0"><button class="btn btn-success">Book!</button></td>
+                      <td v-if="giorno.curr_available_seats > 0"><button :id="giorno.day" @click="goToBookSeat" class="btn btn-success">Book!</button></td>
                       <td v-else>--</td>
                     </tr>
                     
@@ -97,6 +99,156 @@
       </div>
 
        
+    </div>
+
+
+
+
+
+
+    <div v-else-if="bookingSeat && !viewingSummaryPage && !sharingWithFriends" class="container">
+
+    <div class="row mt-3">
+        <img @click="backToMap" class="backImgFromBookingView" src="../assets/back.png" width="30"/>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+        <!--  CARD  -->
+        <div class="card card-signin my-5 border-warning mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-center"><b>Book your seat!</b></h5>
+            <hr class="my-4">
+
+            <!--  FORM  -->
+            <form class="form-signin" @keyup.enter="bookSeat()">
+              <div class="form-label-group">
+                  <h4>Day details</h4>
+                <input type="text" id="day_details" class="form-control" v-model="day_details" disabled >
+              </div>
+
+              <div class="form-label-group">
+              <h4>Hours' range</h4>
+                <input type="text" id="hours" class="form-control" v-model="rangeHours" placeholder="Insert the hours' range (e.g.: from 15 to 18 pm)" required>
+              </div>
+
+
+              <button v-if="readyRangeHours" @click="bookSeat" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Book your seat!</button>
+              <hr class="my-4">
+
+              <div v-if="errorAuth != null" :class="colore" role="alert">
+                  {{text}}
+              </div>
+              
+            </form>
+            <!--  FINE FORM  -->
+
+          </div>
+        </div>
+        <!--  FINE CARD  -->
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div v-else-if="!bookingSeat && viewingSummaryPage && !sharingWithFriends" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>Your seat has been booked!</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+          <button type="button" id="bottone_download" class="btn btn-lg btn-success btn-block mt-3">Download</button>
+        </div>
+        <div class="col">
+          <button type="button" id="bottone_share" @click="goToShareReservationWithFriends" class="btn btn-lg btn-success btn-block mt-3">Share it by email!</button>
+        </div>
+
+  
+    </div>
+    </center>
+    
+
+  </div>
+
+
+
+
+  <div v-else-if="!bookingSeat && !viewingSummaryPage && sharingWithFriends" class="container">
+    <div class="row mt-3">
+        <img @click="backImgFromSharingView" class="backImgFromSharingView" src="../assets/back.png" width="30"/>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+        <!--  CARD  -->
+        <div class="card card-signin my-5 border-warning mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-center"><b>Insert your friends' emails</b></h5>
+            <hr class="my-4">
+
+            <!--  FORM  -->
+            <form class="form-signin" @keyup.enter="accedi()">
+
+              <div class="form-label-group">
+                <input type="text" class="form-control" v-model="emailAddress1" placeholder="Insert an email address">
+              </div>
+
+              <div class="form-label-group">
+                <input type="text" class="form-control" v-model="emailAddress2" placeholder="Insert an email address">
+              </div>
+
+              <div class="form-label-group">
+                <input type="text" class="form-control" v-model="emailAddress3" placeholder="Insert an email address">
+              </div>
+
+              <div class="form-label-group">
+                <input type="text" class="form-control" v-model="emailAddress4" placeholder="Insert an email address">
+              </div>
+
+              <div class="form-label-group">
+                <input type="text" class="form-control" v-model="emailAddress5" placeholder="Insert an email address">
+              </div>
+
+
+              <button v-if="true" @click="bookSeat" type="button" class="btn btn-lg btn-success btn-block mt-3">Send emails!</button>
+              <hr class="my-4">
+
+              <div v-if="errorAuth != null" :class="colore" role="alert">
+                  {{text}}
+              </div>
+              
+            </form>
+            <!--  FINE FORM  -->
+
+          </div>
+        </div>
+        <!--  FINE CARD  -->
+
+      </div>
+    </div>
+  
+  </div>
+
+
+
+
     </div>
 
   
@@ -146,6 +298,24 @@ export default {
         stylecard:"",
         X: '',
         Y: '',
+        day_details: '',
+        readyRangeHours: false,
+        rangeHours: '',
+
+        emailAddress1: '',
+        emailAddress2: '',
+        emailAddress3: '',
+        emailAddress4: '',
+        emailAddress5: '',
+
+        readyEmail1: false,
+        readyEmail2: false,
+        readyEmail3: false,
+        readyEmail4: false,
+        readyEmail5: false,
+        
+        readyEmailGeneral: false,
+
 
         studyRoomsDetails : [
 
@@ -307,6 +477,10 @@ export default {
 
         studyRoomClicked: {},
 
+        bookingSeat: false,
+        viewingSummaryPage: false,
+        sharingWithFriends: false,
+
         
         markerOptions: {
           url: require('../assets/markerSensore.png'),
@@ -315,6 +489,84 @@ export default {
         
 
       }
+  },
+
+  watch : {
+    rangeHours : function(){
+      const len = this.rangeHours.length 
+        if(len >= 5 ) {
+          this.readyRangeHours = true
+        }
+        else
+          this.readyRangeHours = false
+    },
+
+    emailAddress1 : function(){
+
+      const tmp = this.emailAddress1;
+      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const res = regex.test(tmp);
+
+      //Se il test va a buon fine vuol dire che ho un'email valida
+      if (res)  this.readyEmail1 = true
+      else      this.readyEmail1 = false;
+
+    },
+
+    emailAddress2 : function(){
+
+      const tmp = this.emailAddress2;
+      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const res = regex.test(tmp);
+
+      //Se il test va a buon fine vuol dire che ho un'email valida
+      if (res)  this.readyEmail2 = true
+      else      this.readyEmail2 = false;
+
+    },
+
+    emailAddress3 : function(){
+
+      const tmp = this.emailAddress3;
+      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const res = regex.test(tmp);
+
+      //Se il test va a buon fine vuol dire che ho un'email valida
+      if (res)  this.readyEmail3 = true
+      else      this.readyEmail3 = false;
+
+    },
+
+    emailAddress4 : function(){
+
+      const tmp = this.emailAddress4;
+      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const res = regex.test(tmp);
+
+      //Se il test va a buon fine vuol dire che ho un'email valida
+      if (res)  this.readyEmail4 = true
+      else      this.readyEmail4 = false;
+
+    },
+
+    emailAddress5 : function(){
+
+      const tmp = this.emailAddress5;
+      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const res = regex.test(tmp);
+
+      //Se il test va a buon fine vuol dire che ho un'email valida
+      if (res)  this.readyEmail5 = true
+      else      this.readyEmail5 = false;
+
+    },
+
+    /*readyEmailGeneral : function() {
+      if(!this.readyEmail1 && !this.readyEmail2 && !this.readyEmail3 && !this.readyEmail4 && !this.readyEmail5){
+        this.readyEmailGeneral = true;
+      }
+    }*/
+
   },
 
   beforeCreate(){
@@ -541,7 +793,8 @@ export default {
 
       ...mapMutations([
         'setChosenCity',
-        'setCoordinate_aule'
+        'setCoordinate_aule',
+        'setStudyRoomPrenotata'
       ]),
 
       showInfoDetails(event){
@@ -584,6 +837,45 @@ export default {
         if(this.X != X || this.Y != Y){
           this.show = false;
         }
+      },
+
+      goToBookSeat(event){
+        const alreadyBooked = this.$store.state.studyRoomPrenotata;
+
+        if(alreadyBooked){
+          alert("YOU ALREADY HAVE A RESERVATION!")
+          return;
+        }
+
+        const dettagli_giorno = event.target.id;
+
+        this.day_details = dettagli_giorno;
+
+        this.bookingSeat = true;
+
+      },
+
+      backToMap(){
+        this.rangeHours = "";
+        this.bookingSeat = false;
+      },
+
+      bookSeat(){
+        
+        this.bookingSeat = false;
+        this.viewingSummaryPage = true;
+
+        //this.setStudyRoomPrenotata(true);
+      },
+
+      goToShareReservationWithFriends(){
+        this.viewingSummaryPage = false;
+        this.sharingWithFriends = true;
+      },
+
+      backImgFromSharingView(){
+        this.viewingSummaryPage = true;
+        this.sharingWithFriends = false;
       }
 
   }
@@ -594,7 +886,40 @@ export default {
 
 <style scoped>
 
+.backImgFromBookingView{
+  cursor: pointer;
+}
 
+.backImgFromSharingView{
+  cursor: pointer;
+}
+
+#im3{
+
+    height:400px;  
+    width:1100px;
+   
+    background-size: cover;
+    background-color: #ffc107;
+    border-color: #c7b330;
+    color: #000000;
+
+}
+
+#bottone_homepage{
+  width: 180px;
+  text-align: center;
+}
+
+#bottone_download{
+  width: 180px;
+  text-align: center;
+}
+
+#bottone_share{
+  width: 200px;
+  text-align: center;
+}
 
 </style>
 
