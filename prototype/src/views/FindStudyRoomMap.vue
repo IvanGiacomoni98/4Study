@@ -42,13 +42,26 @@
         <div class="card-body">
           <h5 class="card-title"><b>Study room details</b></h5>
 
+          
+          <div class="row text-center mt-2">
+
+            <div class="col">
+              Name
+            </div>
+            <div class="col">
+              {{studyRoomClicked.nome_aula}}
+            </div>
+
+          </div>
+          
+          
           <div class="row text-center mt-2">
 
             <div class="col">
               Address
             </div>
             <div class="col">
-              Via Antonio Scarpa
+              {{studyRoomClicked.indirizzo_aula}}
             </div>
 
           </div>
@@ -61,55 +74,20 @@
                       <th scope="col">Day</th>
                       <th scope="col">Daily Schedule</th>
                       <th scope="col">Currently available seats</th>
+                      <th scope="col">Book a seat!</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Wednesday</td>
-                      <td>8:00am - 18:00pm</td>
-                      <td>12</td>
-                    </tr>
-
-                    <tr>
-                      <td>Thursday</td>
-                      <td>8:00am - 18:30pm</td>
-                      <td>9</td>
-                    </tr>
-
-                    <tr>
-                      <td>Friday</td>
-                      <td>8:00am - 18:00pm</td>
-                      <td>4</td>
-                    </tr>
-
-                    <tr>
-                      <td>Saturday</td>
-                      <td>9:00am - 17:00pm</td>
-                      <td>43</td>
-                    </tr>
-
-                    <tr>
-                      <td>Sunday</td>
-                      <td>Closed</td>
-                      <td>--</td>
-                    </tr>
-
-                    <tr>
-                      <td>Monday</td>
-                      <td>8:00am - 19:00pm</td>
-                      <td>3</td>
-                    </tr>
-
-                    <tr>
-                      <td>Wednesday</td>
-                      <td>9:00am - 19:00pm</td>
-                      <td>0</td>
+                    <tr v-for="giorno in studyRoomClicked.schedule" :key="giorno.day">
+                      <td>{{giorno.day}}</td>
+                      <td>{{giorno.daily_schedule}}</td>
+                      <td>{{giorno.curr_available_seats}}</td>
+                      <td v-if="giorno.curr_available_seats > 0"><button class="btn btn-success">Book!</button></td>
+                      <td v-else>--</td>
                     </tr>
                     
                   </tbody>
                 </table>
-                          
-          <button class="btn btn-success">Book a seat!</button>
         </div>
       </div>
 
@@ -326,6 +304,8 @@ export default {
 
 
         ],
+
+        studyRoomClicked: {},
 
         
         markerOptions: {
@@ -548,6 +528,17 @@ export default {
       else if(numeroMese == '12') return 'December';
     },
 
+      trovaStudyRoomCliccata(lat, lng){
+        let i=0;
+        let n = this.studyRoomsDetails.length;
+        for(i=0;i<n;i++){
+          if(this.studyRoomsDetails[i].coordinate_aule.lat == lat && this.studyRoomsDetails[i].coordinate_aule.lng == lng){
+            return this.studyRoomsDetails[i];
+          }
+        }
+        return null;
+      },
+
       ...mapMutations([
         'setChosenCity',
         'setCoordinate_aule'
@@ -571,6 +562,15 @@ export default {
 
         this.stylecard="position:absolute;top:"+Y+"px;left:"+X+"px;"
         //console.log(this.stylecard)
+
+        const studyRoomCliccata = this.trovaStudyRoomCliccata(lat, lng);
+
+        if (studyRoomCliccata == null){
+          alert("ERRORE! STUDY ROOM NON TROVATA AL CLICK SULLA MAPPA!")
+          return;
+        }
+
+        this.studyRoomClicked = studyRoomCliccata;
 
         this.show=true
 
