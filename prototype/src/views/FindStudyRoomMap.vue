@@ -204,36 +204,46 @@
             <hr class="my-4">
 
             <!--  FORM  -->
-            <form class="form-signin" @keyup.enter="accedi()">
+            <form class="form-signin" @keyup.enter="sendEmails">
 
               <div class="form-label-group">
-                <input type="text" class="form-control" v-model="emailAddress1" placeholder="Insert an email address">
+                <input type="email" class="form-control" v-model="emailAddress1" placeholder="Insert an email address">
               </div>
 
               <div class="form-label-group">
-                <input type="text" class="form-control" v-model="emailAddress2" placeholder="Insert an email address">
+                <input type="email" class="form-control" v-model="emailAddress2" placeholder="Insert an email address">
               </div>
 
               <div class="form-label-group">
-                <input type="text" class="form-control" v-model="emailAddress3" placeholder="Insert an email address">
+                <input type="email" class="form-control" v-model="emailAddress3" placeholder="Insert an email address">
               </div>
 
               <div class="form-label-group">
-                <input type="text" class="form-control" v-model="emailAddress4" placeholder="Insert an email address">
+                <input type="email" class="form-control" v-model="emailAddress4" placeholder="Insert an email address">
               </div>
 
               <div class="form-label-group">
-                <input type="text" class="form-control" v-model="emailAddress5" placeholder="Insert an email address">
+                <input type="email" class="form-control" v-model="emailAddress5" placeholder="Insert an email address">
               </div>
 
-
-              <button v-if="true" @click="bookSeat" type="button" class="btn btn-lg btn-success btn-block mt-3">Send emails!</button>
-              <hr class="my-4">
-
-              <div v-if="errorAuth != null" :class="colore" role="alert">
-                  {{text}}
+              <div class="row">
+                <div class="col">
+                  <button @click="sendEmails" type="button" class="btn btn-lg btn-success btn-block mt-3">Send emails!</button>
+                </div>
+                  
+                <div class="col">
+                  <router-link to="/avanzato">
+                    <button type="button" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>
+                  </router-link>
+                </div>
               </div>
               
+              <hr class="my-4">
+
+              <div v-if="errorAuth != null" :class="colore" role="alert" style="height: 50px">
+                  {{text_error}}
+              </div>
+
             </form>
             <!--  FINE FORM  -->
 
@@ -302,19 +312,15 @@ export default {
         readyRangeHours: false,
         rangeHours: '',
 
+        errorAuth : null,
+        text_error : "",
+        colore : "",
+
         emailAddress1: '',
         emailAddress2: '',
         emailAddress3: '',
         emailAddress4: '',
         emailAddress5: '',
-
-        readyEmail1: false,
-        readyEmail2: false,
-        readyEmail3: false,
-        readyEmail4: false,
-        readyEmail5: false,
-        
-        readyEmailGeneral: false,
 
 
         studyRoomsDetails : [
@@ -500,72 +506,6 @@ export default {
         else
           this.readyRangeHours = false
     },
-
-    emailAddress1 : function(){
-
-      const tmp = this.emailAddress1;
-      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-      const res = regex.test(tmp);
-
-      //Se il test va a buon fine vuol dire che ho un'email valida
-      if (res)  this.readyEmail1 = true
-      else      this.readyEmail1 = false;
-
-    },
-
-    emailAddress2 : function(){
-
-      const tmp = this.emailAddress2;
-      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-      const res = regex.test(tmp);
-
-      //Se il test va a buon fine vuol dire che ho un'email valida
-      if (res)  this.readyEmail2 = true
-      else      this.readyEmail2 = false;
-
-    },
-
-    emailAddress3 : function(){
-
-      const tmp = this.emailAddress3;
-      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-      const res = regex.test(tmp);
-
-      //Se il test va a buon fine vuol dire che ho un'email valida
-      if (res)  this.readyEmail3 = true
-      else      this.readyEmail3 = false;
-
-    },
-
-    emailAddress4 : function(){
-
-      const tmp = this.emailAddress4;
-      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-      const res = regex.test(tmp);
-
-      //Se il test va a buon fine vuol dire che ho un'email valida
-      if (res)  this.readyEmail4 = true
-      else      this.readyEmail4 = false;
-
-    },
-
-    emailAddress5 : function(){
-
-      const tmp = this.emailAddress5;
-      const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-      const res = regex.test(tmp);
-
-      //Se il test va a buon fine vuol dire che ho un'email valida
-      if (res)  this.readyEmail5 = true
-      else      this.readyEmail5 = false;
-
-    },
-
-    /*readyEmailGeneral : function() {
-      if(!this.readyEmail1 && !this.readyEmail2 && !this.readyEmail3 && !this.readyEmail4 && !this.readyEmail5){
-        this.readyEmailGeneral = true;
-      }
-    }*/
 
   },
 
@@ -876,6 +816,138 @@ export default {
       backImgFromSharingView(){
         this.viewingSummaryPage = true;
         this.sharingWithFriends = false;
+
+        this.emailAddress1 = "";
+        this.emailAddress2 = "";
+        this.emailAddress3 = "";
+        this.emailAddress4 = "";
+        this.emailAddress5 = "";
+
+        this.errorAuth = null,
+        this.text_error = "",
+        this.colore = ""
+      },
+      
+      sendEmails(){
+
+        let email_1_vuoto = false;
+        let email_2_vuoto = false;
+        let email_3_vuoto = false;
+        let email_4_vuoto = false;
+        let email_5_vuoto = false;
+
+        if(this.emailAddress1 == ''){
+          email_1_vuoto = true;
+        }
+        
+        else{
+          let tmp = this.emailAddress1;
+          const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+          const res = regex.test(tmp)
+
+          if(!res){
+            this.errorAuth = true;
+            this.text_error = "Email number 1 wrong!"
+            this.colore = "alert alert-danger"
+
+            return;
+          }
+        }
+
+        if(this.emailAddress2 == ''){
+          email_2_vuoto = true;
+        }
+        
+        else{
+          let tmp = this.emailAddress2;
+          const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+          const res = regex.test(tmp)
+
+          if(!res){
+            this.errorAuth = true;
+            this.text_error = "Email number 2 wrong!"
+            this.colore = "alert alert-danger"
+
+            return;
+          }
+        }
+
+        if(this.emailAddress3 == ''){
+          email_3_vuoto = true;
+        }
+        
+        else{
+          let tmp = this.emailAddress3;
+          const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+          const res = regex.test(tmp)
+
+          if(!res){
+            this.errorAuth = true;
+            this.text_error = "Email number 3 wrong!"
+            this.colore = "alert alert-danger"
+
+            return;
+          }
+        }
+
+        if(this.emailAddress4 == ''){
+          email_4_vuoto = true;
+        }
+        
+        else{
+          let tmp = this.emailAddress4;
+          const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+          const res = regex.test(tmp)
+
+          if(!res){
+            this.errorAuth = true;
+            this.text_error = "Email number 4 wrong!"
+            this.colore = "alert alert-danger"
+
+            return;
+          }
+        }
+
+        if(this.emailAddress5 == ''){
+          email_5_vuoto = true;
+        }
+        
+        else{
+          let tmp = this.emailAddress5;
+          const regex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+          const res = regex.test(tmp)
+
+          if(!res){
+            this.errorAuth = true;
+            this.text_error = "Email number 5 wrong!"
+            this.colore = "alert alert-danger"
+
+            return;
+          }
+        }
+
+
+        if(email_1_vuoto && email_2_vuoto && email_3_vuoto && email_4_vuoto && email_5_vuoto){
+          this.errorAuth = true;
+          this.text_error = "All email fields are empty!"
+          this.colore = "alert alert-danger"
+
+          return;
+        }
+
+        // Qui è andato tutto a buon fine
+        else{
+
+          // Qui si devono mandare le email => NODEMAILER
+
+          this.errorAuth = 'NO ERROR'
+          this.text_error = "Emails successfully sent!"
+          this.colore = "alert alert-success"
+
+
+        }
+
+        
       }
 
   }
