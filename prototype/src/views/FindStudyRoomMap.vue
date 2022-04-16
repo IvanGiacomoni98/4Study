@@ -997,6 +997,11 @@ export default {
       
         emailjs.init(user_id_public_key);
 
+<<<<<<< HEAD
+=======
+        alert("emailJS inizializzato")
+
+>>>>>>> a0d50696682f4615371d3a85cbd55a3a191d3d20
         const email_sender = process.env.VUE_APP_EMAILJS_SENDER_EMAIL
 
         const service_id = process.env.VUE_APP_EMAILJS_SERVICE_ID;
@@ -1005,6 +1010,7 @@ export default {
         const namePerson = this.reservation.name;
         const day_details = this.reservation.day_details;
         const rangeHours = this.reservation.rangeHours;
+<<<<<<< HEAD
   
         const study_room_name = this.studyRoomClicked.nome_aula;
         const study_room_address = this.studyRoomClicked.indirizzo_aula;
@@ -1013,6 +1019,13 @@ export default {
 
         let message = "Name: "+namePerson+' - '+"Study room name: "+study_room_name+' - '+'Study room address: '+study_room_address
         +' - '+"City: "+city+' - '+"Day details: "+day_details+' - '+"Range hours: "+rangeHours;
+=======
+        const study_room_name = 'Aula B2 DIAG';
+        const study_room_address = 'Via Ariosto 25'
+
+        let message = "Name: "+namePerson+'\n'+"Study room name: "+study_room_name+'\n'+'Study room address: '+study_room_address
+        +'\n'+"Day details: "+day_details+'\n'+"Range hours: "+rangeHours;
+>>>>>>> a0d50696682f4615371d3a85cbd55a3a191d3d20
 
         for(let i=0;i<emails.length;i++){
           const contactdetail = {
@@ -1022,6 +1035,7 @@ export default {
             message: message
           };
 
+<<<<<<< HEAD
           emailjs.send(service_id, template_id, contactdetail).then( async function (res) {
             console.log(res)
             console.log("Email Sent Successfully");
@@ -1029,6 +1043,11 @@ export default {
             await this.sleep(1300).then(async ()=>{
               console.log("passiamo alla prossima email")
           })
+=======
+          emailjs.send(service_id, template_id, contactdetail).then(function (res) {
+            console.log(res)
+            alert("Email Sent Successfully");
+>>>>>>> a0d50696682f4615371d3a85cbd55a3a191d3d20
           },
             error => {
               alert("Error Occur");
@@ -1037,10 +1056,13 @@ export default {
         }
 
       },
+<<<<<<< HEAD
 
       sleep(milliseconds){
         return new Promise(resolve => setTimeout(resolve, milliseconds))
       }
+=======
+>>>>>>> a0d50696682f4615371d3a85cbd55a3a191d3d20
 
   }
 
