@@ -1,8 +1,9 @@
 <template>
-  <div class="container mt-3 ">
+
+
+    <div class="container mt-3 ">
       <div class="row">
         <div class="col">
-        
         <div class="card border-warning mb-3">
         <div class="card-body">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -12,7 +13,7 @@
         </ul>
         <!-- TABBED PANE CONTENT-->
         <div class="tab-content" id="myTabContent" >
-          <div   v-if="profile" id="tab1" class="tab-pane active" role="tabpanel" aria-labelledby="tab1-tab">
+          <div v-if="profile" id="tab1" class="tab-pane active" role="tabpanel" aria-labelledby="tab1-tab">
               <div class="row">
                 <div class="col">
                     
@@ -139,18 +140,62 @@
           <!-- Secondo Tabbed-->
           <div v-if="!profile" class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
               
-            <div class ="col" style="padding-top:5px;">
+            <div class="col" style="padding-top:5px;">
+
+              <div>
+
+              <!--  TABELLA  -->
+
+              <div class="table-responsive table-borderless mt-1" style="height: 350px">
+                <table class="table">
+                  <!--  INTESTAZIONE TABELLA  -->
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Booking id</th>
+                      <th scope="col">Study room name</th>
+                      <th scope="col">Hours' range</th>
+                      <th scope="col">Details</th>
+                    </tr>
+                  </thead>
+
+              <!--  CORPO TABELLA  -->
+              <tbody>
+                <tr v-for="booking in bookings" :key="booking.id_prenotazione">
+                  <td>{{booking.id_prenotazione}}</td>
+                  <td>{{booking.nome_aula}}</td>
+                  <td>{{booking.rangeHours}}</td>
+                  <td>
+                    <img
+                      src="../assets/eye.png"
+                      height="30"
+                      :id="booking.id_prenotazione"
+                      class="img_dettagli_booking"
+                      @click="viewBookingDetails"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+    </div>
         
             </div>
 
 
           </div>
+
+
+
+
           
         </div>
         </div>
               </div>
               </div>
           </div>
+
+
 
 </template>
 
@@ -171,6 +216,8 @@ export default {
         name:"",
         surname:"",
         profile: true,
+        
+        bookings: [],
     }
   },
   mounted()
@@ -187,6 +234,10 @@ export default {
     this.high=this.$store.state.highschools[this.id_utente]
     this.town=this.$store.state.towns[this.id_utente]
     this.university=this.$store.state.univerisities[this.id_utente]
+
+    // carico le prenotazioni
+    this.bookings = this.$store.state.prenotazioni_aule;
+
   },
   methods:{
       switchBooking(){
@@ -206,7 +257,14 @@ export default {
           this.$store.state.univerisities[this.id_utente]=this.university
           alert("Profile saved!")
           
-      }
+      },
+
+      viewBookingDetails(event){
+
+        const id = event.target.id;
+
+        alert(id);
+      },
   }
 
   
@@ -250,6 +308,14 @@ export default {
   background-image:url('../assets/menu_ins2.png');
    
     
+}
+
+.img_dettagli_booking{
+  cursor: pointer;
+}
+
+.backImgFromBookingDetailsView{
+  cursor: pointer;
 }
 
 </style>

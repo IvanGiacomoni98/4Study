@@ -879,7 +879,10 @@ export default {
         this.reservation.day_details = this.day_details;
         this.reservation.name = all;
 
+        const id = this.$store.state.prenotazioni_aule.length + 1;
+
         let prenotazione = {
+          id_prenotazione: id,
           nome_completo_persona: this.reservation.name,
           nome_aula: this.studyRoomClicked.nome_aula,
           indirizzo_aula: this.studyRoomClicked.indirizzo_aula,
