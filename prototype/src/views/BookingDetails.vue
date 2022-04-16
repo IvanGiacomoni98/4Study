@@ -87,9 +87,10 @@
               </div>
             </div>
 
+              <!--
               <div v-if="cliccatoSuCancella" class="alert alert-success mt-2" role="alert" style="height: 50px">
                   {{text}}
-              </div>
+              </div> -->
 
 
 
@@ -156,7 +157,9 @@ export default {
 
       this.aggiungiUnPostoInAula(info_aula);
 
-      this.cliccatoSuCancella = true;
+      this.$router.push('/profile');
+
+      //this.cliccatoSuCancella = true;
       
     }
 
