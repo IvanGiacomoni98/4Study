@@ -536,15 +536,20 @@ export default {
   },
   
   mounted() {
-    
-    this.inserisciMarkers();
 
     /*console.log(this.studyRoomsDetails[0].coordinate_aule)
     console.log(this.studyRoomsDetails[1].coordinate_aule)
     console.log(this.studyRoomsDetails[2].coordinate_aule)*/
 
+    let GLOBAL_COUNTER_AULE = this.$store.state.GLOBAL_COUNTER_AULE;
 
-    let today = new Date();
+    // Se è la prima volta (o più) che carico il componente, allora prendo i dati dal componente locale
+
+    if(GLOBAL_COUNTER_AULE == 0){
+
+      this.inserisciMarkers();
+
+      let today = new Date();
     let todayDayNumber = today.getDate();
     let todayMonth = today.getMonth();
     let dayOfWeek = this.getDayOfWeek(today);
@@ -647,13 +652,47 @@ export default {
       console.log()*/
 
       this.studyRoomsDetails[i].schedule = ordered;
-
+      
 
 
     }
+
+
+
     console.log("array in data");
     console.log(this.studyRoomsDetails);
     console.log();
+
+    // Salvo i dati la prima volta nello store
+    this.setAule(this.studyRoomsDetails);
+
+    // Aumento il contatore globale
+
+    let c = this.$store.state.GLOBAL_COUNTER_AULE;
+    c = c + 1;
+    this.setGLOBAL_COUNTER_AULE(c);
+    }
+
+
+    // Se è la seconda volta (o più) che carico il componente, allora prendo i dati sempre dallo store
+
+    else{
+
+       this.studyRoomsDetails = this.$store.state.aule;
+
+       this.inserisciMarkers();
+
+       // Aumento il contatore globale
+
+       let c = this.$store.state.GLOBAL_COUNTER_AULE;
+       c = c + 1;
+       this.setGLOBAL_COUNTER_AULE(c);
+
+       console.log("array in data");
+       console.log(this.studyRoomsDetails);
+       console.log();
+      
+    }
 
   },
 
@@ -756,7 +795,10 @@ export default {
       ...mapMutations([
         'setChosenCity',
         'setCoordinate_aule',
-        'aggiungiPrenotazione'
+        'aggiungiPrenotazione',
+        'setGLOBAL_COUNTER_AULE',
+        'setAule',
+        'levaUnPostoInAula'
       ]),
 
       showInfoDetails(event){
@@ -846,7 +888,16 @@ export default {
           rangeHours: this.reservation.rangeHours
         }
 
+        // Aggiungo la prenotazione nello store
         this.aggiungiPrenotazione(prenotazione);
+        
+        const info_aula = {
+          nome_aula: this.studyRoomClicked.nome_aula,
+          day_details: this.reservation.day_details
+        }
+        
+        // Rimuovo un posto libero nell'aula in quel giorno, nello store
+        this.levaUnPostoInAula(info_aula);
 
         this.bookingSeat = false;
         this.viewingSummaryPage = true;

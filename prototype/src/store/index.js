@@ -28,7 +28,11 @@ export default new Vuex.Store({
 
     coordinate_aule : [],
 
+    aule : [],
+
     prenotazioni_aule: [],
+
+    GLOBAL_COUNTER_AULE: 0,
 
     notes:[
       {
@@ -92,6 +96,12 @@ export default new Vuex.Store({
     },
     getPrenotazioni_aule : state => {
       return state.prenotazioni_aule
+    },
+    getGLOBAL_COUNTER_AULE : state => {
+      return state.GLOBAL_COUNTER_AULE;
+    },
+    getAule : state => {
+      return state.aule;
     }
 
   },
@@ -140,7 +150,45 @@ export default new Vuex.Store({
     },
     aggiungiPrenotazione : (state, prenotazione) => {
       state.prenotazioni_aule.push(prenotazione);
+    },
+    setGLOBAL_COUNTER_AULE : (state, val) => {
+      state.GLOBAL_COUNTER_AULE = val;
+    },
+    setAule : (state, val) => {
+      state.aule = val;
+    },
+    levaUnPostoInAula : (state, info_aula) => {
+      const nome_aula = info_aula.nome_aula;
+      const day_details = info_aula.day_details;
+
+      for(let i=0;i<state.aule.length;i++){
+        if(state.aule[i].nome_aula == nome_aula){
+          for(let j=0;j<state.aule[i].schedule.length;j++){
+            if(state.aule[i].schedule[j].day == day_details){
+              state.aule[i].schedule[j].curr_available_seats = state.aule[i].schedule[j].curr_available_seats - 1;
+              break;
+            }
+          }
+        }
+      }
+    },
+
+    aggiungiUnPostoInAula : (state, info_aula) => {
+      const nome_aula = info_aula.nome_aula;
+      const day_details = info_aula.day_details;
+
+      for(let i=0;i<state.aule.length;i++){
+        if(state.aule[i].nome_aula == nome_aula){
+          for(let j=0;j<state.aule[i].schedule.length;j++){
+            if(state.aule[i].schedule[j].day == day_details){
+              state.aule[i].schedule[j].curr_available_seats = state.aule[i].schedule[j].curr_available_seats + 1;
+              break;
+            }
+          }
+        }
+      }
     }
+
   },
   actions: {
     
