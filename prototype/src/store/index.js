@@ -26,8 +26,9 @@ export default new Vuex.Store({
     chosenCity: "",
     chosenCityCoordinates: { lat: 0.0, lng: 0.0 },
 
-    studyRoomPrenotata : false,
     coordinate_aule : [],
+
+    prenotazioni_aule: [],
 
     notes:[
       {
@@ -86,11 +87,11 @@ export default new Vuex.Store({
     getChosenCityCoordinates : state => {
       return state.chosenCityCoordinates
     },
-    getStudyRoomPrenotata : state => {
-      return state.studyRoomPrenotata
-    },
     getCoordinate_aule : state => {
       return state.coordinate_aule
+    },
+    getPrenotazioni_aule : state => {
+      return state.prenotazioni_aule
     }
 
   },
@@ -134,11 +135,11 @@ export default new Vuex.Store({
     setChosenCityCoordinates : (state, val) => {
       state.chosenCityCoordinates = val;
     },
-    setStudyRoomPrenotata : (state, val) => {
-      state.studyRoomPrenotata = val;
-    },
     setCoordinate_aule : (state, val) => {
       state.coordinate_aule = val;
+    },
+    aggiungiPrenotazione : (state, prenotazione) => {
+      state.prenotazioni_aule.push(prenotazione);
     }
   },
   actions: {

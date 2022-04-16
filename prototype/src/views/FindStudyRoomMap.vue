@@ -300,7 +300,6 @@ export default {
         'getStudy_rooms_names',
         'getStudy_rooms_addresses',
         'getSchedules',
-        'getStudyRoomPrenotata',
         'getCoordinate_aule'
     ]),
 
@@ -757,7 +756,7 @@ export default {
       ...mapMutations([
         'setChosenCity',
         'setCoordinate_aule',
-        'setStudyRoomPrenotata'
+        'aggiungiPrenotazione'
       ]),
 
       showInfoDetails(event){
@@ -803,11 +802,13 @@ export default {
       },
 
       goToBookSeat(event){
-        const alreadyBooked = this.$store.state.studyRoomPrenotata;
+        const prenotazioni = this.$store.state.prenotazioni_aule;
 
-        if(alreadyBooked){
-          alert("YOU ALREADY HAVE A RESERVATION!")
-          return;
+        for(let i=0;i<prenotazioni.length;i++){
+          if(prenotazioni[i].day_details == event.target.id){
+            alert("YOU ALREADY HAVE A RESERVATION FOR A STUDY ROOM IN THIS DAY!")
+            return;
+          }
         }
 
         this.citta_aula = this.$store.state.chosenCity;
@@ -836,10 +837,20 @@ export default {
         this.reservation.day_details = this.day_details;
         this.reservation.name = all;
 
+        let prenotazione = {
+          nome_completo_persona: this.reservation.name,
+          nome_aula: this.studyRoomClicked.nome_aula,
+          indirizzo_aula: this.studyRoomClicked.indirizzo_aula,
+          citta_aula: this.$store.state.chosenCity,
+          day_details: this.reservation.day_details,
+          rangeHours: this.reservation.rangeHours
+        }
+
+        this.aggiungiPrenotazione(prenotazione);
+
         this.bookingSeat = false;
         this.viewingSummaryPage = true;
 
-        //this.setStudyRoomPrenotata(true);
       },
 
       goToShareReservationWithFriends(){
