@@ -32,6 +32,8 @@ export default new Vuex.Store({
 
     prenotazioni_aule: [],
 
+    prenotazione_dettagli : {},
+
     GLOBAL_COUNTER_AULE: 0,
 
     notes:[
@@ -102,6 +104,9 @@ export default new Vuex.Store({
     },
     getAule : state => {
       return state.aule;
+    },
+    getPrenotazione_dettagli : state => {
+      return state.prenotazione_dettagli;
     }
 
   },
@@ -187,6 +192,10 @@ export default new Vuex.Store({
           }
         }
       }
+    },
+
+    setPrenotazione_dettagli : (state, val) => {
+      state.prenotazione_dettagli = val;
     }
 
   },

@@ -155,6 +155,7 @@
                       <th scope="col">Study room name</th>
                       <th scope="col">Hours' range</th>
                       <th scope="col">Details</th>
+                      <th scope="col">Download</th>
                     </tr>
                   </thead>
 
@@ -172,6 +173,14 @@
                       class="img_dettagli_booking"
                       @click="viewBookingDetails"
                     />
+                  </td>
+                  <td>
+                    <a href="../assets/download.txt" download="download.txt"
+                      ><img
+                        src="../assets/download.png"
+                        :id="booking.id_prenotazione"
+                        height="35"
+                    /></a>
                   </td>
                 </tr>
               </tbody>
@@ -201,6 +210,7 @@
 
 <script>
 
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'Profile',
@@ -240,6 +250,11 @@ export default {
 
   },
   methods:{
+
+      ...mapMutations([
+        'setPrenotazione_dettagli',
+      ]),
+
       switchBooking(){
           this.profile=false
       },
@@ -263,7 +278,12 @@ export default {
 
         const id = event.target.id;
 
-        alert(id);
+        for(let i=0;i<this.bookings.length;i++){
+          if(this.bookings[i].id_prenotazione == id){
+            this.setPrenotazione_dettagli(this.bookings[i]);
+            this.$router.push('/bookingDetails');
+          }
+        }
       },
   }
 

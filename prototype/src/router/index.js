@@ -10,11 +10,12 @@ import CambioPw from '../views/CambioPw.vue'
 import NewOperatore from '../views/NewOperatore.vue'
 import Home from '../views/Home.vue'
 import Announcements from '../views/Announcements.vue'
-import MyAnnouncements from '../views/MyAnnouncements.vue'
+//import MyAnnouncements from '../views/MyAnnouncements.vue'
 import Component_404 from '../views/404.vue'
 import Note from '../views/Notes.vue'
 import MyNotes from '../views/MyNotes.vue'
 import Profile from '../views/Profile.vue'
+import BookingDetails from '../views/BookingDetails.vue'
 import FindStudyRoom from '../views/FindStudyRoom.vue'
 import FindStudyRoomMap from '../views/FindStudyRoomMap.vue'
 
@@ -31,6 +32,11 @@ Vue.use(VueRouter)
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/bookingDetails',
+      name: 'BookingDetails',
+      component: BookingDetails
     },
     {
       path:'/mynotes',
@@ -103,11 +109,11 @@ Vue.use(VueRouter)
     component:Announcements
   },
 
-  {
+  /*{
     path:'/myannouncements',
     name:'MyAnnouncements',
     component: MyAnnouncements
-  },
+  },*/
 
   {
     path:'/findStudyRoom',
