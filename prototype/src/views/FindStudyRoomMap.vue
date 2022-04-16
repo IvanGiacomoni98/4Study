@@ -124,6 +124,21 @@
             <!--  FORM  -->
             <form class="form-signin" @keyup.enter="bookSeat()">
               <div class="form-label-group">
+                  <h4>Room name</h4>
+                <input type="text" id="study_room_name" class="form-control" v-model="studyRoomClicked.nome_aula" disabled >
+              </div>
+
+              <div class="form-label-group">
+                  <h4>Room address</h4>
+                <input type="text" id="study_room_address" class="form-control" v-model="studyRoomClicked.indirizzo_aula" disabled >
+              </div>
+
+              <div class="form-label-group">
+                  <h4>City</h4>
+                <input type="text" id="citta_aula" class="form-control" v-model="citta_aula" disabled >
+              </div>
+
+              <div class="form-label-group">
                   <h4>Day details</h4>
                 <input type="text" id="day_details" class="form-control" v-model="day_details" disabled >
               </div>
@@ -493,6 +508,8 @@ export default {
         viewingSummaryPage: false,
         sharingWithFriends: false,
 
+        citta_aula: '',
+
         
         markerOptions: {
           url: require('../assets/markerSensore.png'),
@@ -792,6 +809,8 @@ export default {
           alert("YOU ALREADY HAVE A RESERVATION!")
           return;
         }
+
+        this.citta_aula = this.$store.state.chosenCity;
 
         const dettagli_giorno = event.target.id;
 
