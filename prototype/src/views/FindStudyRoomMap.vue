@@ -204,7 +204,7 @@
             <hr class="my-4">
 
             <!--  FORM  -->
-            <form class="form-signin" @keyup.enter="sendEmails">
+            <form id="formShareEmails" ref="formShareEmails" class="form-signin" @keyup.enter="sendEmails">
 
               <div class="form-label-group">
                 <input type="email" class="form-control" v-model="emailAddress1" placeholder="Insert an email address">
@@ -268,6 +268,8 @@
 
 import { mapGetters, mapMutations} from 'vuex'
 import {gmapApi} from 'vue2-google-maps'
+import emailjs from 'emailjs-com';
+require('dotenv').config();
 
 //:icon="{ url: require('../assets/markerSensore.png')}"  => ICON SUI MARKER (?)
 
@@ -321,6 +323,10 @@ export default {
         emailAddress3: '',
         emailAddress4: '',
         emailAddress5: '',
+
+        reservation: {
+          
+        },
 
 
         studyRoomsDetails : [
@@ -801,7 +807,16 @@ export default {
       },
 
       bookSeat(){
-        
+
+        const idUtenteLoggato = localStorage.getItem('id_utente');
+        const nameUtenteLoggato = this.$store.state.names[idUtenteLoggato];
+        const surnameUtenteLoggato = this.$store.state.surnames[idUtenteLoggato];
+        const all = nameUtenteLoggato + ' ' + surnameUtenteLoggato;
+
+        this.reservation.rangeHours = this.rangeHours;
+        this.reservation.day_details = this.day_details;
+        this.reservation.name = all;
+
         this.bookingSeat = false;
         this.viewingSummaryPage = true;
 
@@ -830,6 +845,8 @@ export default {
       
       sendEmails(){
 
+        let emails = [];
+
         let email_1_vuoto = false;
         let email_2_vuoto = false;
         let email_3_vuoto = false;
@@ -852,6 +869,9 @@ export default {
 
             return;
           }
+          else{
+            emails.push(this.emailAddress1);
+          }
         }
 
         if(this.emailAddress2 == ''){
@@ -869,6 +889,9 @@ export default {
             this.colore = "alert alert-danger"
 
             return;
+          }
+          else{
+            emails.push(this.emailAddress2);
           }
         }
 
@@ -888,6 +911,9 @@ export default {
 
             return;
           }
+          else{
+            emails.push(this.emailAddress3);
+          }
         }
 
         if(this.emailAddress4 == ''){
@@ -905,6 +931,9 @@ export default {
             this.colore = "alert alert-danger"
 
             return;
+          }
+          else{
+            emails.push(this.emailAddress4);
           }
         }
 
@@ -924,6 +953,9 @@ export default {
 
             return;
           }
+          else{
+            emails.push(this.emailAddress5);
+          }
         }
 
 
@@ -932,13 +964,22 @@ export default {
           this.text_error = "All email fields are empty!"
           this.colore = "alert alert-danger"
 
+          /*const idForm = "formShareEmails";
+          const formInvioEmail = this.$refs[idForm];
+          console.log(formInvioEmail)*/
+
+          //console.log(this.reservation);
+
           return;
         }
 
         // Qui è andato tutto a buon fine
         else{
 
-          // Qui si devono mandare le email => NODEMAILER
+          // Qui si devono mandare le email => EMAILJS
+
+          this.emailSender(emails);
+
 
           this.errorAuth = 'NO ERROR'
           this.text_error = "Emails successfully sent!"
@@ -948,7 +989,49 @@ export default {
         }
 
         
-      }
+      },
+
+      emailSender(emails) {
+
+        const user_id_public_key = process.env.VUE_APP_EMAILJS_PUBLIC_KEY_USER_ID;
+      
+        emailjs.init(user_id_public_key);
+
+        alert("emailJS inizializzato")
+
+        const email_sender = process.env.VUE_APP_EMAILJS_SENDER_EMAIL
+
+        const service_id = process.env.VUE_APP_EMAILJS_SERVICE_ID;
+        const template_id = process.env.VUE_APP_EMAILJS_TEMPLATE_ID;
+
+        const namePerson = this.reservation.name;
+        const day_details = this.reservation.day_details;
+        const rangeHours = this.reservation.rangeHours;
+        const study_room_name = 'Aula B2 DIAG';
+        const study_room_address = 'Via Ariosto 25'
+
+        let message = "Name: "+namePerson+'\n'+"Study room name: "+study_room_name+'\n'+'Study room address: '+study_room_address
+        +'\n'+"Day details: "+day_details+'\n'+"Range hours: "+rangeHours;
+
+        for(let i=0;i<emails.length;i++){
+          const contactdetail = {
+            from_name: this.reservation.name,
+            to_email: emails[i],
+            from_email: email_sender,
+            message: message
+          };
+
+          emailjs.send(service_id, template_id, contactdetail).then(function (res) {
+            console.log(res)
+            alert("Email Sent Successfully");
+          },
+            error => {
+              alert("Error Occur");
+              console.log(error)
+            })
+        }
+
+      },
 
   }
 
