@@ -81,6 +81,16 @@
               </div>
             </div>
 
+            <div class="row">
+              <div class="col">
+                  <button class="btn btn-danger" @click="deleteBooking">Delete booking</button>
+              </div>
+            </div>
+
+              <div v-if="cliccatoSuCancella" class="alert alert-success mt-2" role="alert" style="height: 50px">
+                  {{text}}
+              </div>
+
 
 
           </div>
@@ -92,12 +102,17 @@
 </template>
 
 <script>
+
+import {mapMutations} from 'vuex'
+
 export default {
   name: "BookingDetails",
 
   data() {
     return {
-      booking: {}
+      booking: {},
+      cliccatoSuCancella: false,
+      text: 'Booking succesfully deleted!'
     };
   },
 
@@ -106,7 +121,45 @@ export default {
   },
 
   methods: {
-    
+
+    ...mapMutations([
+        'deleteBookingById',
+        'aggiungiUnPostoInAula'
+      ]),
+
+    deleteBooking(){
+
+      if(!confirm("Are you sure you want to delete this booking?")){
+        return
+      }
+
+      console.log("Prima della cancellazione: ")
+      console.log(this.$store.state.prenotazioni_aule)
+
+      for(let i=0;i<this.$store.state.prenotazioni_aule.length;i++){
+        if(this.$store.state.prenotazioni_aule[i].id_prenotazione == this.booking.id_prenotazione){
+          this.$store.state.prenotazioni_aule.splice(i, 1);
+          break;
+        }
+      }
+
+      console.log()
+      console.log("Dopo della cancellazione: ")
+      console.log(this.$store.state.prenotazioni_aule)
+
+      
+
+      const info_aula = {
+        nome_aula : this.booking.nome_aula,
+        day_details : this.booking.day_details
+      }
+
+      this.aggiungiUnPostoInAula(info_aula);
+
+      this.cliccatoSuCancella = true;
+      
+    }
+
   },
 };
 </script>

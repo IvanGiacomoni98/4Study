@@ -153,7 +153,7 @@
                     <tr>
                       <th scope="col">Booking id</th>
                       <th scope="col">Study room name</th>
-                      <th scope="col">Hours' range</th>
+                      <th scope="col">Day details</th>
                       <th scope="col">Details</th>
                       <th scope="col">Download</th>
                     </tr>
@@ -164,7 +164,7 @@
                 <tr v-for="booking in bookings" :key="booking.id_prenotazione">
                   <td>{{booking.id_prenotazione}}</td>
                   <td>{{booking.nome_aula}}</td>
-                  <td>{{booking.rangeHours}}</td>
+                  <td>{{booking.day_details}}</td>
                   <td>
                     <img
                       src="../assets/eye.png"

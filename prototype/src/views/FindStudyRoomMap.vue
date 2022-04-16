@@ -879,7 +879,9 @@ export default {
         this.reservation.day_details = this.day_details;
         this.reservation.name = all;
 
-        const id = this.$store.state.prenotazioni_aule.length + 1;
+        let max_id = this.$store.getters.getMaxIdfromBookings;
+
+        const id = max_id + 1;
 
         let prenotazione = {
           id_prenotazione: id,

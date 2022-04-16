@@ -107,6 +107,18 @@ export default new Vuex.Store({
     },
     getPrenotazione_dettagli : state => {
       return state.prenotazione_dettagli;
+    },
+    getMaxIdfromBookings : state => {
+
+      let max_id = 0;
+      
+      for(let i=0;i<state.prenotazioni_aule.length;i++){
+        if(state.prenotazioni_aule[i].id_prenotazione > max_id){
+          max_id = state.prenotazioni_aule[i].id_prenotazione;
+        }
+      }
+
+      return max_id;
     }
 
   },
