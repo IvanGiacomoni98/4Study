@@ -85,6 +85,7 @@
           >
             Publish announcement
           </button>
+          <div> {{this.announcements}} </div>
         </div>
       </div>
     </div>
@@ -622,13 +623,14 @@ export default {
       tag1: "",
       tag2: "",
       tag3: "",
-      num_of_announcements: 1,
+      num_of_announcements: 0,
       announcements: [],
     };
   },
 
   created() {
     this.announcements = this.$store.state.announcements
+    this.num_of_announcements = this.$store.state.num_of_announcements
   },
 
   methods: {

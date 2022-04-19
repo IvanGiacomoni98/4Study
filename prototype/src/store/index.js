@@ -68,7 +68,7 @@ export default new Vuex.Store({
         tags: "#tutor #maths #english #science ",        
       },
     ],
-    id_announcements:2,
+    num_of_announcements: 1,
   },
   getters: {
     getStazione: state=>{
