@@ -85,7 +85,6 @@
           >
             Publish announcement
           </button>
-          <div> {{this.announcements}} </div>
         </div>
       </div>
     </div>
