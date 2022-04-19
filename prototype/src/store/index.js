@@ -54,6 +54,21 @@ export default new Vuex.Store({
     ],
     id_notes:2,
     indexLoggedUser:0,
+    announcements:[
+      {
+        id: 0,
+        title: "For sale backpack",
+        description: "1 years old backbard, red colour",
+        tags: "#selling #backpack ",
+      },
+      {
+        id: 1,
+        title: "Tutoring for school children",
+        description: "maths, english and science, 10 euros per hour",
+        tags: "#tutor #maths #english #science ",        
+      },
+    ],
+    id_announcements:2,
   },
   getters: {
     getStazione: state=>{

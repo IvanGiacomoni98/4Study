@@ -107,7 +107,7 @@
           <div class="card-body">
             <h5 class="card-title text-center"><b>Publish announcement</b></h5>
 
-            <form >   <!-- @keyup.enter="pubblicaAnnuncio()"  -->
+            <form  @keyup.enter="pubblicaAnnuncio()" >
               <div class="row mt-3">
                 <div class="col mt-1">
                   <h6><b>Title</b></h6>
@@ -614,6 +614,7 @@ export default {
       mostraZoneInserite: false,
       idBack: "",
       title: "",
+      description: "",
       course: "",
       tags: "",
       id: 0,
@@ -621,34 +622,26 @@ export default {
       tag1: "",
       tag2: "",
       tag3: "",
-      announcements:[
-      {
-        id: 0,
-        title: "For sale backpack",
-        description: "1 years old backbard, red colour",
-        tags: "#selling #backpack ",
-      },
-      {
-        id: 1,
-        title: "Tutoring for school children",
-        description: "maths, english and science, 10 euros per hour",
-        tags: "#tutor #maths #english #science ",        
-      },
-      ],
-      id_announcements:2,
+      num_of_announcements: 1,
+      announcements: [],
     };
+  },
+
+  created() {
+    this.announcements = this.$store.state.announcements
   },
 
   methods: {
     // Pubblicazione annuncio
     publishAnnouncement() {
       this.announcements.push({
-        id: this.id + 1,
+        id: this.num_of_announcements + 1,
         title: this.title,
         description: this.description,
         tags: this.tags,
       });
 
+      this.num_of_announcements += 1;
       this.adding = false;
       this.visualizzandoDettagli = false;
       this.updating = false;
