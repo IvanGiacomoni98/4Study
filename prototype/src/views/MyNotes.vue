@@ -159,20 +159,7 @@
                 </div>
               </div>
 
-              <div class="row mt-2">
-                <div class="col mt-1">
-                  <h6><b>Email</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="email"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
-
+     
               <div class="row mt-2">
                 <div class="col mt-1">
                   <h6><b>Add tags</b></h6>
@@ -601,6 +588,7 @@ export default {
   methods: {
     // Pubblicazione annuncio
     pubblicaNote() {
+      this.email=this.$store.state.users[this.user_id]
       this.notes.push({
         id: this.id + 1,
         title: this.title,

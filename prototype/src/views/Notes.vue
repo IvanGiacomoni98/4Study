@@ -136,25 +136,12 @@
                     style="width: 200px"
                   >
                     <option value="HCI">HCI</option>
-                    <option value="HCI">SE</option>
-                    <option value="HCI">IOT</option>
+                    <option value="SE">SE</option>
+                    <option value="IOT">IOT</option>
                   </select>
                 </div>
               </div>
 
-              <div class="row mt-2">
-                <div class="col mt-1">
-                  <h6><b>Email</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="email"
-                    style="width: 200px"
-                  />
-                </div>
-              </div>
 
               <div class="row mt-2">
                 <div class="col mt-1">
@@ -645,6 +632,7 @@ export default {
       tag1: "",
       tag2: "",
       tag3: "",
+      id_utente:0,
     };
   },
 
@@ -656,6 +644,9 @@ export default {
   methods: {
     // Pubblicazione annuncio
     pubblicaNote() {
+
+      this.id_utente=localStorage.id_utente
+      this.email=this.$store.state.users[this.id_utente]
       this.notes.push({
         id: this.id + 1,
         title: this.title,
