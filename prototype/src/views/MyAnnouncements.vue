@@ -1,7 +1,16 @@
 <template>
   <div>
     <!--  SCHERMATA DI VISUALIZZAZIONE INIZIALE  -->
+    <!--
+    <div> {{this.announcements}}</div>
+    <div> {{this.id}}</div>
+    <div> ***********************</div>
+    <div> {{this.$store.state.announcements}}</div>
+    <div> {{this.$store.state.id_announcements}}</div>
+    <div> ***********************</div>
+    -->
 
+       
     <div
       v-if="
         !adding &&
@@ -12,16 +21,9 @@
       "
     >
       <div class="card border-warning mt-3">
-        
         <div class="card-body">
-          <h5 class="card-title "><button class="btn btn-warning mb-2" @click="myAnnouncements()" style="float:left">View my announcements </button><b>Announcements</b></h5>
-          <!--
-          <div> {{this.announcements}}</div>
-          <div> {{this.id}}</div>
-          <div> ***********************</div>
-          <div> {{this.$store.state.announcements}}</div>
-          <div> {{this.$store.state.id_announcements}}</div>
-          -->
+          <h5 class="card-title"><b>My Announcements</b></h5>
+
           <!--  TABELLA  -->
 
           <div class="table-responsive table-borderless" style="height: 350px">
@@ -40,7 +42,8 @@
                   </th>
                   <th scope="col">Title</th>
                   <th scope="col">Details</th>
-                  <th scope="col">Reply to the owner</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
                   <th scope="col">
                     <img
                       @click="cliccatoSuFiltra = true"
@@ -68,13 +71,21 @@
                   </td>
                   <td>
                     <img
-                      src="../assets/chat.jpg"
-                      height="30"
+                      src="../assets/update.png"
+                      height="25"
                       :id="announcement.id"
+                      @click="visualizzaModifica"
                     />
-                    <!--   da inserire in img tag: @click="visualizzaDettagli"  -->
                   </td>
-
+                   <td>
+                    <img
+                      src="../assets/delete.png"
+                      height="25"
+                      :id="announcement.id"
+                      @click="eliminaAnnuncio"
+                    />
+                  </td>
+                
                   <td><!--  Padding per img filter  --></td>
                 </tr>
               </tbody>
@@ -109,11 +120,12 @@
       </div>
 
       <center>
+        <!--  DA PC E TUTTI GLI ALTRI DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
         <div class="card card-signin border-warning mt-2" style="width: 520px">
           <div class="card-body">
             <h5 class="card-title text-center"><b>Publish announcement</b></h5>
 
-            <form  @keyup.enter="publishAnnouncement()" >
+            <form @keyup.enter="publishAnnouncement()">
               <div class="row mt-3">
                 <div class="col mt-1">
                   <h6><b>Title</b></h6>
@@ -129,7 +141,7 @@
                 </div>
               </div>
 
-               <div class="row mt-3">
+              <div class="row mt-3">
                 <div class="col mt-1">
                   <h6><b>Description</b></h6>
                 </div>
@@ -143,6 +155,7 @@
                   />
                 </div>
               </div>
+              
 
               <div class="row mt-2">
                 <div class="col mt-1">
@@ -157,7 +170,6 @@
                   />
                 </div>
               </div>
-
               <div class="row mt-2">
                 <div class="col mt-1">
                   <h6><b>Choose file</b></h6>
@@ -178,7 +190,7 @@
                 type="button"
                 class="btn btn-success mt-3"
               >
-                Publish announcement
+                Publish
               </button>
             </form>
           </div>
@@ -203,17 +215,6 @@
         <div class="card border-warning mt-2" style="width: 460px">
           <div class="card-body">
             <h5 class="card-title text-center"><b>Announcement details</b></h5>
-
-            <!--    -->
-            <div class="row">
-              <div class="col">
-                <p><b>email</b></p>
-              </div>
-
-              <div class="col">
-                {{ annunciDaVisualizzare.email }}
-              </div>
-            </div>
 
             <!--    -->
             <div class="row">
@@ -267,8 +268,6 @@
       </center>
     </div>
 
-   
-
     <!--  SCHERMATA DI MODIFICA DELL'ANNUNCIO  -->
 
     <div v-if="updating">
@@ -284,178 +283,78 @@
       </div>
 
       <center>
+        <!--  DA PC E TUTTI GLI ALTRI DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
 
         <div
           class="card card-signin border-warning mt-2 d-none d-sm-block"
           style="width: 520px"
         >
           <div class="card-body">
-            <h5 class="card-title text-center"><b>AGGIORNA L'ANNUNCIO</b></h5>
+            <h5 class="card-title text-center"><b>UPDATE ANNOUNCEMENT</b></h5>
 
             <form @keyup.enter="aggiornaAnnuncio">
-              <!--  CF  -->
+             
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>CF</b></h6>
+                  <h6><b>Title</b></h6>
                 </div>
 
                 <div class="col">
                   <input
                     class="form-control border-warning"
-                    v-model="CF"
+                    v-model="title"
                     type="text"
                     style="width: 200px"
                   />
                 </div>
 
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
               </div>
 
-              <!--  Data inizio  -->
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>Data inizio</b></h6>
+                  <h6><b>Description</b></h6>
                 </div>
 
                 <div class="col">
                   <input
-                    class="form-control border-warning mt-1"
-                    v-model="data_inizio"
-                    type="date"
-                    style="width: 200px"
-                  />
-                </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
-              </div>
-
-              <!--  Data fine  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Data fine</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="data_fine"
-                    type="date"
-                    style="width: 200px"
-                  />
-                </div>
-
-                <div class="col">
-                  <!--  Padding per bottoni + e -  -->
-                </div>
-              </div>
-
-              <!--  Zone  -->
-              <div class="row">
-                <div class="col mt-1">
-                  <h6><b>Zone</b></h6>
-                </div>
-
-                <div class="col">
-                  <input
-                    class="form-control border-warning mt-1"
-                    v-model="newZona"
-                    placeholder="Aggiungi(+) / Rimuovi(-)"
+                    class="form-control border-warning"
+                    v-model="description"
                     type="text"
                     style="width: 200px"
                   />
                 </div>
 
-                <!--  Bottoni inserimento(+) e rimozione(-) zone  -->
-                <div class="col">
-                  <button
-                    @click="aggiungiZona()"
-                    class="btn border-warning"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>+</b>
-                  </button>
-                  <button
-                    @click="mostraZoneInserite = !mostraZoneInserite"
-                    class="btn border-danger ml-1"
-                    type="button"
-                    style="width: 35px; height: 35px"
-                  >
-                    <b>-</b>
-                  </button>
-                </div>
               </div>
 
-              <!--  Zone inserite  -->
-              <div v-if="mostraZoneInserite">
-                <div v-for="(zona, index) in zone" :key="index">
-                  <div class="row mt-2">
-                    <div class="col">
-                      {{ zona }}
-                    </div>
 
-                    <div class="col">
-                      <button
-                        @click="rimuoviZona"
-                        :id="index"
-                        class="btn border-warning ml-1"
-                        type="button"
-                        style="width: 35px; height: 35px"
-                      >
-                        <b>-</b>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--  Descrizione  -->
               <div class="row">
                 <div class="col mt-1">
-                  <h6><b>Descrizione</b></h6>
+                  <h6><b>Add tags</b></h6>
                 </div>
 
                 <div class="col">
-                  <textarea
+                  <input
                     class="form-control border-warning mt-1"
-                    v-model="descrizione"
-                    type="textarea"
-                    maxlength="200"
-                    style="width: 200px; height: 200px"
-                  ></textarea>
+                    v-model="tags"
+                    style="width: 200px"
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col mt-1">
+                  <h6><b>Choose file</b></h6>
                 </div>
 
                 <div class="col">
-                  <!--  Padding per bottoni + e -  -->
+                  <input
+                    class="form-control border-warning mt-1"
+                    style="width: 200px"
+                    type="file"
+                  />
                 </div>
               </div>
 
-              <div
-                v-if="
-                  cliccatoSuAggiorna &&
-                  (error == 'CF' ||
-                    error == 'Data inizio' ||
-                    error == 'Data fine' ||
-                    error == 'Logica delle date' ||
-                    error == 'Descrizione')
-                "
-                class="alert alert-danger mt-1"
-                role="alert"
-              >
-                {{ messaggioErrore }}
-              </div>
-
-              <div
-                v-else-if="cliccatoSuAggiorna && error == ''"
-                class="alert alert-success mt-1"
-                role="alert"
-              >
-                {{ messaggioConferma }}
-              </div>
 
               <!--  Bottone di aggiornamento annuncio  -->
               <button
@@ -463,13 +362,13 @@
                 type="button"
                 class="btn btn-success mt-1"
               >
-                Aggiorna annuncio
+                Update
               </button>
             </form>
           </div>
         </div>
       </center>
-    </div>
+    </div>    
 
     <!--  SCHERMATA FILTRI  -->
 
@@ -544,7 +443,7 @@
     <div v-if="filtering && !visualizzandoDettagli">
       <div class="card border-warning mt-3">
         <div class="card-body">
-          <h5 class="card-title"><b>Filtered announcements</b></h5>
+          <h5 class="card-title"><b>My filtered announcements</b></h5>
 
           <!--  TABELLA  -->
 
@@ -555,7 +454,6 @@
                 <tr>
                   <th scope="col">Title</th>
                   <th scope="col">Details</th>
-                  <th scope="col">Replay to the owner</th>
                   <th scope="col">
                     <img
                       @click="rimuoviFiltri()"
@@ -580,14 +478,6 @@
                        @click="visualizzaDettagli"
                     />
                   </td>
-                  <td>
-                    <img
-                      src="../assets/chat.jpg"
-                      height="30"
-                      :id="n.id"
-                    />
-                    <!--   da inserire in img tag: @click="visualizzaDettagli"  -->
-                  </td>
                   <td><!--  Padding per img no filter  --></td>
                 </tr>
               </tbody>
@@ -596,18 +486,24 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "Announcements",
+  name: "MyAnnouncements",
 
   data() {
     return {
-      notes: [],
+      announcements: [],
       tipoUtente: "",
-      annunci: [],
       annunciFiltrati: [],
       loading: false,
       adding: false,
@@ -615,12 +511,6 @@ export default {
       updating: false,
       cliccatoSuFiltra: false,
       filtering: false,
-      CF: "",
-      data_inizio: "",
-      data_fine: "",
-      descrizione: "",
-      newZona: "",
-      zone: [],
       error: "",
       messaggioErrore: "",
       cliccatoSuPubblica: false,
@@ -632,27 +522,47 @@ export default {
       idBack: "",
       title: "",
       description: "",
-      course: "",
       tags: "",
       id: 0,
       email: "",
       tag1: "",
       tag2: "",
       tag3: "",
-      announcements: [],
+      user_id:0,
+      id_updating:0
     };
   },
 
   created() {
+    this.id=this.$store.state.id_announcements
     this.announcements = this.$store.state.announcements
-    this.id = this.$store.state.id_announcements
+    this.user_id=this.$store.state.indexLoggedUser
+    var app=[]
+    var i=0
+    for(i=0;i<this.announcements.length;i++)
+    {
+        if(this.announcements[i].email == this.$store.state.users[this.user_id])
+            app.push(this.announcements[i])
+    }
+    this.announcements=app
   },
 
+
   methods: {
+
     // Pubblicazione annuncio
     publishAnnouncement() {
-      //questo aggiorna sia versione locale sia store di announcements
+      //questo aggiorna solo versione locale
       this.announcements.push({
+        id: this.id + 1,
+        email: this.$store.state.users[this.$store.state.indexLoggedUser],
+        title: this.title,
+        description: this.description,
+        tags: this.tags,
+      });
+
+      //questo aggiorna solo store di announcements
+      this.$store.state.announcements.push({
         id: this.id + 1,
         email: this.$store.state.users[this.$store.state.indexLoggedUser],
         title: this.title,
@@ -668,7 +578,61 @@ export default {
       this.cliccatoSuFiltra = false;
       this.filtering = false;
     },
-    
+
+    visualizzaModifica(event)
+    {
+        const id_announcement = event.target.id;
+        console.log(id_announcement)
+        var i=0
+         for (i=0;this.announcements.length;i++ )
+             {
+                 if(this.announcements[i].id==id_announcement)
+                 {
+                     console.log(this.announcements[i])
+                    this.title=this.announcements[i].title
+                    this.tags=this.announcements[i].tags
+                    this.description=this.announcements[i].description
+                    this.email=this.announcements[i].email
+                    this.id_updating=id_announcement
+                    break
+                 }
+             }
+        this.updating=true
+     },
+
+     eliminaAnnuncio(event){
+        const id_announcement = event.target.id;
+         if(confirm("Do you really want to delete?"))
+         {
+             var  index=0
+             var i=0
+             //elimina annuncio in locale
+             for (i=0;this.announcements.length;i++ )
+             {
+                 if(this.announcements[i].id==id_announcement)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+            this.announcements.splice(index,1)
+
+            //elimina annuncio in store
+            for (i=0;this.$store.state.announcements.length;i++ )
+             {
+                 if(this.$store.state.announcements[i].id==id_announcement)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+            this.$store.state.announcements.splice(index,1)
+            
+         }
+    },
+
     visualizzaDettagli(event) {
       
       this.visualizzandoDettagli = true;
@@ -689,10 +653,6 @@ export default {
       }
 
       console.log(this.annunciDaVisualizzare);
-    },
-    myAnnouncements()
-    {
-      this.$router.push("/myannouncements")
     },
 
     // Filtri per gli annunci
@@ -737,6 +697,54 @@ export default {
       this.filtering = false;
     },
 
+    aggiornaAnnuncio(){
+      var i=0
+      var index=0
+      var id_announcement=this.id_updating
+          //elimina annuncio in locale
+          for (i=0;this.announcements.length;i++ )
+             {
+                 if(this.announcements[i].id==id_announcement)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+          console.log(index)
+          this.announcements.splice(index,1)
+
+          //elimina annuncio in store
+          for (i=0;this.$store.state.announcements.length;i++ )
+             {
+                 if(this.$store.state.announcements[i].id==id_announcement)
+                 {
+                     index=i
+                     console.log(i)
+                     break
+                 }
+             }
+          this.$store.state.announcements.splice(index,1)
+
+          //aggiorna annuncio in locale
+          this.announcements.push({
+             id: this.id_updating,
+             title: this.title,
+             email: this.email,
+             description: this.description,
+             tags: this.tags,
+          });
+          //aggiorna annuncio in store
+          this.$store.state.announcements.push({
+              id: this.id_updating,
+              title: this.title,
+              email: this.email,
+              description: this.description,
+              tags: this.tags,
+          })
+          this.updating=false
+    },
+
     // Rimozione filtri
     rimuoviFiltri() {
       this.cliccatoSuFiltra = false;
@@ -753,16 +761,20 @@ export default {
       this.cliccatoSuFiltra = false;
       this.mostraZoneInserite = false;
       this.visualizzandoDettagli = false;
-
-      this.data_inizio = "";
-      this.data_fine = "";
-      this.descrizione = "";
-      this.zone = [];
-      this.CF = "";
     },
+    tornaAllaSchermataPrecedenteDaModifica()
+    {
+      this.adding = false;
+      this.visualizzandoDettagli = false;
+      this.updating = false;
+      this.cliccatoSuFiltra = false;
+      this.filtering = false;
+      
+    }
   },
 };
 </script>
+
 
 <style scoped>
 .back {
