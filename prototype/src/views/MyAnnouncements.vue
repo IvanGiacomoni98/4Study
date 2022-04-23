@@ -32,9 +32,9 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">
-                    <router-link to="/avanzato"
+                    <router-link to="/announcements"
                       ><img
-                        data-title="Torna alle avanzate"
+                        data-title="Torna ad announcements"
                         src="../assets/back.png"
                         class="back"
                         style="width: 20px; margin-left: 16px"
