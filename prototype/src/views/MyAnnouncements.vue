@@ -555,7 +555,7 @@ export default {
       //questo aggiorna solo versione locale
       this.announcements.push({
         id: this.id + 1,
-        email: this.$store.state.users[this.$store.state.indexLoggedUser],
+        email: this.$store.state.users[this.user_id],
         title: this.title,
         description: this.description,
         tags: this.tags,
@@ -564,7 +564,7 @@ export default {
       //questo aggiorna solo store di announcements
       this.$store.state.announcements.push({
         id: this.id + 1,
-        email: this.$store.state.users[this.$store.state.indexLoggedUser],
+        email: this.$store.state.users[this.user_id],
         title: this.title,
         description: this.description,
         tags: this.tags,

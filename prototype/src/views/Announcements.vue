@@ -640,6 +640,7 @@ export default {
       tag2: "",
       tag3: "",
       announcements: [],
+      id_utente:0,
     };
   },
 
@@ -652,9 +653,11 @@ export default {
     // Pubblicazione annuncio
     publishAnnouncement() {
       //questo aggiorna sia versione locale sia store di announcements
+      this.id_utente=localStorage.id_utente
+      this.email=this.$store.state.users[this.id_utente]
       this.announcements.push({
         id: this.id + 1,
-        email: this.$store.state.users[this.$store.state.indexLoggedUser],
+        email: this.email,
         title: this.title,
         description: this.description,
         tags: this.tags,
