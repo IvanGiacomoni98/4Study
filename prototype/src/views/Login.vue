@@ -205,10 +205,10 @@ export default {
           }
         }
 
-        this.$store.state.indexUserLogged=index
+        this.$store.state.indexLoggedUser=index
         localStorage.id_utente=index
         console.log("INDEX",index)
-        console.log("ID STORE PRE",this.$store.state.indexUserLogged)
+        console.log("ID STORE PRE",this.$store.state.indexLoggedUser)
         if(okusers & okpw)
           { 
             this.errorAuth = 'NO ERROR'
