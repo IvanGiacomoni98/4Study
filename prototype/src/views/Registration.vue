@@ -46,6 +46,14 @@
                 </div>
 
                 <div class="row mt-2">
+                    <div class="col">
+                      <h5>Residence town</h5>
+                        <input type="text" v-model=town id="inputTown" :class="townClass" placeholder="Residence town" required>
+                        <label v-if="townVer==false" for="inputTown" class="badge badge-danger">Residence town not valid</label>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
                   <div class="col">
                     <h5>Password</h5>
                     <input type="password" v-model=password :class="passwordClass" placeholder="Password" required>
@@ -119,6 +127,11 @@ export default {
             birthplaceClass: 'form-control-check',
             birthplaceVer: true,
 
+            town:'',
+            townOk: false,
+            townClass: 'form-control-check',
+            townVer: true,
+
             email:'',
             emailOk:false,
             emailClass: 'form-control-check',
@@ -154,6 +167,29 @@ export default {
           else this.surnameOk = true
           if(isNaN(this.surname) || this.surname=='')  { this.surnameVer = true; this.surnameClass = "form-control-check-ver";}
           else{ this.surnameVer = false; this.surnameClass = "form-control-check-errore";}
+        },
+        town: function(){
+          if(this.town=='') this.townOk = false
+          else this.townOk = true
+
+          if(this.town.charAt(0) == this.town.charAt(0).toLowerCase()){ 
+            var newTown = ""
+            newTown=this.town.charAt(0).toUpperCase() + this.town.slice(1);
+            this.birthplace = newTown
+          }  
+          
+          var trovato = false
+          var json = require('../../comuni.json');
+          var i=0
+          for(i=0; i<json.length; i++){
+            if(json[i].nome.toLowerCase()==this.town.toLowerCase()){
+              trovato=true
+              this.town = json[i].nome
+            }
+          }          
+
+          if(trovato==true && this.townOk==true) { this.townVer = true; this.townClass = "form-control-check-ver";}
+          else { this.townVer = false; this.townClass = "form-control-check-errore";}
         },
         sex: function(){
           if(this.sex=='') this.sexOk = false
@@ -276,6 +312,10 @@ export default {
         sexOk: function(){
           if(this.sexOk==true) this.sexClass = 'select-control-check-ver'
           else this.sexClass = "select-control-check-errore"
+        },
+        townOk: function(){
+          if(this.townOk==true) this.townClass = 'select-control-check-ver'
+          else this.townClass = "select-control-check-errore"
         }
 
 
@@ -285,7 +325,7 @@ export default {
         checkForm(){
           if(this.nameVer==true && this.surnameVer==true && (this.phoneVer==true || this.phone=='') && this.emailVer==true && 
           this.birthplaceVer==true && this.passwordVer==true && this.dayOk==true && this.monthOk==true && 
-          this.yearOk==true && this.sexOk==true && this.password2Ver==true) return true;
+          this.yearOk==true && this.townOk==true && this.sexOk==true && this.password2Ver==true) return true;
           else return false
         }
         ,
@@ -346,11 +386,17 @@ export default {
               this.allerta = true
               this.sexClass = 'select-control-check-errore'
           }
+          if(!this.townOk || this.townVer == false){
+              tuttoInserito = false
+              this.allerta = true
+              this.passwordClass = 'form-control-check-errore'
+          }
 
           this.$store.state.names.push(this.name)
-          this.$store.state.surnames.push(this.name)
+          this.$store.state.surnames.push(this.surname)
           //don't worry be happy
            this.$store.state.dates.push(this.phone)
+           this.$store.state.towns.push(this.town);
         this.$store.state.users.push(this.email)
         this.$store.state.pws.push(this.password)
         this.$store.state.phones.push("")

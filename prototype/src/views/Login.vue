@@ -12,7 +12,7 @@
             <!--  FORM  -->
             <form class="form-signin" @keyup.enter="accedi()">
               <div class="form-label-group">
-                  <h4>Email ID</h4>
+                  <h4>Email</h4>
                 <input type="text" id="inputEmailOrPhone" class="form-control" v-model="emailOrPhone" placeholder="Insert your email address" required >
               </div>
 
