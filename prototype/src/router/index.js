@@ -16,7 +16,7 @@ import Note from '../views/Notes.vue'
 import MyNotes from '../views/MyNotes.vue'
 import Profile from '../views/Profile.vue'
 import BookingDetails from '../views/BookingDetails.vue'
-import FindStudyRoom from '../views/FindStudyRoom.vue'
+import ChooseCity from '../views/ChooseCity.vue'
 import FindStudyRoomMap from '../views/FindStudyRoomMap.vue'
 
 
@@ -116,13 +116,13 @@ Vue.use(VueRouter)
   },
 
   {
-    path:'/findStudyRoom',
-    name:'FindStudyRooms',
-    component: FindStudyRoom
+    path:'/chooseCity',
+    name:'ChooseCity',
+    component: ChooseCity
   },
 
   {
-    path:'/findStudyRoomMap/:city',
+    path:'/findStudyRoomMap',
     name:'FindStudyRoomsMap',
     component: FindStudyRoomMap
   },

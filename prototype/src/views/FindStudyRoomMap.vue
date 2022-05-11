@@ -5,14 +5,16 @@
       <div v-if="!bookingSeat && !viewingSummaryPage && !sharingWithFriends" class="container">
 
       <div class="row mt-3">
-        <router-link to="/findStudyRoom"><img src="../assets/back.png" width="30"/></router-link>
+        <router-link to="/avanzato"><img src="../assets/back.png" width="30"/></router-link>
       </div>
 
       <div class="mt-3">
-        <h3><p>Find a study room</p></h3>
+        <h3><p>Find a study room - {{cityMap}}</p></h3>
       </div>
 
-      <div class="row mt-5">
+      <div class="row mt-3">
+        
+        <div class="col">
 
         <GmapMap
               class = "mappa"
@@ -20,7 +22,7 @@
               :zoom="zoomMap"
               :clickable="true"
               @click="removePopup"
-              style="width: 1200px; height: 480px"
+              style="width: 1100px; height: 480px"
         >
 
         <GmapMarker
@@ -98,6 +100,13 @@
 
       </div>
 
+      </div>
+
+   
+      <center>
+        <router-link to="/chooseCity"><button style="width:170px" type="button" class="btn btn-success btn-block mt-3">Change city</button></router-link>
+
+      </center>
        
     </div>
 
@@ -342,6 +351,9 @@ export default {
           
         },
 
+        nomi_citta : [],
+        cityMap: '',
+
 
         studyRoomsDetails : [
 
@@ -534,6 +546,12 @@ export default {
   beforeCreate(){
 
   },
+
+  async created(){
+
+      this.cityMap = this.$store.state.chosenCity;
+
+    },
   
   mounted() {
 
@@ -817,7 +835,7 @@ export default {
         this.lat=lat
         this.lng=lng
 
-        this.stylecard="position:absolute;top:"+Y+"px;left:"+X+"px;"
+        this.stylecard="position:absolute;top:"+Y+"px;left:"+X+"px;width:600px"
         //console.log(this.stylecard)
 
         const studyRoomCliccata = this.trovaStudyRoomCliccata(lat, lng);
@@ -853,7 +871,7 @@ export default {
           }
         }
 
-        this.citta_aula = this.$store.state.chosenCity;
+        this.citta_aula = this.cityMap;
 
         const dettagli_giorno = event.target.id;
 
@@ -888,7 +906,7 @@ export default {
           nome_completo_persona: this.reservation.name,
           nome_aula: this.studyRoomClicked.nome_aula,
           indirizzo_aula: this.studyRoomClicked.indirizzo_aula,
-          citta_aula: this.$store.state.chosenCity,
+          citta_aula: this.cityMap,
           day_details: this.reservation.day_details,
           rangeHours: this.reservation.rangeHours
         }

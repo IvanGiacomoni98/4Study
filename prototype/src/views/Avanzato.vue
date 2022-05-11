@@ -9,7 +9,7 @@
           </router-link>
           </div>
         <div class="col">
-            <router-link to="/findStudyRoom">
+            <router-link to="/findStudyRoomMap">
          <button  class="rounded"  id="im3"><h5>Find study rooms</h5></button> 
           </router-link>
         </div>

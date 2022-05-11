@@ -19,7 +19,7 @@ export default new Vuex.Store({
     dates:["2/12/1998","31/05/1998"],
     users:["danielebufalieritkd@gmail.com","ivangiacomoni@gmail.com"],
     highschools:["A.Volta","G.Galilei"],
-    towns:["Rome","Terracina"],
+    towns:["Roma","Terracina"],
     univerisities:["Sapienza","Sapienza"],
     pws:["daniele98","4study98."],
 

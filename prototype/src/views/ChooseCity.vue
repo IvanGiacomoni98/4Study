@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row mt-4">
-      <router-link to="/avanzato"><img src="../assets/back.png" width="30"/></router-link>
+      <router-link to="/findStudyRoomMap"><img src="../assets/back.png" width="30"/></router-link>
     </div>
     
     <div class="row">
@@ -11,7 +11,7 @@
            <h5 class="card-title text-center"><b>Insert the city where to study</b></h5>
            
             <hr>
-            <form class="form-signin">
+            <form class="form-signin" @keyup.enter="goToMapStudyRooms">
 
               <div class="form-label-group"><br>
               
@@ -105,7 +105,7 @@ export default {
             localStorage.setItem('lat', lat);
             localStorage.setItem('lng', lng);
 
-            this.$router.push('/findStudyRoomMap/'+this.chosen_city)
+            this.$router.push('/findStudyRoomMap')
           })
           .catch(error => {
             alert("catch")

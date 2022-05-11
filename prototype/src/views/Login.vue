@@ -49,6 +49,9 @@
 
 import {mapMutations} from 'vuex'
 import { mapGetters} from 'vuex'
+import axios from 'axios';
+require("dotenv").config();
+
 export default {
     name: 'Login',
     data (){
@@ -155,7 +158,8 @@ export default {
       ...mapMutations([
         'setLogged',
         'setToken',
-        'setType'
+        'setType',
+        'setChosenCity',
       ]),
       ...mapGetters([
         'getUsers',
@@ -211,8 +215,12 @@ export default {
         console.log("ID STORE PRE",this.$store.state.indexLoggedUser)
         if(okusers & okpw)
           { 
+            
+            // Setto la città per le mappe come la città di residenza dell'utente che si è appena loggato
+            this.setCityForMaps();
+
             this.errorAuth = 'NO ERROR'
-            this.text = "Accesso a Eco effettato con successo!"
+            this.text = "Accesso a 4Study effettato con successo!"
             this.colore = "alert alert-success"
             this.$store.commit('setLogged', true)
             this.$router.push('/avanzato')
@@ -226,7 +234,39 @@ export default {
 
        
 
-      }
+      },
+
+      setCityForMaps() {
+
+          const indexLoggedUser = this.$store.state.indexLoggedUser;
+          
+          // Setto la città per le mappe come la città di residenza dell'utente che si è appena loggato
+          this.setChosenCity(this.$store.state.towns[indexLoggedUser]);
+
+          const key = process.env.VUE_APP_MAP_STUDY_ROOMS
+          const city = this.$store.state.chosenCity;
+
+          axios.get('https://open.mapquestapi.com/geocoding/v1/address?key='+key+'&location='+city)
+          .then(response => {
+
+            const latLng = response.data.results[0].locations[0].displayLatLng
+
+            //alert("SUBITO LAT: "+response.data.results[0].locations[0].displayLatLng.lat)
+            //alert("SUBITO LNG: "+response.data.results[0].locations[0].displayLatLng.lng)
+
+            const lat = parseFloat(latLng.lat);
+            const lng = parseFloat(latLng.lng);
+
+            localStorage.setItem('lat', lat);
+            localStorage.setItem('lng', lng);
+          })
+          .catch(error => {
+            alert("catch")
+            console.log(error);
+          });
+
+        }
+
     },
 }
 </script>
