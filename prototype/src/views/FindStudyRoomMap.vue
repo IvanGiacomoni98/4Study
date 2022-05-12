@@ -86,7 +86,7 @@
                       <td>{{giorno.day}}</td>
                       <td>{{giorno.daily_schedule}}</td>
                       <td>{{giorno.curr_available_seats}}</td>
-                      <td v-if="giorno.curr_available_seats > 0"><button :id="giorno.day" @click="goToBookSeat" class="btn btn-success">Book!</button></td>
+                      <td v-if="giorno.curr_available_seats > 0"><button :id="giorno.day+';'+giorno.daily_schedule" @click="goToBookSeat" class="btn btn-success">Book!</button></td>
                       <td v-else>--</td>
                     </tr>
                     
@@ -153,12 +153,49 @@
               </div>
 
               <div class="form-label-group">
-              <h4>Hours' range</h4>
-                <input type="text" id="hours" class="form-control" v-model="rangeHours" placeholder="Insert the hours' range (e.g.: from 15 to 18 pm)" required>
+                  <h4>Daily schedule</h4>
+                  <div class="row">
+
+                    <div class="col">
+                      <h6>Opening hours</h6>
+                      <input type="time" id="open_time_schedule" class="form-control" name="open_time_schedule" v-model="open_time_schedule" disabled>
+
+                    </div>
+
+                    <div class="col">
+                      <h6>Closing time</h6>
+                      <input type="time" id="closing_time_schedule" class="form-control" name="closing_time_schedule" v-model="closing_time_schedule" disabled>
+
+
+                    </div>
+
+                  </div>
+
+              </div>
+
+              <div class="form-label-group">
+                  <h4>Booking time</h4>
+                  <div class="row">
+
+                    <div class="col">
+                      <h6>From</h6>
+                      <input type="time" id="from_hour" class="form-control" name="from_hour" v-model="from_hour" required>
+
+                    </div>
+
+                    <div class="col">
+                      <h6>To</h6>
+                      <input type="time" id="to_hour" class="form-control" name="to_hour" v-model="to_hour" required>
+
+
+                    </div>
+
+                  </div>
+
               </div>
 
 
-              <button v-if="readyRangeHours" @click="bookSeat" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Book your seat!</button>
+              <button @click="bookSeat" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Book your seat!</button>
               <hr class="my-4">
 
               <div v-if="errorAuth != null" :class="colore" role="alert">
@@ -334,6 +371,7 @@ export default {
         X: '',
         Y: '',
         day_details: '',
+        opening_hours: '',
         readyRangeHours: false,
         rangeHours: '',
 
@@ -353,6 +391,11 @@ export default {
 
         nomi_citta : [],
         cityMap: '',
+
+        from_hour: '',
+        to_hour: '',
+        open_time_schedule: '',
+        closing_time_schedule: '',
 
 
         studyRoomsDetails : [
@@ -873,27 +916,64 @@ export default {
 
         this.citta_aula = this.cityMap;
 
-        const dettagli_giorno = event.target.id;
+        const dettagli_giorno = event.target.id.split(";")[0];
+        const opening_hours = event.target.id.split(";")[1];
 
         this.day_details = dettagli_giorno;
+        this.opening_hours = opening_hours;
+
+        let start = this.opening_hours.split("-")[0].trim();
+        let end = this.opening_hours.split("-")[1].trim();
+
+        start = start.slice(0, -2)
+        end = end.slice(0, -2)
+
+        let start_ = '';
+        let end_ = '';
+
+        let n = start.split(":")[0].length;
+        if(n==1){
+          start_ = '0'+start;
+        }
+        else{
+          start_ = start;
+        }
+
+        n = end.split(":")[0].length;
+        if(n==1){
+        end_ = '0'+end;
+        }
+        else{
+          end_ = end;
+        }
+
+        this.open_time_schedule = start_;
+        this.closing_time_schedule = end_;
 
         this.bookingSeat = true;
 
       },
 
       backToMap(){
+
+        this.errorAuth = null;
+        this.text_error = "";
+
         this.rangeHours = "";
         this.bookingSeat = false;
       },
 
       bookSeat(){
 
+        this.errorAuth = null;
+        this.text_error = "";
+
         const idUtenteLoggato = localStorage.getItem('id_utente');
         const nameUtenteLoggato = this.$store.state.names[idUtenteLoggato];
         const surnameUtenteLoggato = this.$store.state.surnames[idUtenteLoggato];
         const all = nameUtenteLoggato + ' ' + surnameUtenteLoggato;
 
-        this.reservation.rangeHours = this.rangeHours;
+        this.reservation.rangeHours = this.from_hour + " - " + this.to_hour;
         this.reservation.day_details = this.day_details;
         this.reservation.name = all;
 
@@ -911,6 +991,12 @@ export default {
           rangeHours: this.reservation.rangeHours
         }
 
+        const validRangeHours = this.validateRangeHours();
+
+        if(!validRangeHours){
+          return;
+        }
+
         // Aggiungo la prenotazione nello store
         this.aggiungiPrenotazione(prenotazione);
         
@@ -925,6 +1011,76 @@ export default {
         this.bookingSeat = false;
         this.viewingSummaryPage = true;
 
+      },
+
+      validateRangeHours(){
+        const opening_hours = this.opening_hours;
+        let start = opening_hours.split("-")[0].trim();
+        let end = opening_hours.split("-")[1].trim();
+
+        start = start.slice(0, -2)
+        end = end.slice(0, -2)
+
+        /*alert(start)
+        alert(end);*/
+
+        let start_hour = parseInt(start.split(':')[0]);
+        let start_minutes = parseInt(start.split(':')[1]);
+        let end_hour = parseInt(end.split(':')[0]);
+        let end_minutes = parseInt(end.split(':')[1]);
+
+        let from_hour_hour = parseInt(this.from_hour.split(":")[0]);
+        let from_hour_minutes = parseInt(this.from_hour.split(":")[1]);
+
+        let to_hour_hour = parseInt(this.to_hour.split(":")[0]);
+        let to_hour_minutes = parseInt(this.to_hour.split(":")[1]);
+
+        if(isNaN(from_hour_hour) || isNaN(from_hour_minutes) || isNaN(to_hour_hour) || isNaN(to_hour_minutes)){
+          this.errorAuth = true
+          this.colore = "alert alert-danger"
+          this.text = "One or both dates are not correctly filled!"
+          return false;
+        }
+
+        /*console.log(start_hour + " " + start_minutes)
+        console.log(end_hour + " " + end_minutes)
+
+        console.log("from hour hour "+from_hour_hour)
+        console.log("from hour minutes "+from_hour_minutes)
+        console.log("to hour hour "+to_hour_hour)
+        console.log("to hour minutes "+to_hour_minutes)*/
+
+        /*alert(start_hour + " " + start_minutes)
+        alert(end_hour + " " + end_minutes)
+
+        alert("from hour hour "+from_hour_hour)
+        alert("from hour minutes "+from_hour_minutes)
+        alert("to hour hour "+to_hour_hour)
+        alert("to hour minutes "+to_hour_minutes)*/
+
+        if((from_hour_hour < start_hour) || ((from_hour_hour == start_hour) && from_hour_minutes < start_minutes)){
+          this.errorAuth = true
+          this.colore = "alert alert-danger"
+          this.text = "Start hour must be greater than or equal "+start
+          return false;
+        }
+
+
+        if((to_hour_hour > end_hour) || ((to_hour_hour == end_hour) && to_hour_minutes > end_minutes)){
+          this.errorAuth = true
+          this.colore = "alert alert-danger"
+          this.text = "End hour must be less than or equal "+end
+          return false;
+        }
+
+        if(from_hour_hour > to_hour_hour || (from_hour_hour == to_hour_hour && from_hour_minutes > to_hour_minutes)){
+          this.errorAuth = true
+          this.colore = "alert alert-danger"
+          this.text = "Start hour must be less than or equal end hour"
+          return false;
+        }
+
+        return true;
       },
 
       goToShareReservationWithFriends(){
