@@ -233,8 +233,13 @@
           <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
           </router-link>
         </div>
-        <div class="col">
-          <button type="button" id="bottone_download" class="btn btn-lg btn-success btn-block mt-3">Download</button>
+        <div class="col mt-2">
+          <a href="../assets/download.txt" download="download.txt"
+                      ><img
+                        src="../assets/download.png"
+                        height="60"
+                        width="60"
+                    /></a>
         </div>
         <div class="col">
           <button type="button" id="bottone_share" @click="goToShareReservationWithFriends" class="btn btn-lg btn-success btn-block mt-3">Share it by email!</button>
