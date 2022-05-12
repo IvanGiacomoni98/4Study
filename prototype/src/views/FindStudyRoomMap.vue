@@ -908,7 +908,7 @@ export default {
         const prenotazioni = this.$store.state.prenotazioni_aule;
 
         for(let i=0;i<prenotazioni.length;i++){
-          if(prenotazioni[i].day_details == event.target.id){
+          if(prenotazioni[i].day_details == event.target.id.split(";")[0]){
             alert("YOU ALREADY HAVE A RESERVATION FOR A STUDY ROOM IN THIS DAY!")
             return;
           }
