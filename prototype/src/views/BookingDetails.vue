@@ -18,6 +18,16 @@
           <div class="card-body">
             <h5 class="card-title text-center"><b>Booking details</b></h5>
 
+            <div class="row">
+              <div class="col">
+                <p><b>Reservation id</b></p>
+              </div>
+
+              <div class="col">
+                {{booking.id_prenotazione}}
+              </div>
+            </div>
+
             
             <div class="row">
               <div class="col">
@@ -73,11 +83,26 @@
 
             <div class="row">
               <div class="col">
-                <p><b>Hours' range</b></p>
+                <p><b>Booking time</b></p>
               </div>
 
               <div class="col">
                 {{booking.rangeHours}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col mt-1">
+                <p><b>Download</b></p>
+              </div>
+
+              <div class="col">
+                <a href="../assets/download.txt" download="study_room_reservation.pdf"
+                      ><img
+                        src="../assets/download.png"
+                        height="35"
+                        width="35"
+                    /></a>
               </div>
             </div>
 

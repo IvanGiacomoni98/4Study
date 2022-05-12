@@ -234,7 +234,7 @@
           </router-link>
         </div>
         <div class="col mt-2">
-          <a href="../assets/download.txt" download="download.txt"
+          <a href="../assets/download.txt" download="study_room_reservation.pdf"
                       ><img
                         src="../assets/download.png"
                         height="60"
