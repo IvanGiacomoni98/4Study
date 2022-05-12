@@ -40,7 +40,6 @@
                   </th>
                   <th scope="col">Title</th>
                   <th scope="col">Details</th>
-                  <th scope="col">Reply to the owner</th>
                   <th scope="col">
                     <img
                       @click="cliccatoSuFiltra = true"
@@ -66,14 +65,7 @@
                       @click="visualizzaDettagli"
                     />
                   </td>
-                  <td>
-                    <img
-                      src="../assets/chat.jpg"
-                      height="30"
-                      :id="announcement.id"
-                    />
                     <!--   da inserire in img tag: @click="visualizzaDettagli"  -->
-                  </td>
 
                   <td><!--  Padding per img filter  --></td>
                 </tr>
