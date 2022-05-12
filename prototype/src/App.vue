@@ -25,8 +25,6 @@
       <li  class="nav-item">
         <router-link  to="/profile" class="nav-link" href="#">Profile</router-link>
       </li>
-       <li  class="nav-item">
-        <router-link  to="/chat" class="nav-link" href="#">Chat</router-link>
        <li class="nav-item">
         <router-link  to="/logout" class="nav-link" href="#">Logout </router-link>
       </li>
