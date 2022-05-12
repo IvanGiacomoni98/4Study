@@ -241,9 +241,6 @@
                         width="60"
                     /></a>
         </div>
-        <div class="col">
-          <button type="button" id="bottone_share" @click="goToShareReservationWithFriends" class="btn btn-lg btn-success btn-block mt-3">Share it by email!</button>
-        </div>
 
   
     </div>
