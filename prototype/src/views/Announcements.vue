@@ -547,7 +547,6 @@
                 <tr>
                   <th scope="col">Title</th>
                   <th scope="col">Details</th>
-                  <th scope="col">Replay to the owner</th>
                   <th scope="col">
                     <img
                       @click="rimuoviFiltri()"
@@ -571,14 +570,6 @@
                       :id="n.id"
                        @click="visualizzaDettagli"
                     />
-                  </td>
-                  <td>
-                    <img
-                      src="../assets/chat.jpg"
-                      height="30"
-                      :id="n.id"
-                    />
-                    <!--   da inserire in img tag: @click="visualizzaDettagli"  -->
                   </td>
                   <td><!--  Padding per img no filter  --></td>
                 </tr>
