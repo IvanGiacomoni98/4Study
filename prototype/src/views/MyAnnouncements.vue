@@ -17,7 +17,8 @@
         !visualizzandoDettagli &&
         !updating &&
         !cliccatoSuFiltra &&
-        !filtering
+        !filtering &&
+        !confirmationPage
       "
     >
       <div class="card border-warning mt-3">
@@ -492,7 +493,44 @@
     </div>
 
 
+    <!-- CONFIRMATION PAGE  -->
 
+    <div v-else-if="confirmationPage" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>Notes have been correctly added!</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+          <button @click="tornaAllaSchermataPrecedenteDaFiltri" type="button" id="bottone_annunci" class="btn btn-lg btn-success btn-block mt-3">My announcements</button>   
+        </div>
+        <div class="col mt-2">
+          <a href="../assets/download.txt" download="announcement.pdf"
+                      ><img
+                        src="../assets/download.png"
+                        height="60"
+                        width="60"
+                    /></a>
+        </div>
+
+  
+    </div>
+    </center>
+    
+
+  </div>
 
 
 
@@ -515,6 +553,7 @@ export default {
       updating: false,
       cliccatoSuFiltra: false,
       filtering: false,
+      confirmationPage: false,
       error: "",
       messaggioErrore: "",
       cliccatoSuPubblica: false,
@@ -581,6 +620,7 @@ export default {
       this.updating = false;
       this.cliccatoSuFiltra = false;
       this.filtering = false;
+      this.confirmationPage = true;
     },
 
     visualizzaModifica(event)
@@ -765,6 +805,7 @@ export default {
       this.cliccatoSuFiltra = false;
       this.mostraZoneInserite = false;
       this.visualizzandoDettagli = false;
+      this.confirmationPage = false;
 
       this.title = "";
       this.description = "";
@@ -819,4 +860,17 @@ img {
   padding: 1rem;
   transition: all 0.2s;
 }
+
+#im3{
+
+    height:400px;  
+    width:1100px;
+   
+    background-size: cover;
+    background-color: #ffc107;
+    border-color: #c7b330;
+    color: #000000;
+
+}
+
 </style>

@@ -8,7 +8,8 @@
         !visualizzandoDettagli &&
         !updating &&
         !cliccatoSuFiltra &&
-        !filtering
+        !filtering &&
+        !confirmationPage
       "
     >
       <div class="card border-warning mt-3">
@@ -78,7 +79,7 @@
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="note.pdf"
+                    <a href="../assets/download.txt" download="notes.pdf"
                       ><img
                         src="../assets/download.png"
                         :id="note.id"
@@ -100,7 +101,7 @@
             data-title="Aggiungi"
             class="btn btn-success mt-1"
           >
-            Share Notes
+            Add notes
           </button>
         </div>
       </div>
@@ -123,7 +124,7 @@
         <!--  DA PC E TUTTI GLI ALTRI DISPOSITIVI AD ECCEZIONE DEL TELEFONO  -->
         <div class="card card-signin border-warning mt-2" style="width: 520px">
           <div class="card-body">
-            <h5 class="card-title text-center"><b>Share notes</b></h5>
+            <h5 class="card-title text-center"><b>Add notes</b></h5>
 
             <form @keyup.enter="pubblicaAnnuncio()">
               <div class="row mt-3">
@@ -194,7 +195,7 @@
                 type="button"
                 class="btn btn-success mt-3"
               >
-                Share notes
+                Add notes
               </button>
             </form>
           </div>
@@ -270,7 +271,7 @@
               </div>
 
               <div class="col">
-                <a href="../assets/download.txt" download="note.pdf"
+                <a href="../assets/download.txt" download="notes.pdf"
                       ><img
                         src="../assets/download.png"
                         height="35"
@@ -529,7 +530,7 @@
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="note.pdf"
+                    <a href="../assets/download.txt" download="notes.pdf"
                       ><img
                         src="../assets/download.png"
                         :id="n.id"
@@ -544,6 +545,48 @@
         </div>
       </div>
     </div>
+
+
+    <!-- CONFIRMATION PAGE  -->
+
+    <div v-else-if="confirmationPage" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>Notes have been correctly added!</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+          <button @click="tornaAllaSchermataPrecedenteDaFiltri" type="button" id="bottone_notes" class="btn btn-lg btn-success btn-block mt-3">My notes</button>   
+        </div>
+        <div class="col mt-2">
+          <a href="../assets/download.txt" download="notes.pdf"
+                      ><img
+                        src="../assets/download.png"
+                        height="60"
+                        width="60"
+                    /></a>
+        </div>
+
+  
+    </div>
+    </center>
+    
+
+  </div>
+
+
   </div>
 </template>
 
@@ -563,6 +606,7 @@ export default {
       updating: false,
       cliccatoSuFiltra: false,
       filtering: false,
+      confirmationPage: false,
       CF: "",
       data_inizio: "",
       data_fine: "",
@@ -626,7 +670,7 @@ export default {
         tag: this.tags,
       })
    
-
+      this.confirmationPage = true;
       this.adding = false;
       this.visualizzandoDettagli = false;
       this.updating = false;
@@ -790,6 +834,7 @@ export default {
       this.cliccatoSuFiltra = false;
       this.mostraZoneInserite = false;
       this.visualizzandoDettagli = false;
+      this.confirmationPage = false;
 
       this.data_inizio = "";
       this.data_fine = "";
@@ -850,4 +895,17 @@ img {
   padding: 1rem;
   transition: all 0.2s;
 }
+
+#im3{
+
+    height:400px;  
+    width:1100px;
+   
+    background-size: cover;
+    background-color: #ffc107;
+    border-color: #c7b330;
+    color: #000000;
+
+}
+
 </style>
