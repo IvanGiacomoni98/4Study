@@ -592,7 +592,7 @@
 
     <div class="row mt-5">
        <div class="col">
-          <button class="rounded" disabled id="im3"><h5>Notes have been correctly added!</h5></button>
+          <button class="rounded" disabled id="im3"><h5>Announcement has been correctly published!</h5></button>
           </div>
 
   
