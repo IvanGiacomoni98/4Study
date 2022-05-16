@@ -418,6 +418,7 @@
                   <input
                     class="form-control border-warning"
                     v-model="tag1"
+                    placeholder="e.g.: #SE"
                     type="text"
                     style="width: 200px"
                   />
@@ -433,6 +434,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag2"
+                    placeholder="e.g.: #SE"
                     style="width: 200px"
                   />
                 </div>
@@ -447,6 +449,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag3"
+                    placeholder="e.g.: #SE"
                     style="width: 200px"
                   />
                 </div>
@@ -775,6 +778,10 @@ export default {
       this.descrizione = "";
       this.zone = [];
       this.CF = "";
+
+      this.tag1 = "";
+      this.tag2 = "";
+      this.tag3 = "";
     },
 
     tornaAllaSchermataPrecedenteDaModifica()
