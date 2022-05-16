@@ -61,7 +61,7 @@
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="download.txt"
+                    <a href="../assets/download.txt" download="note.pdf"
                       ><img
                         src="../assets/download.png"
                         :id="note.id"
@@ -206,7 +206,7 @@
             <!--  CF  -->
             <div class="row">
               <div class="col">
-                <p><b>title</b></p>
+                <p><b>Title</b></p>
               </div>
 
               <div class="col">
@@ -246,6 +246,23 @@
                 {{ noteDaVisualizzare.tag }}
               </div>
             </div>
+
+            <div class="row">
+              <div class="col">
+                <p><b>Download</b></p>
+              </div>
+
+              <div class="col">
+                <a href="../assets/download.txt" download="note.pdf"
+                      ><img
+                        src="../assets/download.png"
+                        height="35"
+                        width="35"
+                    /></a>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </center>
@@ -579,7 +596,7 @@
                     />
                   </td>
                   <td>
-                    <a href="../assets/download.txt" download="download.txt"
+                    <a href="../assets/download.txt" download="note.pdf"
                       ><img
                         src="../assets/download.png"
                         :id="n.id"
