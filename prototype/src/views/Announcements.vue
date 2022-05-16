@@ -145,6 +145,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tags"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -199,7 +200,7 @@
             <!--    -->
             <div class="row">
               <div class="col">
-                <p><b>email</b></p>
+                <p><b>Email</b></p>
               </div>
 
               <div class="col">
@@ -247,7 +248,7 @@
               </div>
 
               <div class="col">
-                <a href="../assets/download.txt" download="download.txt"
+                <a href="../assets/download.txt" download="announcement.pdf"
                       ><img
                         src="../assets/image.jpg"
                         height="35"
@@ -491,6 +492,7 @@
                   <input
                     class="form-control border-warning"
                     v-model="tag1"
+                    placeholder="e.g.: #maths"
                     type="text"
                     style="width: 200px"
                   />
@@ -502,6 +504,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag2"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -512,6 +515,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag3"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -745,6 +749,10 @@ export default {
       this.descrizione = "";
       this.zone = [];
       this.CF = "";
+
+      this.title = "";
+      this.description = "";
+      this.tags = "";
     },
   },
 };

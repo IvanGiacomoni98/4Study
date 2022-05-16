@@ -23,7 +23,7 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">
-                    <router-link to="/avanzato"
+                    <router-link to="/notes"
                       ><img
                         data-title="Torna alle avanzate"
                         src="../assets/back.png"

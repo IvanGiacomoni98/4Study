@@ -166,6 +166,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tags"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -256,7 +257,7 @@
               </div>
 
               <div class="col">
-                <a href="../assets/download.txt" download="download.txt"
+                <a href="../assets/download.txt" download="announcement.pdf"
                       ><img
                         src="../assets/image.jpg"
                         height="35"
@@ -398,6 +399,7 @@
                   <input
                     class="form-control border-warning"
                     v-model="tag1"
+                    placeholder="e.g.: #maths"
                     type="text"
                     style="width: 200px"
                   />
@@ -409,6 +411,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag2"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -419,6 +422,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tag3"
+                    placeholder="e.g.: #maths"
                     style="width: 200px"
                   />
                 </div>
@@ -761,6 +765,14 @@ export default {
       this.cliccatoSuFiltra = false;
       this.mostraZoneInserite = false;
       this.visualizzandoDettagli = false;
+
+      this.title = "";
+      this.description = "";
+      this.tags = "";
+
+      this.tag1 = "";
+      this.tag2 = "";
+      this.tag3 = "";
     },
     tornaAllaSchermataPrecedenteDaModifica()
     {
