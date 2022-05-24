@@ -4,7 +4,7 @@
   <div class="container mt-3 ">
     <div class="row mt-5">
        <div class="col">
-         <router-link to="/studygroup">
+         <router-link to="/findGroupMap">
           <button  class="rounded"  id="im3"><h5>Find a study group</h5></button>
           </router-link>
           </div>
