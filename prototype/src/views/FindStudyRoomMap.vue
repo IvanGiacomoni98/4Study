@@ -5,7 +5,7 @@
       <div v-if="!bookingSeat && !viewingSummaryPage && !sharingWithFriends" class="container">
 
       <div class="row mt-3">
-        <router-link to="/avanzato"><img src="../assets/back.png" width="30"/></router-link>
+        <router-link to="/avanzato"><img @click="backToAvanzato" src="../assets/back.png" width="30"/></router-link>
       </div>
 
       <div class="mt-3">
@@ -332,6 +332,7 @@
 import { mapGetters, mapMutations} from 'vuex'
 import {gmapApi} from 'vue2-google-maps'
 import emailjs from 'emailjs-com';
+import axios from 'axios';
 require('dotenv').config();
 
 //:icon="{ url: require('../assets/markerSensore.png')}"  => ICON SUI MARKER (?)
@@ -874,6 +875,8 @@ export default {
         this.text = JSON.stringify(event.latLng)
         const lat = JSON.parse(this.text).lat
         const lng = JSON.parse(this.text).lng
+
+        alert(lat + " - "+lng)
         
         //console.log(X + ' ' + Y)
         //console.log(lat + ' ' + lng)
@@ -1302,6 +1305,37 @@ export default {
 
       sleep(milliseconds){
         return new Promise(resolve => setTimeout(resolve, milliseconds))
+      },
+
+      backToAvanzato(){
+        this.setChosenCity(this.$store.state.towns[this.$store.state.indexLoggedUser]);
+
+        const key = process.env.VUE_APP_MAP_STUDY_ROOMS
+          const city = this.$store.state.chosenCity;
+          
+
+          axios.get('https://open.mapquestapi.com/geocoding/v1/address?key='+key+'&location='+city)
+          .then(response => {
+
+            const latLng = response.data.results[0].locations[0].displayLatLng
+
+            //alert("SUBITO LAT: "+response.data.results[0].locations[0].displayLatLng.lat)
+            //alert("SUBITO LNG: "+response.data.results[0].locations[0].displayLatLng.lng)
+
+            const lat = parseFloat(latLng.lat);
+            const lng = parseFloat(latLng.lng);
+
+            localStorage.setItem('lat', lat);
+            localStorage.setItem('lng', lng);
+
+            console.log(localStorage.getItem("lat"));
+            console.log(localStorage.getItem("lng"));
+
+          })
+          .catch(error => {
+            alert("catch")
+            console.log(error);
+          });
       }
 
   }
