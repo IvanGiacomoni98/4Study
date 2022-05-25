@@ -136,6 +136,7 @@
                   <input
                     class="form-control border-warning"
                     v-model="title"
+                    placeholder="Insert a tile"
                     type="text"
                     style="width: 200px"
                   />
@@ -148,12 +149,7 @@
                 </div>
 
                 <div class="col">
-                  <input
-                    class="form-control border-warning"
-                    v-model="description"
-                    type="text"
-                    style="width: 200px"
-                  />
+                  <textarea v-model="description" id="inputDescription" class="form-control border-warning mt-1" placeholder="Insert a description" style="height: 100px" autofocus required></textarea>
                 </div>
               </div>
               
