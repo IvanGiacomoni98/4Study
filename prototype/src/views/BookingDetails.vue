@@ -1,6 +1,6 @@
 <template>
     
-  <div>
+  <div v-if="!confirmation">
 
       <!--  Img Back  -->
       <div class="row mt-1 ml-1">
@@ -125,6 +125,37 @@
 
   </div>
 
+  <div v-else-if="confirmation" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>Reservation succesfully deleted!</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3" style="width: 190px">Homepage</button>   
+          </router-link>
+        </div>
+
+        <div class="col">
+         <router-link to="/profile">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3" style="width: 190px">Profile</button>   
+          </router-link>
+        </div>
+  
+    </div>
+    </center>
+    
+
+  </div>
+
 </template>
 
 <script>
@@ -138,7 +169,8 @@ export default {
     return {
       booking: {},
       cliccatoSuCancella: false,
-      text: 'Booking succesfully deleted!'
+      text: 'Booking succesfully deleted!',
+      confirmation: false,
     };
   },
 
@@ -182,7 +214,7 @@ export default {
 
       this.aggiungiUnPostoInAula(info_aula);
 
-      this.$router.push('/profile');
+      this.confirmation = true;
 
       //this.cliccatoSuCancella = true;
       
@@ -212,4 +244,14 @@ img {
   padding: 1rem;
   transition: all 0.2s;
 }
+
+#im3 {
+    height: 400px;
+    width: 1100px;
+    background-size: cover;
+    background-color: #ffc107;
+    border-color: #c7b330;
+    color: #000000;
+}
+
 </style>
