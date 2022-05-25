@@ -875,8 +875,6 @@ export default {
         this.text = JSON.stringify(event.latLng)
         const lat = JSON.parse(this.text).lat
         const lng = JSON.parse(this.text).lng
-
-        alert(lat + " - "+lng)
         
         //console.log(X + ' ' + Y)
         //console.log(lat + ' ' + lng)
