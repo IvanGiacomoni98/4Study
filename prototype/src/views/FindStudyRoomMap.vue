@@ -219,7 +219,7 @@
 
     <div class="row mt-5">
        <div class="col">
-          <button class="rounded" disabled id="im3"><h5>Your seat has been booked!</h5></button>
+          <button class="rounded" disabled id="im3"><h5>Your seat has been booked! You can check your reservation in the profile section or you can also download from here.</h5></button>
           </div>
 
   
@@ -231,6 +231,11 @@
        <div class="col">
          <router-link to="/avanzato">
           <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+         <router-link to="/profile">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Profile</button>   
           </router-link>
         </div>
         <div class="col mt-2">
@@ -1355,7 +1360,7 @@ export default {
 #im3{
 
     height:400px;  
-    width:1100px;
+    width:1150px;
    
     background-size: cover;
     background-color: #ffc107;
