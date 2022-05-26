@@ -1,19 +1,19 @@
 <template>
     <div>
     
-        <div v-if="!bookingSeat && !viewingSummaryPage && !sharingWithFriends" class="container">
+        <div v-if="!confirmation" class="container">
     
             <div class="row mt-3">
-                <router-link to="/avanzato"><img src="../assets/back.png" width="30" /></router-link>
+                <router-link to="/avanzato"><img @click="backToAvanzato" src="../assets/back.png" width="30" /></router-link>
             </div>
     
             <div class="mt-3 ">
                 <h3>
-                    <p>Find a Group</p>
+                    <p>Find a study group - {{chosenCity}}</p>
                 </h3>
             </div>
     
-            <div class="row mt-5 ">
+            <div class="row mt-3 ">
     
                 <GmapMap class="mappa " :center="{lat:center.lat, lng:center.lng} " :zoom="zoomMap " :clickable="true " @click="removePopup " style="width: 1200px; height: 480px ">
     
@@ -22,7 +22,7 @@
     
                 </GmapMap>
             </div>
-        </div>
+
         <center>
         <div class="container">
             <div class="row">
@@ -34,6 +34,41 @@
                 </div>
             </div>
         </div>
+        </center>
+        
+        </div>
+
+    <div v-else-if="confirmation" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>Group successfully joined! You can check your groups in the profile section.</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+         <router-link to="/profile">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Profile</button>   
+          </router-link>
+        </div>
+  
+    </div>
+    </center>
+    
+
+  </div>
+
+        <center>
 
 
         <div v-if="show" :style="stylecard" :class="content_class">
@@ -89,10 +124,16 @@
     
                                 </div>
                                 <center>
-                                <div class="col">
-                     <router-link to="/Avanzato"><button style="width:170px" type="button" class="btn btn-success btn-block mt-3">Join the group</button></router-link>
-                </div>
-    </center>
+                                <div v-if="!studyGroupClicked.member" class="col">
+                                    <button :id="studyGroupClicked.id_study_group" @click="joinGroup" style="width:170px" type="button" class="btn btn-success btn-block mt-3">Join the group</button>
+                                </div>
+                                <div v-else-if="!studyGroupClicked.admin && studyGroupClicked.member" class="col  mt-1">
+                                    <b>You are a member of this group.</b>
+                                </div>
+                                <div v-else-if="studyGroupClicked.admin" class="col mt-1">
+                                    <b>You are the admin of this group.</b>
+                                </div>
+                                </center>
                                 
                             </div>
                         </div>
@@ -109,6 +150,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { gmapApi } from 'vue2-google-maps'
+import axios from 'axios';
 require('dotenv').config();
 
 //:icon="{ url: require('../assets/markerSensore.png')}"  => ICON SUI MARKER (?)
@@ -145,56 +187,12 @@ export default {
             stylecard: "",
             X: '',
             Y: '',
+            chosenCity: '',
+            
+            confirmation: false,
 
             studyGroupClicked: {},
-
-            studyGroupDetails : [
-
-          {
-
-            id_study_group: 0,
-            coordinate_gruppo : {
-              lat: '',
-              lng: '',
-            },
-            nome_gruppo: 'HCI GROUP 1',
-            descrizione_gruppo: 'First year of human computer interaction',
-            indirizzo_gruppo: 'Viale Manzoni 3',
-            partecipanti:'3'
-
-
-
-          },
-          {
-
-            id_study_group: 1,
-            coordinate_gruppo : {
-              lat: '',
-              lng: '',
-            },
-            nome_gruppo: 'StudyZone eng',
-            descrizione_gruppo: 'Study group of engineering in computer cience',
-            indirizzo_gruppo: 'Via Scarpa 123',
-            partecipanti:'78'
-
-
-          },
-          {
-
-            id_study_group: 2,
-            coordinate_gruppo : {
-              lat: '',
-              lng: '',
-            },
-             nome_gruppo: 'Data Management',
-            descrizione_gruppo: 'Data Management with Lenzerini',
-            indirizzo_gruppo: 'Via Roma 78',
-            partecipanti:'11'
-
-          }
-            ],
-
-
+            studyGroupDetails: [],
 
 
             markerOptions: {
@@ -210,27 +208,20 @@ export default {
 
     },
 
+    created(){
+
+        console.log(this.$store.state.markers_gruppi)
+
+        this.chosenCity = this.$store.state.chosenCity;
+
+        this.studyGroupDetails = this.$store.state.gruppi;
+
+        this.markers = this.$store.state.markers_gruppi;
+
+        this.inserisciMarkers();
+    },
+
     mounted() {
-        if(localStorage.getItem("groupAdded")=="true")
-        {
-            localStorage.setItem('groupAdded',"false");
-            this.inserisciMarkers2();
-            var obj=localStorage.getItem('gruppo_aggiunto')
-
-            obj=JSON.parse(obj)
-            obj.coordinate_gruppo = {
-            lat: this.center.lat - this.MARKER_DETERMINATION,
-             lng: this.center.lng - this.MARKER_DETERMINATION
-             }
-            this.studyGroupDetails.push(obj)
-        }
-        else{
-            this.inserisciMarkers();
-        }
-           
-            console.log();
-
-        
 
     },
 
@@ -238,90 +229,19 @@ export default {
 
         inserisciMarkers() {
 
-            this.markers.push({
-                id_study_group: 0,
-                lat: this.center.lat,
-                lng: this.center.lng
-            })
-
-            this.markers.push({
-                id_study_group: 1,
-                lat: this.center.lat + this.MARKER_DETERMINATION,
-                lng: this.center.lng + this.MARKER_DETERMINATION
-            })
-
-            this.markers.push({
-                id_study_group: 2,
-                lat: this.center.lat + this.MARKER_DETERMINATION,
-                lng: this.center.lng - this.MARKER_DETERMINATION
-            })
-            this.studyGroupDetails[0].coordinate_gruppo = {
-          lat: this.center.lat,
-          lng: this.center.lng
-        }
-
-        this.studyGroupDetails[1].coordinate_gruppo = {
-          lat: this.center.lat + this.MARKER_DETERMINATION,
-          lng: this.center.lng + this.MARKER_DETERMINATIONf
-        }
-
-        this.studyGroupDetails[2].coordinate_gruppo = {
-          lat: this.center.lat + this.MARKER_DETERMINATION,
-          lng: this.center.lng - this.MARKER_DETERMINATION
-        }
-
-
+            for(let i=0;i<this.markers.length;i++){
+                this.studyGroupDetails[i].coordinate_gruppo = {
+                    lat: this.markers[i].lat,
+                    lng: this.markers[i].lng,
+                }
+            }
 
         },
-        inserisciMarkers2() {
-
-            this.markers.push({
-                id_study_group: 0,
-                lat: this.center.lat,
-                lng: this.center.lng
-            })
-
-            this.markers.push({
-                id_study_group: 1,
-                lat: this.center.lat + this.MARKER_DETERMINATION,
-                lng: this.center.lng + this.MARKER_DETERMINATION
-            })
-
-            this.markers.push({
-                id_study_group: 2,
-                lat: this.center.lat + this.MARKER_DETERMINATION,
-                lng: this.center.lng - this.MARKER_DETERMINATION
-            })
-
-            this.markers.push({
-                id_study_group: 3,
-                lat: this.center.lat - this.MARKER_DETERMINATION,
-                lng: this.center.lng - this.MARKER_DETERMINATION
-            })
-
-            this.studyGroupDetails[0].coordinate_gruppo = {
-          lat: this.center.lat,
-          lng: this.center.lng
-        }
-
-        this.studyGroupDetails[1].coordinate_gruppo = {
-          lat: this.center.lat + this.MARKER_DETERMINATION,
-          lng: this.center.lng + this.MARKER_DETERMINATIONf
-        }
-
-        this.studyGroupDetails[2].coordinate_gruppo = {
-          lat: this.center.lat + this.MARKER_DETERMINATION,
-          lng: this.center.lng - this.MARKER_DETERMINATION
-        }
-
-
-
-        }
-        ,
-
-
 
         trovaStudyGroupCliccato(lat, lng) {
+
+            console.log("quelle che mi arrivano in input => "+lat+" - "+lng)
+
             let i = 0;
             let n = this.studyGroupDetails.length;
             for (i = 0; i < n; i++) {
@@ -334,7 +254,8 @@ export default {
 
         ...mapMutations([
             'setChosenCity',
-            'setcoordinate_gruppo'
+            'setcoordinate_gruppo',
+            'joinaGruppo'
         ]),
 
         showInfoDetails(event) {
@@ -385,6 +306,80 @@ export default {
         },
         sleep(milliseconds) {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
+        },
+
+        backToAvanzato(){
+            this.setChosenCity(this.$store.state.towns[this.$store.state.indexLoggedUser]);
+
+        const key = process.env.VUE_APP_MAP_STUDY_ROOMS
+          const city = this.$store.state.chosenCity;
+          
+
+          axios.get('https://open.mapquestapi.com/geocoding/v1/address?key='+key+'&location='+city)
+          .then(response => {
+
+            const latLng = response.data.results[0].locations[0].displayLatLng
+
+            //alert("SUBITO LAT: "+response.data.results[0].locations[0].displayLatLng.lat)
+            //alert("SUBITO LNG: "+response.data.results[0].locations[0].displayLatLng.lng)
+
+            const lat = parseFloat(latLng.lat);
+            const lng = parseFloat(latLng.lng);
+
+            localStorage.setItem('lat', lat);
+            localStorage.setItem('lng', lng);
+
+            const markers_gruppi = this.$store.state.markers_gruppi;
+            this.$store.state.markers_gruppi = [];
+
+            for(let i=0;i<markers_gruppi.length;i++){
+              let lat_ = 0.0;
+              let lng_ = 0.0;
+
+              if(i == 0){
+                lat_ = lat;
+                lng_ = lng;
+              }
+              else if(i == 1){
+                lat_ = lat + this.MARKER_DETERMINATION;
+                lng_ = lng + this.MARKER_DETERMINATION;
+              }
+              else if(i == 2){
+                lat_ = lat + this.MARKER_DETERMINATION;
+                lng_ = lng - this.MARKER_DETERMINATION;
+              }
+              else if(i == 3){
+                lat_ = lat - this.MARKER_DETERMINATION;
+                lng_ = lng + this.MARKER_DETERMINATION;
+              }
+              else if(i == 4){
+                lat_ = lat - this.MARKER_DETERMINATION;
+                lng_ = lng - this.MARKER_DETERMINATION;
+              }
+
+              this.$store.state.markers_gruppi.push({
+                id_study_group: i,
+                lat: lat_,
+                lng: lng_
+              })
+
+            }
+
+          })
+          .catch(error => {
+            alert("catch")
+            console.log(error);
+          });
+        },
+
+        joinGroup(event){
+            const group_id = event.target.id;
+            this.joinaGruppo(group_id);
+            
+            console.log(this.studyGroupClicked);
+            this.show = false;
+            this.confirmation = true;
+
         }
 
     }
