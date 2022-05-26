@@ -228,7 +228,11 @@ export default {
           else{
               this.errorAuth = true
               this.colore = "alert alert-danger"
-              this.text = "Email o password errati!"
+              this.text = "Wrong email or password!"
+
+              setTimeout(() => {
+                this.errorAuth = null;  
+              }, 3000)
             }
         
 

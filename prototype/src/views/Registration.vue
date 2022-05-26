@@ -1,7 +1,7 @@
 
 <template>
   <div class="container">
-    <div class="row">
+     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5  border-warning">
           <div class="card-body">
@@ -13,21 +13,22 @@
 
 
               <div class="form-label-group">
-                
+
+                    <div class="row mt-2">
+                    <div class="col">
+                        <h5>Name</h5>
+                        <input type="text" v-model=name  id="inputName" :class="nameClass" placeholder="Name" autofocus required>
+                        <label v-if="nameVer==false" for="inputName" class="badge badge-danger">No number</label>
+                    </div>
+                    </div>
+
                     <div class="row">
                     <div class="col ">
                       <h5>Surname</h5>
                         <input type="text" v-model=surname id="inputSurname" :class="surnameClass" placeholder="Surname" required>
-                        <label v-if="surnameVer==false" for="inputSurname" class="badge badge-danger">No numero</label>
+                        <label v-if="surnameVer==false" for="inputSurname" class="badge badge-danger">No number</label>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col">
-                        <h5>Name</h5>
-                        <input type="text" v-model=name  id="inputName" :class="nameClass" placeholder="Name" autofocus required>
-                        <label v-if="nameVer==false" for="inputName" class="badge badge-danger">No numero</label>
-                    </div>
-                    </div>
               </div>
 
               <div class="form-label-group">
@@ -41,7 +42,7 @@
                 <div class="row mt-2">
                     <div class="col">
                       <h5>Date of birth</h5>
-                        <input type="date" v-model=phone id="inputDate" :class="nameClass" placeholder="Date of birth">
+                        <input type="date" v-model=birthdate id="inputDate" :class="nameClass" placeholder="Date of birth">
                     </div>
                 </div>
 
@@ -76,6 +77,10 @@
               
               <hr class="my-4">
               <router-link to="/login" >Back to the login page</router-link>
+
+              <div v-if="errorAuth != null" :class="colore" role="alert">
+                  {{text}}
+              </div>
               
 
             </form>
@@ -127,6 +132,11 @@ export default {
             birthplaceClass: 'form-control-check',
             birthplaceVer: true,
 
+            birthdate: '',
+            birthdateOk:false,
+            birthdateClass: 'select-control-check',
+            birthdateVer: true,
+
             town:'',
             townOk: false,
             townClass: 'form-control-check',
@@ -152,7 +162,11 @@ export default {
             phoneClass: 'form-control-check',
             phoneVer: true,
 
-            allerta: false
+            allerta: false,
+
+            errorAuth : null,
+            text : "",
+            colore : "",
         }
     },
     watch: {
@@ -206,6 +220,14 @@ export default {
         year: function(){
           if(this.year=='') this.yearOk = false
           else this.yearOk = true
+        },
+        birthdate: function(){
+          if(this.birthdate == ""){
+            this.birthdateOk = false;
+          }
+          else{
+            this.birthdateOk = true;
+          }
         },
         birthplace: function(){
           if(this.birthplace=='') this.birthplaceOk = false
@@ -289,6 +311,10 @@ export default {
           if(this.birthplaceOk==true) this.birthplaceClass = 'form-control-check'
           else this.birthplaceClass = "form-control-check-errore"
         },
+        birthdateOk: function(){
+          if(this.birthdateOk==true) this.birthdateOklass = 'select-control-check-ver'
+          else this.birthdateOkClass = "select-control-check-errore"
+        },
         emailOk: function(){
           if(this.emailOk==true) this.emailClass = 'form-control-check'
           else this.emailClass = "form-control-check-errore"
@@ -324,7 +350,7 @@ export default {
     methods : {
         checkForm(){
           if(this.nameVer==true && this.surnameVer==true && (this.phoneVer==true || this.phone=='') && this.emailVer==true && 
-          this.birthplaceVer==true && this.passwordVer==true && this.dayOk==true && this.monthOk==true && 
+          this.birthplaceVer==true && this.birthdateOk==true && this.passwordVer==true && this.dayOk==true && this.monthOk==true && 
           this.yearOk==true && this.townOk==true && this.sexOk==true && this.password2Ver==true) return true;
           else return false
         }
@@ -341,20 +367,10 @@ export default {
               this.allerta = true
               this.surnameClass = 'form-control-check-errore'
           }
-          if(!this.birthplaceOk || this.birthplaceVer==false){
-              tuttoInserito = false
-              this.allerta = true
-              this.birthplaceClass = 'form-control-check-errore'
-          }
           if(!this.emailOk || this.emailVer==false){
               tuttoInserito = false
               this.allerta = true
               this.emailClass = 'form-control-check-errore'
-          }
-          if(this.phone!='' && this.phoneVer==false){
-              tuttoInserito = false
-              this.allerta = true
-              this.phoneClass = 'form-control-check-errore'
           }
           if(!this.passwordOk || this.passwordVer==false){
               tuttoInserito = false
@@ -366,30 +382,27 @@ export default {
               this.allerta = true
               this.password2Class = 'form-control-check-errore'
           }
-          if(!this.dayOk){
-              tuttoInserito = false
-              this.allerta = true
-              this.dayClass = 'select-control-check-errore'
-          }
-          if(!this.monthOk){
-              tuttoInserito = false
-              this.allerta = true
-              this.monthClass = 'select-control-check-errore'
-          }
-          if(!this.yearOk){
-              tuttoInserito = false
-              this.allerta = true
-              this.yearClass = 'select-control-check-errore'
-          }
-          if(!this.sexOk){
-              tuttoInserito = false
-              this.allerta = true
-              this.sexClass = 'select-control-check-errore'
-          }
           if(!this.townOk || this.townVer == false){
               tuttoInserito = false
               this.allerta = true
               this.passwordClass = 'form-control-check-errore'
+          }
+          if(!this.birthdateOk){
+              tuttoInserito = false
+              this.allerta = true
+              this.birthdateClass = 'select-control-check-errore'
+          }
+
+          if(!tuttoInserito){
+            this.errorAuth = true
+            this.colore = "alert alert-danger"
+            this.text = "Something is missing or invalid! Be sure to check all fields!"
+
+            setTimeout(() => {
+              this.errorAuth = null;  
+            }, 3000)
+
+            return;
           }
 
           this.$store.state.names.push(this.name)
