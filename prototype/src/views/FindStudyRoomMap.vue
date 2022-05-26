@@ -1002,6 +1002,11 @@ export default {
         const validRangeHours = this.validateRangeHours();
 
         if(!validRangeHours){
+
+          setTimeout(() => {
+            this.errorAuth = null;  
+          }, 3000)
+
           return;
         }
 

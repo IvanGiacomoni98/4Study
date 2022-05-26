@@ -701,7 +701,7 @@ export default {
         
         setTimeout(() => {
           this.errorAuth = null;
-        }, 2000)
+        }, 3000)
         
         return;
       }
@@ -795,7 +795,7 @@ export default {
       if(!valid){
         setTimeout(() => {
           this.errorAuth = null;
-        }, 2000)
+        }, 3000)
         
         return;
       }
