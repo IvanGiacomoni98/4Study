@@ -16,6 +16,7 @@ import Note from '../views/Notes.vue'
 import MyNotes from '../views/MyNotes.vue'
 import Profile from '../views/Profile.vue'
 import BookingDetails from '../views/BookingDetails.vue'
+import GroupDetails from '../views/GroupDetails.vue';
 import ChooseCity from '../views/ChooseCity.vue'
 import ChoseCityGroup from '../views/ChooseCityGroup.vue'
 import FindStudyRoomMap from '../views/FindStudyRoomMap.vue'
@@ -144,6 +145,11 @@ Vue.use(VueRouter)
     path:'/createNewGroup',
     name:'CreateNewGroup',
     component: CreateNewGroup
+  },
+  {
+    path: '/groupDetails',
+    name: 'GroupDetails',
+    component: GroupDetails
   },
 
   { path: '*', redirect: '/notFound' },  
