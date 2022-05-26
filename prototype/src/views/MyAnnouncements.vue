@@ -136,9 +136,10 @@
                   <input
                     class="form-control border-warning"
                     v-model="title"
-                    placeholder="Insert a tile"
+                    placeholder="Insert a title"
                     type="text"
                     style="width: 200px"
+                    required
                   />
                 </div>
               </div>
@@ -163,8 +164,9 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tags"
-                    placeholder="e.g.: #maths"
+                    placeholder="e.g.: #maths#tutor"
                     style="width: 200px"
+                    required
                   />
                 </div>
               </div>
@@ -188,8 +190,13 @@
                 type="button"
                 class="btn btn-success mt-3"
               >
-                Publish
+                Publish announcement
               </button>
+
+              <div class="mt-2" v-if="errorAuth != null" :class="colore" role="alert" style="height: 50px">
+                  {{text_error}}
+            </div>
+
             </form>
           </div>
         </div>
@@ -433,6 +440,11 @@
               >
                 Filter announcements
               </button>
+
+              <div class="mt-2" v-if="errorAuth != null" :class="colore" role="alert" style="height: 50px">
+                  {{text_error}}
+            </div>
+
             </form>
           </div>
         </div>
@@ -568,7 +580,11 @@ export default {
       tag2: "",
       tag3: "",
       user_id:0,
-      id_updating:0
+      id_updating:0,
+
+      errorAuth : null,
+      text_error : "",
+      colore : "",
     };
   },
 
@@ -591,6 +607,17 @@ export default {
 
     // Pubblicazione annuncio
     publishAnnouncement() {
+
+      const valid = this.validateFieldsPublishAnnouncement();
+      if(!valid) {
+        
+        setTimeout(() => {
+          this.errorAuth = null;
+        }, 2000)
+        
+        return;
+      }
+
       //questo aggiorna solo versione locale
       this.announcements.push({
         id: this.id + 1,
@@ -617,6 +644,39 @@ export default {
       this.cliccatoSuFiltra = false;
       this.filtering = false;
       this.confirmationPage = true;
+    },
+
+    validateFieldsPublishAnnouncement(){
+
+      if(this.title == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert a title"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.description == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert a description"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tags == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert at least one tag"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tags.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Tags not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      return true;
     },
 
     visualizzaModifica(event)
@@ -697,6 +757,16 @@ export default {
 
     // Filtri per gli annunci
     filtraAnnunci() {
+
+      const valid = this.validateTagsFiltering();
+      if(!valid){
+        setTimeout(() => {
+          this.errorAuth = null;
+        }, 2000)
+        
+        return;
+      }
+
       this.cliccatoSuFiltra = false;
       var i = 0;
       const dim = this.announcements.length;
@@ -727,6 +797,39 @@ export default {
       }
       this.filtering = true;
    
+    },
+
+    validateTagsFiltering(){
+
+      if(this.tag1 == "" && this.tag2 == "" && this.tag3 == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert at least one tag"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag1 != "" && this.tag1.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "First tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag2 != "" && this.tag2.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Second tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag3 != "" && this.tag3.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Third tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      return true;
     },
 
     tornaIndietro() {

@@ -138,6 +138,7 @@
                     v-model="title"
                     type="text"
                     style="width: 200px"
+                    required
                   />
                 </div>
               </div>
@@ -152,6 +153,7 @@
                     class="form-control border-warning mt-1"
                     v-model="course"
                     style="width: 200px"
+                    required
                   >
                     <option value="HCI">HCI</option>
                     <option value="HCI">SE</option>
@@ -170,7 +172,7 @@
                   <input
                     class="form-control border-warning mt-1"
                     v-model="tags"
-                    placeholder="e.g.: #SE"
+                    placeholder="e.g.: #SE#IOT"
                     style="width: 200px"
                   />
                 </div>
@@ -185,6 +187,7 @@
                     class="form-control border-warning mt-1"
                     style="width: 200px"
                     type="file"
+                    required
                   />
                 </div>
               </div>
@@ -197,6 +200,11 @@
               >
                 Add notes
               </button>
+
+              <div class="mt-2" v-if="errorAuth != null" :class="colore" role="alert" style="height: 50px">
+                  {{text_error}}
+            </div>
+
             </form>
           </div>
         </div>
@@ -483,6 +491,11 @@
                 Filter notes
               </button>
             </form>
+
+            <div class="mt-2" v-if="errorAuth != null" :class="colore" role="alert" style="height: 50px">
+                  {{text_error}}
+            </div>
+
           </div>
         </div>
       </center>
@@ -631,7 +644,11 @@ export default {
       tag2: "",
       tag3: "",
       user_id:0,
-      id_updating:0
+      id_updating:0,
+
+      errorAuth : null,
+      text_error : "",
+      colore : "",
     };
   },
 
@@ -654,6 +671,17 @@ export default {
     // Pubblicazione annuncio
     pubblicaNote() {
       this.email=this.$store.state.users[this.user_id]
+
+      const valid = this.validateFieldsAddNotes();
+      if(!valid) {
+        
+        setTimeout(() => {
+          this.errorAuth = null;
+        }, 2000)
+        
+        return;
+      }
+
       this.notes.push({
         id: this.id + 1,
         title: this.title,
@@ -677,6 +705,36 @@ export default {
       this.cliccatoSuFiltra = false;
       this.filtering = false;
     },
+
+    validateFieldsAddNotes(){
+
+      if(this.title == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert a title"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.course == ""){
+        this.errorAuth = true;
+        this.text_error = "Please select a course"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tags == "") return true;
+
+      if(this.tags.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Tags not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      return true;
+    },
+
+
     eliminaNote(event){
         const id_note = event.target.id;
          if(confirm("Do you really want to delete?"))
@@ -742,6 +800,16 @@ export default {
 
     // Filtri per gli annunci
     filtraNote() {
+
+      const valid = this.validateTagsFiltering();
+      if(!valid){
+        setTimeout(() => {
+          this.errorAuth = null;
+        }, 2000)
+        
+        return;
+      }
+
       this.cliccatoSuFiltra = false;
       var i = 0;
       const dim = this.notes.length;
@@ -772,6 +840,39 @@ export default {
       }
       this.filtering = true;
    
+    },
+
+    validateTagsFiltering(){
+
+      if(this.tag1 == "" && this.tag2 == "" && this.tag3 == ""){
+        this.errorAuth = true;
+        this.text_error = "Please insert at least one tag"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag1 != "" && this.tag1.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "First tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag2 != "" && this.tag2.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Second tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      if(this.tag3 != "" && this.tag3.split("#").length == 1){
+        this.errorAuth = true;
+        this.text_error = "Third tag is not valid"
+        this.colore = "alert alert-danger"
+        return false;
+      }
+
+      return true;
     },
 
     tornaIndietro() {
