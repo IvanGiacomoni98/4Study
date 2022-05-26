@@ -47,7 +47,8 @@ export default {
     data() {
         return {
             nomi_citta : [],
-            chosen_city : ''
+            chosen_city : '',
+            MARKER_DETERMINATION: 0.002,
         }
     },
 
@@ -104,6 +105,42 @@ export default {
 
             localStorage.setItem('lat', lat);
             localStorage.setItem('lng', lng);
+
+            const markers_gruppi = this.$store.state.markers_gruppi;
+            this.$store.state.markers_gruppi = [];
+
+            for(let i=0;i<markers_gruppi.length;i++){
+              let lat_ = 0.0;
+              let lng_ = 0.0;
+
+              if(i == 0){
+                lat_ = lat;
+                lng_ = lng;
+              }
+              else if(i == 1){
+                lat_ = lat + this.MARKER_DETERMINATION;
+                lng_ = lng + this.MARKER_DETERMINATION;
+              }
+              else if(i == 2){
+                lat_ = lat + this.MARKER_DETERMINATION;
+                lng_ = lng - this.MARKER_DETERMINATION;
+              }
+              else if(i == 3){
+                lat_ = lat - this.MARKER_DETERMINATION;
+                lng_ = lng + this.MARKER_DETERMINATION;
+              }
+              else if(i == 4){
+                lat_ = lat - this.MARKER_DETERMINATION;
+                lng_ = lng - this.MARKER_DETERMINATION;
+              }
+
+              this.$store.state.markers_gruppi.push({
+                id_study_group: i,
+                lat: lat_,
+                lng: lng_
+              })
+
+            }
 
             this.$router.push('/findGroupMap')
           })
