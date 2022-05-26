@@ -33,8 +33,91 @@ export default new Vuex.Store({
     prenotazioni_aule: [],
 
     prenotazione_dettagli : {},
+    gruppoDettagli : {},
 
     GLOBAL_COUNTER_AULE: 0,
+
+    markers_gruppi: [
+
+      {
+        id_study_group: 0,
+        lat: parseFloat(localStorage.getItem('lat')),
+        lng: parseFloat(localStorage.getItem('lng'))
+      },
+      {
+        id_study_group: 1,
+        lat: parseFloat(localStorage.getItem('lat')) + 0.002,
+        lng: parseFloat(localStorage.getItem('lng')) + 0.002
+      },
+      {
+        id_study_group: 2,
+        lat: parseFloat(localStorage.getItem('lat')) + 0.002,
+        lng: parseFloat(localStorage.getItem('lng')) - 0.002
+      }
+
+    ],
+
+    my_groups : [],
+    
+    gruppi : [
+
+      {
+
+        id_study_group: 0,
+        coordinate_gruppo : {
+          lat: '',
+          lng: '',
+        },
+        nome_gruppo: 'HCI GROUP 1',
+        descrizione_gruppo: 'First year of human computer interaction',
+        indirizzo_gruppo: 'Viale Manzoni 3, Roma',
+        partecipanti:2,
+        admin: false,
+        member: false,
+      },
+      {
+
+        id_study_group: 1,
+        coordinate_gruppo : {
+          lat: '',
+          lng: '',
+        },
+        nome_gruppo: 'StudyZone eng',
+        descrizione_gruppo: 'Study group of engineering in computer cience',
+        indirizzo_gruppo: 'Via Scarpa 123, Roma',
+        partecipanti:3,
+        admin: false,
+        member: false,
+      },
+      {
+
+        id_study_group: 2,
+        coordinate_gruppo : {
+          lat: '',
+          lng: '',
+        },
+         nome_gruppo: 'Data Management',
+        descrizione_gruppo: 'Data Management with Lenzerini',
+        indirizzo_gruppo: 'Via Roma 78, Roma',
+        partecipanti:4,
+        admin: false,
+        member: false,
+      }
+     ],
+
+     gruppiDaAggiungereCoordinate: [
+       {
+        lat: parseFloat(localStorage.getItem('lat')) - 0.002,
+        lng: parseFloat(localStorage.getItem('lng')) + 0.002
+       },
+       {
+        lat: parseFloat(localStorage.getItem('lat')) - 0.002,
+        lng: parseFloat(localStorage.getItem('lng')) - 0.002
+       }
+     ],
+
+     indexGroupToAdd: 0,
+
 
     notes:[
       {
@@ -223,8 +306,94 @@ export default new Vuex.Store({
       }
     },
 
+    joinaGruppo : (state, group_id) => {
+
+      const n = state.gruppi.length;
+
+      for(let i=0;i<n;i++){
+        if(state.gruppi[i].id_study_group == group_id){
+          state.gruppi[i].partecipanti += 1;
+          state.gruppi[i].member = true;
+
+          state.my_groups.push(state.gruppi[i]);
+
+          break;
+        }
+      }
+    },
+
+    abbandonaGruppo : (state, group_id) => {
+
+      const n = state.gruppi.length;
+
+      for(let i=0;i<n;i++){
+        if(state.gruppi[i].id_study_group == group_id){
+          state.gruppi[i].partecipanti -= 1;
+          state.gruppi[i].member = false;
+          state.gruppi[i].admin = false;
+        }
+      }
+
+      for(let i=0;i<state.my_groups.length;i++){
+        if(state.my_groups[i].id_study_group == group_id){
+          state.my_groups.splice(i, 1);
+          break;
+        }
+      }
+
+    },
+
+    creaGruppo : (state, gruppo) => {
+      state.my_groups.push(gruppo);
+    },
+
+    eliminaGruppoDaiMieiGruppi : (state, group_id) => {
+      let app = [];
+      let app_m = [];
+      let app_g = [];
+      const n = state.my_groups.length;
+
+      for(let i=0;i<n;i++){
+        if(state.my_groups[i].id_study_group != group_id){
+          app.push(state.my_groups[i])
+        }
+      }
+
+      state.my_groups = [];
+      state.my_groups = app;
+
+      const nn = state.markers_gruppi.length;
+
+      for(let i=0;i<nn;i++){
+        if(state.markers_gruppi[i].id_study_group != group_id){
+          app_m.push(state.markers_gruppi[i]);
+        }
+      }
+
+      state.markers_gruppi = [];
+      state.markers_gruppi = app_m;
+
+      const nnn = state.gruppi.length;
+
+      for(let i=0;i<nnn;i++){
+        if(state.gruppi[i].id_study_group != group_id){
+          app_g.push(state.gruppi[i])
+        }
+      }
+
+      state.gruppi = [];
+      state.gruppi = app_g;
+
+      state.indexGroupToAdd -= 1;
+
+    },
+
     setPrenotazione_dettagli : (state, val) => {
       state.prenotazione_dettagli = val;
+    },
+
+    setGruppoDettagli : (state, val) => {
+      state.gruppoDettagli = val;
     }
 
   },
