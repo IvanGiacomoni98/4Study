@@ -67,7 +67,7 @@
                     class="form-control border-warning mt-1"
                     v-model="date"
                     style="width: 200px"
-                    type="date"
+                    type="text"
                   />
                 </div>
 
@@ -290,6 +290,7 @@ export default {
     this.high=this.$store.state.highschools[this.id_utente]
     this.town=this.$store.state.towns[this.id_utente]
     this.university=this.$store.state.univerisities[this.id_utente]
+    this.date = this.$store.state.dates[this.id_utente];
 
     // carico le prenotazioni
     this.bookings = this.$store.state.prenotazioni_aule;

@@ -408,7 +408,7 @@ export default {
           this.$store.state.names.push(this.name)
           this.$store.state.surnames.push(this.surname)
           //don't worry be happy
-           this.$store.state.dates.push(this.phone)
+           this.$store.state.dates.push(this.birthdate)
            this.$store.state.towns.push(this.town);
         this.$store.state.users.push(this.email)
         this.$store.state.pws.push(this.password)
