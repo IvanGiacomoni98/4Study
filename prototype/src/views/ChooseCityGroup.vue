@@ -8,7 +8,7 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5 border-warning">
           <div class="card-body">
-           <h5 class="card-title text-center"><b>Insert the city where to find a study group</b></h5>
+           <h5 class="card-title text-center"><b>Select the city where to find a study group</b></h5>
            
             <hr>
             <form class="form-signin" @keyup.enter="goToMapStudyRooms">

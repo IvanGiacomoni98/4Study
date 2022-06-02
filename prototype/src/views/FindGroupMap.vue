@@ -1,7 +1,7 @@
 <template>
     <div>
-    
-        <div v-if="!confirmation" class="container">
+        
+        <div v-if="!confirmation && !noGroupsFound" class="container">
     
             <div class="row mt-3">
                 <router-link to="/avanzato"><img @click="backToAvanzato" src="../assets/back.png" width="30" /></router-link>
@@ -14,31 +14,71 @@
             </div>
     
             <div class="row mt-3 ">
+
+                <div class="col">
+
+                    <GmapMap class="mappa " :center="{lat:center.lat, lng:center.lng} " :zoom="zoomMap " :clickable="true " @click="removePopup " style="width: 755px; height: 480px ">
     
-                <GmapMap class="mappa " :center="{lat:center.lat, lng:center.lng} " :zoom="zoomMap " :clickable="true " @click="removePopup " style="width: 1200px; height: 480px ">
-    
-                    <GmapMarker :key=index v-for="(marker, index) in markers " :id="marker.id_study_group " :position="google && new google.maps.LatLng(marker.lat, marker.lng) " :clickable="true " :animation=g oogle.maps.Animation.DROP :icon="markerOptions " @click="showInfoDetails "
+                    <GmapMarker :key=index v-for="(marker, index) in markers " :id="marker.id_study_group " :position="google && new google.maps.LatLng(marker.lat, marker.lng) " :visible="groupsVisible" :clickable="true " :animation=g oogle.maps.Animation.DROP :icon="markerOptions " @click="showInfoDetails "
                     />
     
                 </GmapMap>
+
+                </div>
+
+                <div class="col">
+
+                    
+                    <div class="card card-signin my-5 border-warning ml-3">
+          <div class="card-body">
+           <h5 class="card-title text-center"><b>Select the study course</b></h5>
+           
+            <hr>
+            <form class="form-signin" @keyup="showGroups">
+
+              <div class="form-label-group"><br>
+              
+                <div class="form-center">
+                
+                <select class="select-comune" name="gruppo_" id="gruppo_" v-model="chosen_group" required>
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Human Computer Interaction">Human Computer Interaction</option>
+                    <option value="Machine Learning">Machine Learning</option>
+                </select>
+                
+                </div>
+               </div>
+
+                <center>
+                    <button @click="showGroups" class="btn btn-success btn-block mt-4" style="width: 200px" type="button">Search</button>
+              
+                </center>
+               
+
+            </form>
+          </div>
+        </div>
+                 
+
+                </div>
+    
+                
             </div>
 
-        <center>
         <div class="container">
             <div class="row">
                 <div class="col">
                      <router-link to="/chooseCityGroup"><button style="width:170px" type="button" class="btn btn-success btn-block mt-3">Change city</button></router-link>
                 </div>
                 <div class="col">
-                     <router-link to="/CreateNewGroup"><button style="width:170px" type="button" class="btn btn-success btn-block mt-3">Create New Group</button></router-link>
+                     <router-link to="/CreateNewGroup"><button style="width:170px; margin-right: 200px;" type="button" class="btn btn-success btn-block mt-3 mr-5">Create new group</button></router-link>
                 </div>
             </div>
         </div>
-        </center>
         
         </div>
 
-    <div v-else-if="confirmation" class="container">
+    <div v-else-if="confirmation && !noGroupsFound" class="container">
 
     <div class="row mt-5">
        <div class="col">
@@ -59,6 +99,36 @@
         <div class="col">
          <router-link to="/profile">
           <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Profile</button>   
+          </router-link>
+        </div>
+  
+    </div>
+    </center>
+    
+
+  </div>
+
+  <div v-else-if="noGroupsFound && !confirmation" class="container">
+
+    <div class="row mt-5">
+       <div class="col">
+          <button class="rounded" disabled id="im3"><h5>No groups found for this course. If you want you can create it.</h5></button>
+          </div>
+
+  
+    </div>
+    
+    <center>
+
+    <div class="row mt-5">
+       <div class="col">
+         <router-link to="/avanzato">
+          <button type="button" id="bottone_homepage" class="btn btn-lg btn-success btn-block mt-3">Homepage</button>   
+          </router-link>
+        </div>
+        <div class="col">
+         <router-link to="/CreateNewGroup">
+          <button type="button" style="width: 230px" id="bottone_crea_gruppo" class="btn btn-lg btn-success btn-block mt-3">Create new group</button>   
           </router-link>
         </div>
   
@@ -190,6 +260,10 @@ export default {
             chosenCity: '',
             
             confirmation: false,
+
+            chosen_group: "",
+            groupsVisible: false,
+            noGroupsFound: false,
 
             studyGroupClicked: {},
             studyGroupDetails: [],
@@ -380,6 +454,15 @@ export default {
             this.show = false;
             this.confirmation = true;
 
+        },
+
+        showGroups(){
+            if(this.chosen_group == "Software Engineering"){
+                this.groupsVisible = true;
+            }
+            else{
+                this.noGroupsFound = true;
+            }
         }
 
     }
@@ -389,6 +472,19 @@ export default {
 
 
 <style scoped>
+
+.select-comune{
+  height: auto;
+    border-radius: 2rem;
+    border: 1;
+}
+
+.card-signin {
+  
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
 .backImgFromBookingView {
     cursor: pointer;
 }
