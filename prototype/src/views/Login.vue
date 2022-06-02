@@ -19,7 +19,9 @@
               <div class="form-label-group">
               <h4>Password</h4>
                 <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="Insert your password" required>
+              <router-link to="/passwordforgotten">Password forgotten?</router-link>
               </div>
+              
 
 
               <button v-if="readyEmail || readyPhone" @click="accedi()" type="button" class="btn btn-lg btn-success btn-block text-uppercase mt-3">Log in</button>

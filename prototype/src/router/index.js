@@ -39,6 +39,11 @@ Vue.use(VueRouter)
       component: Profile
     },
     {
+      path:'/passwordforgotten',
+      name:'PasswordForgotten',
+      component: PasswordForgotten
+    },
+    {
       path: '/bookingDetails',
       name: 'BookingDetails',
       component: BookingDetails
